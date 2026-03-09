@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation"
 export default function HomePage() {
 
   const router = useRouter()
-  const [loggedIn,setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  useEffect(()=>{
+  useEffect(() => {
     const email = localStorage.getItem("userEmail")
-    if(email) setLoggedIn(true)
-  },[])
+    if (email) setLoggedIn(true)
+  }, [])
 
   const featureBtn =
     "bg-white text-blue-600 hover:text-blue-700 hover:-translate-y-[2px] hover:shadow-xl transition-all duration-200 p-4 rounded-xl shadow text-sm font-semibold flex items-center justify-center gap-2"
@@ -87,14 +87,14 @@ export default function HomePage() {
             <div className="flex gap-3">
 
               <button
-                onClick={()=>router.push("/login")}
+                onClick={() => router.push("/login")}
                 className="bg-white text-red-600 px-4 py-2 rounded-lg text-sm font-medium shadow hover:shadow-lg transition"
               >
                 Login
               </button>
 
               <button
-                onClick={()=>router.push("/login")}
+                onClick={() => router.push("/login")}
                 className="border border-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white hover:text-red-600 transition"
               >
                 Sign Up
@@ -105,7 +105,6 @@ export default function HomePage() {
           )}
 
         </div>
-
 
 
         {/* CONTENT */}
@@ -126,8 +125,10 @@ export default function HomePage() {
               🎧 Listening Practice
             </button>
 
+            {/* READING PRACTICE FIXED */}
+
             <button
-              onClick={()=>router.push("/test")}
+              onClick={() => router.push("/practice/reading")}
               className={featureBtn}
             >
               📚 Reading Practice
@@ -156,7 +157,6 @@ export default function HomePage() {
           </div>
 
         </div>
-
 
 
         {/* FOOTER */}
