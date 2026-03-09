@@ -2,22 +2,23 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { supabase } from "../lib/supabase"
 
 export default function Dashboard() {
 
   const router = useRouter()
-  const [email,setEmail] = useState("")
+  const [email, setEmail] = useState("")
 
-  useEffect(()=>{
+  useEffect(() => {
 
     const getUser = async () => {
 
       const { data } = await supabase.auth.getUser()
 
-      if(!data.user){
+      if (!data.user) {
         router.replace("/login")
-      }else{
+      } else {
         setEmail(data.user.email || "")
       }
 
@@ -25,7 +26,7 @@ export default function Dashboard() {
 
     getUser()
 
-  },[router])
+  }, [router])
 
   const logout = async () => {
 
@@ -72,7 +73,6 @@ export default function Dashboard() {
           Choose Your Practice
         </h2>
 
-
         <div className="grid md:grid-cols-3 gap-8">
 
 
@@ -88,12 +88,15 @@ export default function Dashboard() {
               Practice IELTS Academic Reading tests.
             </p>
 
-            <button
-              onClick={() => router.push("/practice/reading")}
-              className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition"
-            >
-              Start Reading
-            </button>
+            <Link href="/practice/reading">
+
+              <button
+                className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition"
+              >
+                Start Reading
+              </button>
+
+            </Link>
 
           </div>
 
@@ -138,7 +141,6 @@ export default function Dashboard() {
             </button>
 
           </div>
-
 
         </div>
 
