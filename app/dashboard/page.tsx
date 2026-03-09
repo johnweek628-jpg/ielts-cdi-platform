@@ -88,15 +88,12 @@ export default function Dashboard() {
               Practice IELTS Academic Reading tests.
             </p>
 
-            <Link href="/practice/reading">
-
-              <button
-                className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition"
-              >
-                Start Reading
-              </button>
-
-            </Link>
+            <Link
+  href="/practice/reading"
+  className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition block text-center"
+>
+  Start Reading
+</Link>
 
           </div>
 
