@@ -32,7 +32,7 @@ export default function ReadingTest1() {
       <div className="flex-1 w-full">
 
         <iframe
-          src="/tests/reading-test.html"
+          src="/tests/reading-test1.html"
           className="w-full h-full border-0"
         />
 
