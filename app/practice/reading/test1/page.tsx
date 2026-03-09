@@ -8,19 +8,19 @@ export default function ReadingTest1() {
 
   return (
 
-    <div className="w-full h-screen flex flex-col bg-black">
+    <div className="w-screen h-screen flex flex-col bg-black overflow-hidden">
 
       {/* HEADER */}
 
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700 text-white">
+      <div className="flex items-center justify-between px-6 py-3 border-b border-gray-700 text-white flex-shrink-0">
 
-        <h1 className="text-lg font-semibold">
+        <h1 className="text-sm font-semibold tracking-wide">
           IELTS Reading Test 1
         </h1>
 
         <button
           onClick={() => router.push("/practice/reading")}
-          className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm"
+          className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-xs transition"
         >
           Back to Tests
         </button>
@@ -29,11 +29,11 @@ export default function ReadingTest1() {
 
       {/* TEST FRAME */}
 
-      <div className="flex-1">
+      <div className="flex-1 w-full">
 
         <iframe
           src="/tests/reading-test.html"
-          className="w-full h-full border-none"
+          className="w-full h-full border-0"
         />
 
       </div>
