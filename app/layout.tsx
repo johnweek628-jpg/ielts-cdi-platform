@@ -1,5 +1,8 @@
+'use client'
+
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { usePathname } from "next/navigation"
 import "./globals.css"
 import Navbar from "./components/Navbar"
 
@@ -24,13 +27,19 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
+  const pathname = usePathname()
+
+  // IELTS test sahifalarida navbar ko‘rinmaydi
+  const hideNavbar =
+    pathname.startsWith("/practice/reading/test")
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 text-gray-800`}
       >
 
-        <Navbar />
+        {!hideNavbar && <Navbar />}
 
         {children}
 
