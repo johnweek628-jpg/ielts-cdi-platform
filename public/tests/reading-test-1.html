@@ -347,28 +347,642 @@
         .sc-sentence { line-height: 2.6; font-size: 16px; color: var(--text); margin-bottom: 18px; }
         .answer-input.inline-short { width: 120px; }
         .answer-input.inline-long { width: 200px; }
-    </style>
+    
+        /* ===== IDP-inspired refresh ===== */
+        :root {
+            --bg: #f3f6fb;
+            --bg-secondary: #eef3f9;
+            --bg-tertiary: #eaf1fb;
+            --text: #16243a;
+            --text-muted: #5b6b80;
+            --text-light: #7f8ea3;
+            --border: #d9e2ef;
+            --border-medium: #c6d3e4;
+            --header-bg: rgba(255,255,255,0.96);
+            --panel-bg: #ffffff;
+            --nav-bg: rgba(255,255,255,0.98);
+            --input-bg: #ffffff;
+            --example-bg: #f7fafe;
+            --modal-bg: #ffffff;
+            --timer-color: #163250;
+            --resizer-bg: #dde6f2;
+            --active-blue: #2563eb;
+            --footer-btn-bg: #ffffff;
+            --footer-btn-border: #cfd9e6;
+            --passage-title: #173b72;
+            --toolbar-bg: #153154;
+            --toolbar-shadow: 0 12px 30px rgba(15, 37, 64, 0.22);
+        }
+        body {
+            background: linear-gradient(180deg, #f6f9fd 0%, #edf3fa 100%);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .header.idp-header {
+            height: 76px;
+            padding: 14px 22px;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 213, 229, 0.9);
+            box-shadow: 0 8px 24px rgba(14, 30, 58, 0.06);
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        .brand-shell { display:flex; align-items:center; gap:14px; min-width: 0; }
+        .brand-mark {
+            width: 54px; height: 54px; border-radius: 16px;
+            background: linear-gradient(135deg, #0f4aa1 0%, #2563eb 100%);
+            color: #fff; display:flex; align-items:center; justify-content:center;
+            font-weight: 800; letter-spacing: .08em; font-size: 13px;
+            box-shadow: 0 10px 24px rgba(37,99,235,0.28);
+            flex-shrink: 0;
+        }
+        .brand-copy { display:flex; flex-direction:column; gap:4px; min-width:0; }
+        .brand-title { font-size: 18px; font-weight: 700; color: #183153; white-space: nowrap; }
+        .brand-subtitle { font-size: 12px; color: #6c7f96; letter-spacing: .03em; text-transform: uppercase; }
+        .header-right { display:flex; align-items:center; gap:14px; }
+        .header-left { gap: 10px; }
+        .timer-container {
+            background: #f7fafe; border: 1px solid #d8e3f0; border-radius: 999px;
+            padding: 8px 10px 8px 14px; font-weight: 700;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        .timer-controls { margin-left: 10px; gap: 6px; }
+        .timer-controls button {
+            background: #fff; border: 1px solid #d6e0ec; width: 30px; height: 30px;
+            box-shadow: 0 2px 8px rgba(15,37,64,0.06);
+        }
+        #night-mode-btn, #notes-toggle-btn {
+            background: #fff !important; border: 1px solid #d6e0ec !important;
+            border-radius: 999px !important; padding: 8px 14px !important;
+            box-shadow: 0 2px 8px rgba(15,37,64,0.05);
+        }
+        .telegram-link {
+            background: linear-gradient(135deg, #1d9bf0 0%, #0a7bdc 100%);
+            color: #fff; padding: 10px 16px; border-radius: 999px;
+            box-shadow: 0 10px 24px rgba(10,123,220,0.22);
+            text-decoration: none !important; font-size: 14px;
+        }
+        .telegram-link:hover { filter: brightness(1.03); transform: translateY(-1px); }
+        .main-container {
+            margin-top: 76px;
+            height: calc(100vh - 76px);
+            padding: 16px 16px 0;
+            background: transparent;
+        }
+        #passage-header-container { margin-bottom: 12px; }
+        .part-header {
+            margin: 0 0 12px;
+            border-radius: 18px;
+            border: 1px solid #dbe5f1;
+            background: linear-gradient(180deg, #ffffff 0%, #f7fafe 100%);
+            box-shadow: 0 8px 24px rgba(17, 38, 68, 0.05);
+        }
+        .panels-container { gap: 14px; padding-bottom: 96px; }
+        .passage-panel, .questions-panel {
+            border: 1px solid #dbe5f1;
+            border-radius: 22px;
+            box-shadow: 0 14px 40px rgba(16, 32, 55, 0.07);
+            padding-top: 28px;
+        }
+        .questions-panel { border-left: 1px solid #dbe5f1; }
+        .resizer {
+            width: 12px;
+            border-radius: 999px;
+            background-color: #dfe8f3;
+            box-shadow: inset 0 0 0 1px rgba(184, 197, 214, 0.8);
+        }
+        .reading-passage h4 {
+            font-size: 28px;
+            font-weight: 700;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+        .reading-passage p {
+            font-size: 16px;
+            line-height: 1.75;
+            margin-bottom: 1.05em;
+        }
+        .question {
+            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+            border: 1px solid #e2eaf3;
+            border-radius: 18px;
+            padding: 18px 18px 14px;
+            box-shadow: 0 8px 20px rgba(17, 38, 68, 0.04);
+        }
+        .question-prompt strong:first-child { color: #173b72; }
+        .answer-input, select.answer-input {
+            border-radius: 10px;
+            border: 1px solid #c9d7e8;
+            height: 40px;
+            padding: 6px 10px;
+            box-shadow: inset 0 1px 2px rgba(16,32,55,0.03);
+        }
+        .matching-form-row, .sc-sentence { margin-bottom: 16px; }
+        .tf-question, .multi-choice-question {
+            border-radius: 14px;
+            padding: 12px 12px 6px;
+            background: #fcfdff;
+            border: 1px solid #edf2f8;
+        }
+        .tf-option, .multi-choice-option label, .multi-select-option label { min-height: 36px; }
+        .nav-row {
+            left: 16px; right: 16px; bottom: 14px; height: 72px;
+            border: 1px solid #dbe5f1; border-radius: 20px;
+            box-shadow: 0 14px 36px rgba(12, 29, 52, 0.11);
+            padding: 0 10px; background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
+        }
+        .footer__questionNo___3WNct { border-radius: 12px; }
+        .footer__questionNo___3WNct:hover { background: #f0f5fb; }
+        .subQuestion {
+            border-radius: 10px;
+            border-color: #d5dfeb;
+            background: #fff;
+        }
+        .subQuestion.active, .subQuestion.answered {
+            box-shadow: 0 8px 18px rgba(37,99,235,0.18);
+        }
+        .footer__deliverButton___3FM07 {
+            border-radius: 14px;
+            background: linear-gradient(135deg, #0f4aa1 0%, #2563eb 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 10px 24px rgba(37,99,235,0.22);
+        }
+        .footer__deliverButton___3FM07:hover { filter: brightness(1.03); }
+        .nav-arrows { bottom: 102px; right: 28px; }
+        .nav-arrow {
+            border-radius: 16px;
+            background: #173b72;
+            box-shadow: 0 10px 22px rgba(23,59,114,0.22);
+        }
+        .modal-content, .notes-panel, .note-input-box {
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(15, 30, 56, 0.16);
+        }
+        .active-question {
+            outline: 3px solid rgba(37,99,235,0.24);
+            box-shadow: 0 0 0 5px rgba(37,99,235,0.08);
+        }
+        body.night-mode {
+            --bg: #000000;
+            --bg-secondary: #05080d;
+            --bg-tertiary: #081018;
+            --text: #eaf7ff;
+            --text-muted: #c7eaff;
+            --text-light: #9fdcff;
+            --border: #163040;
+            --border-medium: #1d4157;
+            --header-bg: rgba(0, 0, 0, 0.98);
+            --panel-bg: #000000;
+            --nav-bg: rgba(0, 0, 0, 0.98);
+            --input-bg: #04111a;
+            --example-bg: #04111a;
+            --modal-bg: #000000;
+            --timer-color: #eaf7ff;
+            --resizer-bg: #0c1b27;
+            --passage-title: #b9ecff;
+            --footer-btn-bg: #07131d;
+            --footer-btn-border: #1d4157;
+        }
+        body.night-mode .question,
+        body.night-mode .tf-question,
+        body.night-mode .multi-choice-question,
+        body.night-mode .part-header,
+        body.night-mode .passage-panel,
+        body.night-mode .questions-panel,
+        body.night-mode .nav-row {
+            box-shadow: none;
+        }
+        @media (max-width: 980px) {
+            .header.idp-header { height: auto; align-items: flex-start; flex-direction: column; }
+            .header-right { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+            .brand-title { white-space: normal; }
+            .main-container { margin-top: 118px; height: calc(100vh - 118px); }
+        }
+
+        body.night-mode,
+        body.night-mode .main-container,
+        body.night-mode .header.idp-header,
+        body.night-mode .nav-row,
+        body.night-mode .passage-panel,
+        body.night-mode .questions-panel,
+        body.night-mode .part-header,
+        body.night-mode .question,
+        body.night-mode .tf-question,
+        body.night-mode .multi-choice-question,
+        body.night-mode .multi-select-option,
+        body.night-mode .multi-choice-option,
+        body.night-mode .tf-option,
+        body.night-mode .example-box,
+        body.night-mode .modal-content,
+        body.night-mode .note-input-box,
+        body.night-mode .notes-panel,
+        body.night-mode .notes-panel-header,
+        body.night-mode .note-item,
+        body.night-mode #selectionMenu,
+        body.night-mode #notePopup {
+            background: #000000 !important;
+            background-color: #000000 !important;
+            color: var(--text) !important;
+        }
+        body.night-mode {
+            background: #000000 !important;
+        }
+        body.night-mode .question p,
+        body.night-mode .question ul li,
+        body.night-mode .tf-question-text,
+        body.night-mode .tf-option,
+        body.night-mode .multi-choice-option label,
+        body.night-mode .multi-select-option label,
+        body.night-mode .reading-passage p,
+        body.night-mode .reading-passage,
+        body.night-mode .matching-form-label,
+        body.night-mode .sentence-part,
+        body.night-mode .sc-sentence,
+        body.night-mode .result-row,
+        body.night-mode .results-summary,
+        body.night-mode .modal-content h2,
+        body.night-mode .brand-title,
+        body.night-mode .brand-subtitle,
+        body.night-mode .footer__questionNo___3WNct,
+        body.night-mode .subQuestion,
+        body.night-mode .part-header p,
+        body.night-mode .question-prompt,
+        body.night-mode .question,
+        body.night-mode .q-number,
+        body.night-mode .tf-question-number,
+        body.night-mode .attemptedCount,
+        body.night-mode .note-item-text,
+        body.night-mode .notes-empty,
+        body.night-mode .note-input-box .selected-text-preview,
+        body.night-mode .comment-tooltip,
+        body.night-mode #night-mode-btn,
+        body.night-mode #notes-toggle-btn,
+        body.night-mode .timer-container {
+            color: #d8f4ff !important;
+        }
+        body.night-mode .answer-input,
+        body.night-mode select.answer-input,
+        body.night-mode select.answer-input option {
+            color: #d8f4ff !important;
+            background: #04111a !important;
+            border-color: #1f4d66 !important;
+        }
+        body.night-mode .part-header,
+        body.night-mode .question,
+        body.night-mode .tf-question,
+        body.night-mode .multi-choice-question,
+        body.night-mode .passage-panel,
+        body.night-mode .questions-panel,
+        body.night-mode .nav-row,
+        body.night-mode .example-box,
+        body.night-mode .notes-panel,
+        body.night-mode .note-input-box,
+        body.night-mode .modal-content,
+        body.night-mode #selectionMenu,
+        body.night-mode #notePopup {
+            border-color: #12384c !important;
+        }
+        body.night-mode .footer__deliverButton___3FM07 {
+            background: linear-gradient(135deg, #0a6ea8 0%, #6fd8ff 100%) !important;
+            color: #00131d !important;
+        }
+        body.night-mode .reading-passage h4,
+        body.night-mode .passage-title,
+        body.night-mode .sectionNr,
+        body.night-mode strong {
+            color: #bfefff !important;
+        }
+        body.night-mode .subQuestion.active,
+        body.night-mode .subQuestion.answered,
+        body.night-mode .footer__questionNo___3WNct:hover {
+            background-color: #071825 !important;
+        }
+
+    
+        /* ===== Animated input and option effects ===== */
+        .answer-input,
+        select.answer-input {
+            border-radius: 16px !important;
+            transition: transform 0.22s ease, box-shadow 0.28s ease, border-color 0.28s ease, background-color 0.28s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform, box-shadow;
+        }
+        .answer-input:hover,
+        select.answer-input:hover {
+            transform: translateY(-1px);
+            border-color: #8ec5ff !important;
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.12);
+        }
+        .answer-input:focus,
+        .answer-input.active-input,
+        select.answer-input:focus {
+            border-color: #5ba8ff !important;
+            box-shadow:
+                0 0 0 4px rgba(103, 177, 255, 0.16),
+                0 10px 24px rgba(74, 144, 226, 0.18),
+                0 0 26px rgba(127, 205, 255, 0.28) !important;
+            outline: none;
+        }
+        .tf-option,
+        .multi-choice-option,
+        .multi-select-option {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease;
+            border: 1px solid transparent;
+        }
+        .tf-option:hover,
+        .multi-choice-option:hover,
+        .multi-select-option:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 8px 22px rgba(44, 109, 196, 0.12);
+            background: rgba(74, 144, 226, 0.05);
+            border-color: rgba(74, 144, 226, 0.16);
+        }
+        .tf-option label,
+        .multi-choice-option label,
+        .multi-select-option label {
+            width: 100%;
+            min-height: 48px;
+            padding: 10px 12px;
+            border-radius: 16px;
+            transition: inherit;
+        }
+        .tf-option input[type="radio"],
+        .multi-choice-option input[type="radio"],
+        .multi-select-option input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border-radius: 50%;
+            border: 2px solid #8b8b8b;
+            background:
+                radial-gradient(circle at center, #1f79ff 0 0, transparent 0 100%);
+            background-size: 0% 0%;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: inset 0 0 0 6px #fff, 0 1px 2px rgba(0,0,0,0.06);
+            transition:
+                transform 0.22s cubic-bezier(.2,.8,.2,1),
+                border-color 0.28s ease,
+                box-shadow 0.28s ease,
+                background-size 0.34s cubic-bezier(.2,.8,.2,1);
+            cursor: pointer;
+        }
+        .multi-select-option input[type="checkbox"] {
+            border-radius: 8px;
+        }
+        .tf-option:hover input[type="radio"],
+        .multi-choice-option:hover input[type="radio"],
+        .multi-select-option:hover input[type="checkbox"] {
+            transform: scale(1.08);
+            border-color: #4a90e2;
+            box-shadow: inset 0 0 0 6px #fff, 0 0 0 7px rgba(74,144,226,0.08);
+        }
+        .tf-option input[type="radio"]:checked,
+        .multi-choice-option input[type="radio"]:checked,
+        .multi-select-option input[type="checkbox"]:checked {
+            border-color: #1f79ff;
+            background-size: 100% 100%;
+            animation: blueFillPop 0.42s cubic-bezier(.2,.85,.25,1);
+            box-shadow:
+                inset 0 0 0 5px #fff,
+                0 0 0 8px rgba(31,121,255,0.12),
+                0 6px 18px rgba(31,121,255,0.18);
+        }
+        .multi-select-option input[type="checkbox"]:checked {
+            background:
+                linear-gradient(#1f79ff, #1f79ff);
+            background-size: 100% 100%;
+            position: relative;
+        }
+        .multi-select-option input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 7px;
+            height: 12px;
+            border: solid #fff;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            top: 2px;
+            left: 7px;
+        }
+        .tf-option.selected-option,
+        .multi-choice-option.selected-option,
+        .multi-select-option.selected-option {
+            background: linear-gradient(180deg, rgba(74,144,226,0.06), rgba(74,144,226,0.10));
+            border-color: rgba(31,121,255,0.20);
+            box-shadow: 0 8px 24px rgba(31,121,255,0.10);
+        }
+        @keyframes blueFillPop {
+            0%   { transform: scale(0.86); background-size: 10% 10%; }
+            45%  { transform: scale(1.16); background-size: 72% 72%; }
+            70%  { transform: scale(0.98); background-size: 100% 100%; }
+            100% { transform: scale(1); background-size: 100% 100%; }
+        }
+        .cursor-bloom {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            margin-left: -9px;
+            margin-top: -9px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            background: radial-gradient(circle, rgba(124, 197, 255, 0.75) 0%, rgba(124, 197, 255, 0.35) 35%, rgba(124, 197, 255, 0.12) 55%, rgba(124, 197, 255, 0.0) 75%);
+            animation: cursorBloom 0.7s ease-out forwards;
+            filter: blur(0.3px);
+        }
+        @keyframes cursorBloom {
+            0%   { transform: scale(0.6); opacity: 0.95; }
+            60%  { transform: scale(3.6); opacity: 0.38; }
+            100% { transform: scale(5.3); opacity: 0; }
+        }
+
+    
+/* ===== Highlight + Notes ===== */
+.highlight-yellow{
+background:#fff59d;
+border-radius:4px;
+padding:1px 2px;
+}
+.note-underline{
+text-decoration: underline 2px #1f79ff;
+text-underline-offset:2px;
+}
+#selectionMenu{
+position:fixed;
+display:none;
+background:#ffffff;
+border:1px solid #ddd;
+border-radius:10px;
+padding:8px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+z-index:9999;
+gap:6px;
+}
+#selectionMenu button{
+border:none;
+padding:6px 12px;
+border-radius:6px;
+cursor:pointer;
+font-weight:600;
+}
+#btnHighlight{background:#fff176;}
+#btnNote{background:#e3f2fd;}
+#notePopup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+display:none;
+z-index:10000;
+width:300px;
+}
+#notePopup textarea{
+width:100%;
+height:80px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:6px;
+padding:6px;
+}
+.noteBtns{
+margin-top:10px;
+display:flex;
+gap:10px;
+justify-content:flex-end;
+}
+#saveNote{
+background:#2e7d32;
+color:white;
+}
+#cancelNote{
+background:#d32f2f;
+color:white;
+}
+
+
+/* ===== Results panel redesign ===== */
+.result-row{
+background: transparent !important;
+border-bottom: 1px solid #eee;
+padding:10px 8px;
+}
+
+.result-row.correct-answer{
+background:#e8f5e9;
+border-radius:10px;
+}
+
+.result-row.wrong-answer{
+background:#fdecea;
+border-radius:10px;
+}
+
+.result-row .correct-ans{
+color:#2e7d32;
+font-weight:600;
+}
+
+.result-row .user-ans{
+color:#c62828;
+font-weight:600;
+}
+
+.modal-content{
+background:#ffffff;
+}
+
+.results-details-container{
+background:transparent;
+}
+
+
+/* ===== Notes improved ===== */
+.note-underline{
+text-decoration: underline 2px #1f79ff;
+text-underline-offset:3px;
+cursor:pointer;
+position:relative;
+}
+
+.note-tooltip{
+position:absolute;
+background:#ffffff;
+border:1px solid #ddd;
+padding:8px 10px;
+border-radius:8px;
+box-shadow:0 6px 20px rgba(0,0,0,0.15);
+font-size:13px;
+white-space:nowrap;
+z-index:99999;
+pointer-events:none;
+transform:translateY(-120%);
+display:none;
+}
+
+#saveNote{
+background:#81c784 !important;
+color:#0b3d1f;
+border:none;
+}
+
+#cancelNote{
+background:#ef9a9a !important;
+color:#5a0000;
+border:none;
+}
+
+#notePopup textarea{
+font-family:Arial, sans-serif;
+}
+
+</style>
 </head>
 <body>
-<div class="header">
-    <div class="header-left">
-        <div class="timer-container">
-            <span class="timer-display">60:00</span>
-            <div class="timer-controls">
-                <button id="timer-toggle-btn" title="Pause/Resume Timer">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
-                </button>
-                <button id="timer-reset-btn" title="Reset Timer">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
-                </button>
-            </div>
+
+<div class="header idp-header">
+    <div class="brand-shell">
+        <div class="brand-mark">IELTS</div>
+        <div class="brand-copy">
+            <div class="brand-title">Computer-delivered Reading Practice</div>
+            <div class="brand-subtitle">IDP-inspired exam interface</div>
         </div>
-        <button id="night-mode-btn" title="Toggle Night Mode"><span class="moon-icon">🌙</span> Night Mode</button>
-        <button id="notes-toggle-btn" title="Show Notes" style="background:var(--footer-btn-bg);border:1px solid var(--border-medium);border-radius:20px;padding:5px 12px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;transition:all 0.2s;">
-            📝 Notes <span id="notes-count" style="background:#f9a825;color:#1a1a1a;border-radius:10px;padding:1px 6px;font-size:11px;display:none;">0</span>
-        </button>
     </div>
-    <a href="https://t.me/ielts_material_full" target="_blank" class="telegram-link">Full Exam Materials</a>
+
+    <div class="header-right">
+        <div class="header-left">
+            <div class="timer-container">
+                <span class="timer-display">60:00</span>
+                <div class="timer-controls">
+                    <button id="timer-toggle-btn" title="Pause/Resume Timer">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+                    </button>
+                    <button id="timer-reset-btn" title="Reset Timer">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                    </button>
+                </div>
+            </div>
+            <button id="night-mode-btn" title="Toggle Night Mode"><span class="moon-icon">🌙</span> Night Mode</button>
+            
+        </div>
+
+        <a href="https://t.me/jasurbeks_ielts" target="_blank" class="telegram-link">Join us on Telegram</a>
+    </div>
 </div>
 
 <div class="main-container" id="main-container">
@@ -1466,6 +2080,184 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initialize();
 });
+
+// ===== Soft cursor bloom + elegant option animation =====
+(function() {
+    function createBloom(x, y) {
+        const bloom = document.createElement('span');
+        bloom.className = 'cursor-bloom';
+        bloom.style.left = x + 'px';
+        bloom.style.top = y + 'px';
+        document.body.appendChild(bloom);
+        setTimeout(() => bloom.remove(), 720);
+    }
+
+    function pointFromEvent(e, el) {
+        if (e && typeof e.clientX === 'number' && typeof e.clientY === 'number') {
+            return { x: e.clientX, y: e.clientY };
+        }
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+
+    const writableSelector = '.answer-input, input[type="text"], textarea, select.answer-input';
+    document.querySelectorAll(writableSelector).forEach(el => {
+        el.addEventListener('pointerdown', e => {
+            const p = pointFromEvent(e, el);
+            createBloom(p.x, p.y);
+        });
+        el.addEventListener('focus', e => {
+            const p = pointFromEvent(e, el);
+            createBloom(p.x, p.y);
+        }, true);
+    });
+
+    function syncSelectedState(input) {
+        const name = input.getAttribute('name');
+        if (input.type === 'radio' && name) {
+            document.querySelectorAll('input[type="radio"][name="' + CSS.escape(name) + '"]').forEach(r => {
+                const box = r.closest('.tf-option, .multi-choice-option');
+                if (box) box.classList.toggle('selected-option', r.checked);
+            });
+        } else {
+            const box = input.closest('.multi-select-option');
+            if (box) box.classList.toggle('selected-option', input.checked);
+        }
+    }
+
+    document.querySelectorAll('.tf-option input[type="radio"], .multi-choice-option input[type="radio"], .multi-select-option input[type="checkbox"]').forEach(input => {
+        syncSelectedState(input);
+        input.addEventListener('change', () => syncSelectedState(input));
+        const card = input.closest('.tf-option, .multi-choice-option, .multi-select-option');
+        if (card) {
+            card.addEventListener('pointerenter', () => {
+                card.style.zIndex = '2';
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.zIndex = '';
+            });
+        }
+    });
+})();
+
 </script>
+
+<div id="selectionMenu">
+<button id="btnHighlight">Highlight</button>
+<button id="btnNote">Notes</button>
+</div>
+
+<div id="notePopup">
+<b>Add note</b>
+<textarea id="noteText" placeholder="Write your note..."></textarea>
+<div class="noteBtns">
+<button id="saveNote">Save</button>
+<button id="cancelNote">Cancel</button>
+</div>
+</div>
+<script>
+// ===== Highlight and Notes =====
+selectedRange=null;
+
+document.addEventListener("mouseup",function(e){
+const sel=window.getSelection();
+if(sel.toString().length>0){
+selectedRange=sel.getRangeAt(0);
+const menu=document.getElementById("selectionMenu");
+menu.style.display="flex";
+menu.style.left=e.pageX+"px";
+menu.style.top=(e.pageY-40)+"px";
+}else{
+document.getElementById("selectionMenu").style.display="none";
+}
+});
+
+document.getElementById("btnHighlight").onclick=function(){
+if(selectedRange){
+const span=document.createElement("span");
+span.className="highlight-yellow";
+selectedRange.surroundContents(span);
+window.getSelection().removeAllRanges();
+}
+document.getElementById("selectionMenu").style.display="none";
+};
+
+document.getElementById("btnNote").onclick=function(){
+document.getElementById("notePopup").style.display="block";
+};
+
+document.getElementById("cancelNote").onclick=function(){
+document.getElementById("notePopup").style.display="none";
+};
+
+document.getElementById("saveNote").onclick=function(){
+const txt=document.getElementById("noteText").value.trim();
+if(selectedRange && txt){
+const span=document.createElement("span");
+span.className="note-underline";
+span.title=txt;
+selectedRange.surroundContents(span);
+}
+document.getElementById("notePopup").style.display="none";
+document.getElementById("noteText").value="";
+window.getSelection().removeAllRanges();
+};
+</script>
+<script>
+selectedRange=null;
+
+document.addEventListener("mouseup",function(e){
+const sel=window.getSelection();
+if(sel.toString().length>0){
+selectedRange=sel.getRangeAt(0).cloneRange();
+const menu=document.getElementById("selectionMenu");
+menu.style.display="flex";
+menu.style.left=e.pageX+"px";
+menu.style.top=(e.pageY-40)+"px";
+}else{
+document.getElementById("selectionMenu").style.display="none";
+}
+});
+
+document.getElementById("btnNote").onclick=function(){
+document.getElementById("notePopup").style.display="block";
+};
+
+document.getElementById("cancelNote").onclick=function(){
+document.getElementById("notePopup").style.display="none";
+};
+
+document.getElementById("saveNote").onclick=function(){
+
+const txt=document.getElementById("noteText").value.trim();
+if(selectedRange && txt){
+
+const span=document.createElement("span");
+span.className="note-underline";
+
+const tooltip=document.createElement("span");
+tooltip.className="note-tooltip";
+tooltip.innerText=txt;
+
+span.appendChild(tooltip);
+
+selectedRange.surroundContents(span);
+
+span.addEventListener("mouseenter",function(){
+tooltip.style.display="block";
+});
+
+span.addEventListener("mouseleave",function(){
+tooltip.style.display="none";
+});
+
+}
+
+document.getElementById("notePopup").style.display="none";
+document.getElementById("noteText").value="";
+window.getSelection().removeAllRanges();
+};
+</script>
+
 </body>
 </html>
