@@ -7,49 +7,42 @@ export default function Navbar() {
 
   const pathname = usePathname()
 
-  if (pathname === "/test" || pathname.startsWith("/tests")) {
+  // Test sahifalarda navbar ko‘rinmaydi
+  if (pathname.startsWith("/practice/reading/test")) {
     return null
   }
 
   return (
 
-    <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
+    <div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center">
 
-      <div className="max-w-7xl mx-auto h-14 px-6 flex items-center justify-between">
+      <Link href="/" className="flex items-center gap-2 text-gray-700 font-semibold">
+        🏠 Home
+      </Link>
+
+      <h1 className="text-sm font-medium text-gray-600">
+        IELTS CDI Learning Platform
+      </h1>
+
+      <div className="flex gap-3">
 
         <Link
-          href="/"
-          className="flex items-center gap-2 font-semibold text-gray-700 hover:text-red-500 transition"
+          href="/login"
+          className="px-4 py-2 text-sm border rounded-lg"
         >
-          <span className="text-xl">🏠</span>
-          <span className="hidden sm:block">Home</span>
+          Login
         </Link>
 
-        <div className="text-sm font-medium text-gray-500 hidden md:block">
-          IELTS CDI Learning Platform
-        </div>
-
-        <div className="flex items-center gap-3">
-
-          <Link
-            href="/login"
-            className="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-50 transition"
-          >
-            Login
-          </Link>
-
-          <Link
-            href="/login"
-            className="text-sm px-3 py-1.5 rounded-md bg-red-500 text-white hover:bg-red-600 transition"
-          >
-            Sign Up
-          </Link>
-
-        </div>
+        <Link
+          href="/login"
+          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+        >
+          Sign Up
+        </Link>
 
       </div>
 
-    </header>
+    </div>
 
   )
 }
