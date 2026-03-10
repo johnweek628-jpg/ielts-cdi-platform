@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { supabase } from "../lib/supabase"
@@ -8,6 +8,7 @@ import { supabase } from "../lib/supabase"
 export default function Navbar() {
 
   const pathname = usePathname()
+  const router = useRouter()
   const [user,setUser] = useState<any>(null)
 
   useEffect(()=>{
@@ -43,14 +44,14 @@ export default function Navbar() {
 
         {user ? (
 
-          <button className="px-4 py-2 text-sm bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed">
-            Signed Up
-          </button>
+          <div className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm">
+            ✓ Signed Up
+          </div>
 
         ) : (
 
           <button
-            onClick={()=> window.dispatchEvent(new CustomEvent("openSignupModal"))}
+            onClick={()=>router.push("/login")}
             className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
           >
             Sign Up
