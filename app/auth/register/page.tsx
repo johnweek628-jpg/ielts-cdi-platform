@@ -13,7 +13,7 @@ const router = useRouter()
 
 const signup = async () => {
 
-const { error } = await supabase.auth.signUp({
+const { data, error } = await supabase.auth.signUp({
 email,
 password
 })
@@ -21,8 +21,16 @@ password
 if(error){
 alert(error.message)
 }else{
-alert("Account created. Now login.")
-router.push("/auth/login")
+
+// userni avtomatik login qilamiz
+
+await supabase.auth.signInWithPassword({
+email,
+password
+})
+
+router.push("/dashboard")
+
 }
 
 }
