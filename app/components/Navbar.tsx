@@ -2,10 +2,28 @@
 
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import { supabase } from "../lib/supabase"
 
 export default function Navbar() {
 
   const pathname = usePathname()
+
+  const [user,setUser] = useState<any>(null)
+
+  useEffect(()=>{
+
+    const getUser = async () => {
+
+      const { data } = await supabase.auth.getUser()
+
+      setUser(data.user)
+
+    }
+
+    getUser()
+
+  },[])
 
   // Test sahifalarda navbar ko‘rinmaydi
   if (pathname.startsWith("/practice/reading/test")) {
@@ -26,19 +44,30 @@ export default function Navbar() {
 
       <div className="flex gap-3">
 
-        <Link
-          href="/login"
-          className="px-4 py-2 text-sm border rounded-lg"
-        >
-          Login
-        </Link>
+        {/* USER SIGNED UP */}
+        {user ? (
 
-        <Link
-          href="/login"
-          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
-        >
-          Sign Up
-        </Link>
+          <button
+            className="px-4 py-2 text-sm bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"
+          >
+            Signed Up
+          </button>
+
+        ) : (
+
+          <button
+            onClick={()=>{
+
+              const event = new CustomEvent("openSignupModal")
+              window.dispatchEvent(event)
+
+            }}
+            className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+          >
+            Sign Up
+          </button>
+
+        )}
 
       </div>
 
