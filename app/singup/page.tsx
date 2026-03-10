@@ -4,7 +4,7 @@ import { useState } from "react"
 import { supabase } from "../lib/supabase"
 import { useRouter } from "next/navigation"
 
-export default function Login() {
+export default function Signup(){
 
   const router = useRouter()
 
@@ -12,11 +12,11 @@ export default function Login() {
   const [password,setPassword] = useState("")
   const [loading,setLoading] = useState(false)
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
 
     setLoading(true)
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signUp({
       email,
       password
     })
@@ -26,19 +26,20 @@ export default function Login() {
     if(error){
       alert(error.message)
     }else{
+      alert("Account created successfully")
       router.push("/dashboard")
     }
 
   }
 
-  return (
+  return(
 
     <div className="flex items-center justify-center h-screen bg-black text-white">
 
       <div className="bg-gray-900 p-10 rounded-2xl w-96 text-center">
 
         <h1 className="text-2xl font-semibold mb-6">
-          Login
+          Create account
         </h1>
 
         <input
@@ -58,11 +59,11 @@ export default function Login() {
         />
 
         <button
-          onClick={handleLogin}
+          onClick={handleSignup}
           disabled={loading}
-          className="w-full bg-red-600 py-3 rounded-lg"
+          className="w-full bg-blue-600 py-3 rounded-lg"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Creating..." : "Sign up"}
         </button>
 
       </div>

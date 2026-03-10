@@ -1,12 +1,16 @@
 'use client'
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "../lib/supabase"
 
 export default function Dashboard() {
 
+  const router = useRouter()
+
   const [email,setEmail] = useState("")
   const [user,setUser] = useState<any>(null)
+  const [loading,setLoading] = useState(true)
   const [showSignupWarning,setShowSignupWarning] = useState(false)
 
   useEffect(()=>{
@@ -15,16 +19,21 @@ export default function Dashboard() {
 
       const { data } = await supabase.auth.getUser()
 
-      if(data.user){
+      if(!data.user){
+        router.replace("/login")
+      }else{
         setUser(data.user)
         setEmail(data.user.email || "")
       }
+
+      setLoading(false)
 
     }
 
     getUser()
 
-  },[])
+  },[router])
+
 
   const handleClick = () => {
 
@@ -34,9 +43,28 @@ export default function Dashboard() {
 
   }
 
+
+  const logout = async () => {
+
+    await supabase.auth.signOut()
+    router.push("/login")
+
+  }
+
+
+  if(loading){
+    return (
+      <div className="flex items-center justify-center h-screen bg-black text-white">
+        Loading...
+      </div>
+    )
+  }
+
+
   return (
 
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white relative">
+
 
       {/* SIGN UP WARNING MODAL */}
 
@@ -51,7 +79,7 @@ export default function Dashboard() {
             </h2>
 
             <p className="text-gray-400 text-sm">
-              Please click the Sign Up button above to create your free account.
+              Please create your free account.
             </p>
 
           </div>
@@ -59,6 +87,7 @@ export default function Dashboard() {
         </div>
 
       )}
+
 
       {/* HEADER */}
 
@@ -68,13 +97,20 @@ export default function Dashboard() {
           IELTS Mock Test Platform
         </h1>
 
-        {user && (
+        <div className="flex items-center gap-6">
 
           <span className="text-gray-400 text-sm">
             {email}
           </span>
 
-        )}
+          <button
+            onClick={logout}
+            className="bg-red-600 px-4 py-2 rounded-lg"
+          >
+            Logout
+          </button>
+
+        </div>
 
       </div>
 
@@ -102,25 +138,12 @@ export default function Dashboard() {
               Practice IELTS Academic Reading tests.
             </p>
 
-            {user ? (
-
-              <a
-                href="/practice/reading"
-                className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition block text-center"
-              >
-                Start Reading
-              </a>
-
-            ) : (
-
-              <button
-                onClick={handleClick}
-                className="w-full bg-blue-600 py-3 rounded-lg font-medium"
-              >
-                Start Reading
-              </button>
-
-            )}
+            <a
+              href="/practice/reading"
+              className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-medium transition block text-center"
+            >
+              Start Reading
+            </a>
 
           </div>
 
@@ -137,22 +160,9 @@ export default function Dashboard() {
               Practice Task 1 and Task 2 essays with AI evaluation.
             </p>
 
-            {user ? (
-
-              <button className="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-medium transition">
-                Start Writing
-              </button>
-
-            ) : (
-
-              <button
-                onClick={handleClick}
-                className="w-full bg-purple-600 py-3 rounded-lg font-medium"
-              >
-                Start Writing
-              </button>
-
-            )}
+            <button className="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg font-medium transition">
+              Start Writing
+            </button>
 
           </div>
 
@@ -169,22 +179,9 @@ export default function Dashboard() {
               Answer IELTS speaking questions and record responses.
             </p>
 
-            {user ? (
-
-              <button className="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium transition">
-                Start Speaking
-              </button>
-
-            ) : (
-
-              <button
-                onClick={handleClick}
-                className="w-full bg-green-600 py-3 rounded-lg font-medium"
-              >
-                Start Speaking
-              </button>
-
-            )}
+            <button className="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium transition">
+              Start Speaking
+            </button>
 
           </div>
 
