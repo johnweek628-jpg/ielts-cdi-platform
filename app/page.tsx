@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from "./lib/supabase"
+import { useRouter } from "next/navigation"
 
 export default function HomePage() {
 
+  const router = useRouter()
   const [loggedIn,setLoggedIn] = useState(false)
 
   useEffect(()=>{
@@ -15,6 +17,8 @@ export default function HomePage() {
 
       if(data.user){
         setLoggedIn(true)
+      } else {
+        setLoggedIn(false)
       }
 
     }
@@ -25,6 +29,17 @@ export default function HomePage() {
 
   const featureBtn =
     "bg-white text-blue-600 hover:text-blue-700 hover:-translate-y-[2px] hover:shadow-xl transition-all duration-200 p-4 rounded-xl shadow text-sm font-semibold flex items-center justify-center gap-2"
+
+  const handleClick = () => {
+
+    if(!loggedIn){
+      alert("Please sign up first.")
+      return
+    }
+
+    router.push("/dashboard")
+
+  }
 
   return (
 
@@ -79,15 +94,38 @@ export default function HomePage() {
 
           <div className="grid grid-cols-3 gap-6 max-w-3xl w-full">
 
-            <button className={featureBtn}>📖 Learn Vocabulary</button>
-            <button className={featureBtn}>🎧 Listening Practice</button>
-            <button className={featureBtn}>📚 Reading Practice</button>
-            <button className={featureBtn}>✍️ Writing Practice</button>
-            <button className={featureBtn}>⭐ Band 9.0 Samples</button>
-            <button className={featureBtn}>📝 Take a Full Mock</button>
-            <button className={featureBtn}>📦 My Special Prep Materials</button>
+            <button onClick={handleClick} className={featureBtn}>
+              📖 Learn Vocabulary
+            </button>
 
-            <button className={`${featureBtn} col-span-3`}>
+            <button onClick={handleClick} className={featureBtn}>
+              🎧 Listening Practice
+            </button>
+
+            <button onClick={handleClick} className={featureBtn}>
+              📚 Reading Practice
+            </button>
+
+            <button onClick={handleClick} className={featureBtn}>
+              ✍️ Writing Practice
+            </button>
+
+            <button onClick={handleClick} className={featureBtn}>
+              ⭐ Band 9.0 Samples
+            </button>
+
+            <button onClick={handleClick} className={featureBtn}>
+              📝 Take a Full Mock
+            </button>
+
+            <button onClick={handleClick} className={featureBtn}>
+              📦 My Special Prep Materials
+            </button>
+
+            <button
+              onClick={handleClick}
+              className={`${featureBtn} col-span-3`}
+            >
               🎤 Speaking Practice
             </button>
 
