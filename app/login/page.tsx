@@ -11,6 +11,7 @@ export default function Login() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [loading,setLoading] = useState(false)
+  const [resetLoading,setResetLoading] = useState(false)
 
   const handleLogin = async () => {
 
@@ -38,9 +39,13 @@ export default function Login() {
       return
     }
 
+    setResetLoading(true)
+
     const { error } = await supabase.auth.resetPasswordForEmail(email,{
       redirectTo: window.location.origin + "/update-password"
     })
+
+    setResetLoading(false)
 
     if(error){
       alert(error.message)
@@ -90,7 +95,7 @@ export default function Login() {
             onClick={resetPassword}
             className="text-blue-400 cursor-pointer hover:underline"
           >
-            Send a reset link
+            {resetLoading ? "Sending..." : "Send a reset link"}
           </span>
         </p>
 
