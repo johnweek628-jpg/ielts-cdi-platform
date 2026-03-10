@@ -44,7 +44,7 @@ return (
 IELTS CDI Learning Platform
 </h1>
 
-<div className="flex items-center gap-3">
+<div>
 
 {loading ? null : user ? (
 
@@ -54,21 +54,12 @@ IELTS CDI Learning Platform
 
 ) : (
 
-<>
 <button
-onClick={()=>router.push("/login")}
-className="px-4 py-2 text-sm border border-gray-400 text-gray-700 rounded-lg"
+onClick={()=>router.push("/auth")}
+className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
 >
 Login
 </button>
-
-<button
-onClick={()=>router.push("/signup")}
-className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
->
-Sign Up
-</button>
-</>
 
 )}
 
