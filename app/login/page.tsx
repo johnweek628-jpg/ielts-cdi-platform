@@ -31,6 +31,25 @@ export default function Login() {
 
   }
 
+  const resetPassword = async () => {
+
+    if(!email){
+      alert("Please enter your email first.")
+      return
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email,{
+      redirectTo: window.location.origin + "/update-password"
+    })
+
+    if(error){
+      alert(error.message)
+    }else{
+      alert("Password reset email sent. Check your inbox.")
+    }
+
+  }
+
   return (
 
     <div className="flex items-center justify-center h-screen bg-black text-white">
@@ -54,16 +73,26 @@ export default function Login() {
           placeholder="Password"
           value={password}
           onChange={(e)=>setPassword(e.target.value)}
-          className="w-full p-3 rounded bg-black border border-gray-600 mb-6"
+          className="w-full p-3 rounded bg-black border border-gray-600 mb-4"
         />
 
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full bg-red-600 py-3 rounded-lg"
+          className="w-full bg-red-600 py-3 rounded-lg mb-4"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
+
+        <p className="text-sm text-gray-400">
+          Forgot your password?{" "}
+          <span
+            onClick={resetPassword}
+            className="text-blue-400 cursor-pointer hover:underline"
+          >
+            Send a reset link
+          </span>
+        </p>
 
       </div>
 
