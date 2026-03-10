@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { supabase } from "../lib/supabase"
 import { useRouter } from "next/navigation"
 
@@ -10,9 +10,19 @@ export default function Login() {
 
   const [step,setStep] = useState(1)
   const [email,setEmail] = useState("")
-  const [code,setCode] = useState(["","","","",""])
+  const [code,setCode] = useState(["","","","","","","",""])
   const [loading,setLoading] = useState(false)
   const [error,setError] = useState(false)
+
+  const inputs = useRef<(HTMLInputElement | null)[]>([])
+
+  useEffect(()=>{
+
+    if(step === 2){
+      inputs.current[0]?.focus()
+    }
+
+  },[step])
 
   const sendEmail = async () => {
 
@@ -52,7 +62,6 @@ export default function Login() {
     }else{
 
       setError(false)
-
       router.push("/dashboard")
 
     }
@@ -61,10 +70,24 @@ export default function Login() {
 
   const handleChange = (value:string,index:number) => {
 
+    if(!/^[0-9]?$/.test(value)) return
+
     const newCode = [...code]
     newCode[index] = value
     setCode(newCode)
     setError(false)
+
+    if(value && index < 7){
+      inputs.current[index+1]?.focus()
+    }
+
+  }
+
+  const handleKeyDown = (e:any,index:number) => {
+
+    if(e.key === "Backspace" && !code[index] && index > 0){
+      inputs.current[index-1]?.focus()
+    }
 
   }
 
@@ -119,10 +142,12 @@ export default function Login() {
 
                 <input
                   key={index}
+                  ref={(el) => { inputs.current[index] = el }}
                   maxLength={1}
                   value={digit}
                   onChange={(e)=>handleChange(e.target.value,index)}
-                  className={`w-12 h-12 text-center text-xl rounded bg-black border ${
+                  onKeyDown={(e)=>handleKeyDown(e,index)}
+                  className={`w-10 h-12 text-center text-xl rounded bg-black border ${
                     error ? "border-red-500" : "border-gray-600"
                   }`}
                 />
