@@ -55,7 +55,7 @@ IELTS CDI Learning Platform
 ) : (
 
 <button
-onClick={()=>router.push("/auth")}
+onClick={()=>router.push("/auth/login")}
 className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
 >
 Login
