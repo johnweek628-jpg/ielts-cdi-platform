@@ -8,7 +8,6 @@ import { supabase } from "../lib/supabase"
 export default function Navbar() {
 
   const pathname = usePathname()
-
   const [user,setUser] = useState<any>(null)
 
   useEffect(()=>{
@@ -16,7 +15,6 @@ export default function Navbar() {
     const getUser = async () => {
 
       const { data } = await supabase.auth.getUser()
-
       setUser(data.user)
 
     }
@@ -25,7 +23,6 @@ export default function Navbar() {
 
   },[])
 
-  // Test sahifalarda navbar ko‘rinmaydi
   if (pathname.startsWith("/practice/reading/test")) {
     return null
   }
@@ -42,26 +39,18 @@ export default function Navbar() {
         IELTS CDI Learning Platform
       </h1>
 
-      <div className="flex gap-3">
+      <div>
 
-        {/* USER SIGNED UP */}
         {user ? (
 
-          <button
-            className="px-4 py-2 text-sm bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed"
-          >
+          <button className="px-4 py-2 text-sm bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed">
             Signed Up
           </button>
 
         ) : (
 
           <button
-            onClick={()=>{
-
-              const event = new CustomEvent("openSignupModal")
-              window.dispatchEvent(event)
-
-            }}
+            onClick={()=> window.dispatchEvent(new CustomEvent("openSignupModal"))}
             className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
           >
             Sign Up

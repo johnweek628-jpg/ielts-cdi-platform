@@ -53,11 +53,7 @@ export default function Login() {
 
       setError(false)
 
-      setTimeout(()=>{
-
-        router.push("/dashboard")
-
-      },7000)
+      router.push("/dashboard")
 
     }
 
@@ -66,11 +62,8 @@ export default function Login() {
   const handleChange = (value:string,index:number) => {
 
     const newCode = [...code]
-
     newCode[index] = value
-
     setCode(newCode)
-
     setError(false)
 
   }
@@ -120,10 +113,6 @@ export default function Login() {
               We have sent a code to your e-mail
             </h1>
 
-            <p className="text-gray-400 mb-6">
-              Please insert it here
-            </p>
-
             <div className="flex justify-between mb-6">
 
               {code.map((digit,index)=>(
@@ -158,14 +147,6 @@ export default function Login() {
             </button>
 
           </>
-
-        )}
-
-        {loading && step === 2 && !error && (
-
-          <div className="mt-6 text-gray-400">
-            We are checking the code...
-          </div>
 
         )}
 
