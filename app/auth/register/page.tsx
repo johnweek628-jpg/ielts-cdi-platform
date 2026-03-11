@@ -9,28 +9,46 @@ export default function RegisterPage(){
 
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
+const [loading,setLoading] = useState(false)
+
 const router = useRouter()
 
 const signup = async () => {
 
-const { data, error } = await supabase.auth.signUp({
+setLoading(true)
+
+const { error } = await supabase.auth.signUp({
 email,
 password
 })
 
 if(error){
+setLoading(false)
 alert(error.message)
-}else{
+return
+}
 
-// userni avtomatik login qilamiz
+/* account yaratildi — endi login qilamiz */
 
-await supabase.auth.signInWithPassword({
+const { error: loginError } = await supabase.auth.signInWithPassword({
 email,
 password
 })
 
-router.push("/dashboard")
+if(loginError){
+setLoading(false)
+alert(loginError.message)
+return
+}
 
+/* session tekshiramiz */
+
+const { data } = await supabase.auth.getSession()
+
+setLoading(false)
+
+if(data.session){
+router.replace("/dashboard")
 }
 
 }
@@ -63,9 +81,12 @@ className="w-full border p-3 rounded mb-4"
 
 <button
 onClick={signup}
+disabled={loading}
 className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-6"
 >
-Create account
+
+{loading ? "Creating..." : "Create account"}
+
 </button>
 
 <div className="text-center text-sm text-gray-600">
