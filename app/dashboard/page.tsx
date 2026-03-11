@@ -19,7 +19,7 @@ const checkSession = async () => {
 const { data } = await supabase.auth.getSession()
 
 if(!data.session){
-router.replace("/login")
+router.replace("/auth/login")
 }else{
 setUser(data.session.user)
 setEmail(data.session.user.email || "")

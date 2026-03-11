@@ -9,20 +9,29 @@ export default function LoginPage(){
 
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
+const [error,setError] = useState("")
+const [loading,setLoading] = useState(false)
+
 const router = useRouter()
 
 const login = async () => {
+
+setLoading(true)
+setError("")
 
 const { error } = await supabase.auth.signInWithPassword({
 email,
 password
 })
 
+setLoading(false)
+
 if(error){
-alert(error.message)
-}else{
-router.push("/dashboard")
+setError("Please insert your own password of your e-mail account.")
+return
 }
+
+router.replace("/dashboard")
 
 }
 
@@ -49,25 +58,43 @@ type="password"
 placeholder="Password"
 value={password}
 onChange={(e)=>setPassword(e.target.value)}
-className="w-full border p-3 rounded mb-4"
+className="w-full border p-3 rounded mb-2"
 />
+
+{error && (
+<p className="text-red-500 text-sm mb-4">
+{error}
+</p>
+)}
 
 <button
 onClick={login}
-className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-6"
+disabled={loading}
+className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-4"
 >
-Sign in
+{loading ? "Signing in..." : "Sign in"}
 </button>
 
 <div className="text-center text-sm text-gray-600">
 
-New to platform?
+New here?
 
 <Link
 href="/auth/register"
-className="text-indigo-600 ml-1"
+className="text-blue-600 ml-1"
 >
-Create an account
+Create account
+</Link>
+
+</div>
+
+<div className="text-center mt-3">
+
+<Link
+href="/auth/reset"
+className="text-blue-600 text-sm"
+>
+Forgot your password?
 </Link>
 
 </div>
