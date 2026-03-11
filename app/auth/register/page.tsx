@@ -73,7 +73,7 @@ Create account
 Already have an account?
 
 <Link
-href="/auth/login"
+href="/login"
 className="text-indigo-600 ml-1"
 >
 Sign in

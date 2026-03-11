@@ -21,14 +21,27 @@ email,
 password
 })
 
+if(error){
+setLoading(false)
+alert(error.message)
+return
+}
+
+/* account yaratildi — endi avtomatik login qilamiz */
+
+const { error: loginError } = await supabase.auth.signInWithPassword({
+email,
+password
+})
+
 setLoading(false)
 
-if(error){
-alert(error.message)
-}else{
-alert("Account created successfully")
-router.push("/dashboard")
+if(loginError){
+alert(loginError.message)
+return
 }
+
+router.replace("/dashboard")
 
 }
 
