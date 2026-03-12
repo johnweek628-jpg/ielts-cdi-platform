@@ -9,27 +9,40 @@ export default function Dashboard() {
 const router = useRouter()
 
 const [email,setEmail] = useState("")
-const [user,setUser] = useState<any>(null)
 const [loading,setLoading] = useState(true)
 
 useEffect(()=>{
 
-const checkSession = async () => {
+const checkAccess = async () => {
 
 const { data } = await supabase.auth.getSession()
 
 if(!data.session){
 router.replace("/auth/login")
-}else{
-setUser(data.session.user)
-setEmail(data.session.user.email || "")
+return
+}
+
+const user = data.session.user
+setEmail(user.email || "")
+
+/* SUBSCRIPTION CHECK */
+
+const { data:subscription } = await supabase
+.from("subscriptions")
+.select("status")
+.eq("user_id", user.id)
+.single()
+
+if(!subscription || subscription.status !== "active"){
+router.replace("/pricing")
+return
 }
 
 setLoading(false)
 
 }
 
-checkSession()
+checkAccess()
 
 },[router])
 
@@ -37,7 +50,7 @@ checkSession()
 const logout = async () => {
 
 await supabase.auth.signOut()
-router.push("/login")
+router.push("/auth/login")
 
 }
 
@@ -153,4 +166,4 @@ Start Speaking
 
 )
 
-} 
+}
