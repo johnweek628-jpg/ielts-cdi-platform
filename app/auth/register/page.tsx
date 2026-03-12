@@ -20,7 +20,7 @@ const signup = async () => {
 setLoading(true)
 setError("")
 
-const { error } = await supabase.auth.signUp({
+const { data, error } = await supabase.auth.signUp({
 email,
 password,
 options:{
@@ -37,21 +37,16 @@ setError(error.message)
 return
 }
 
-/* ACCOUNT YARALDI → LOGIN QILAMIZ */
+/* agar session darhol yaratilgan bo'lsa */
 
-const { error:loginError } = await supabase.auth.signInWithPassword({
-email,
-password
-})
-
-if(loginError){
-setError(loginError.message)
+if(data.session){
+router.replace("/dashboard")
 return
 }
 
-/* DASHBOARD */
+/* agar session hali yaratilmagan bo'lsa */
 
-router.replace("/dashboard")
+router.replace("/auth/login")
 
 }
 

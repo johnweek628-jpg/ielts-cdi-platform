@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import { supabase } from "../../../lib/supabase"
+import { supabase } from "../../lib/supabase"
 
 export default function ResetPage(){
 
@@ -11,7 +11,7 @@ const [sent,setSent] = useState(false)
 const sendReset = async () => {
 
 await supabase.auth.resetPasswordForEmail(email,{
-redirectTo:"http://localhost:3000/update-password"
+redirectTo:"https://ielts-cdi-platform-production.up.railway.app/update-password"
 })
 
 setSent(true)
