@@ -27,7 +27,7 @@ password
 setLoading(false)
 
 if(error){
-setError("Please insert your own password of your e-mail account.")
+setError("Invalid email or password.")
 return
 }
 
@@ -62,7 +62,7 @@ className="w-full border p-3 rounded mb-2"
 />
 
 {error && (
-<p className="text-red-500 text-sm mb-4">
+<p className="text-red-500 text-sm mb-3">
 {error}
 </p>
 )}
@@ -70,31 +70,20 @@ className="w-full border p-3 rounded mb-2"
 <button
 onClick={login}
 disabled={loading}
-className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-4"
+className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-6"
 >
 {loading ? "Signing in..." : "Sign in"}
 </button>
 
 <div className="text-center text-sm text-gray-600">
 
-New here?
+New to platform?
 
 <Link
 href="/auth/register"
 className="text-blue-600 ml-1"
 >
 Create account
-</Link>
-
-</div>
-
-<div className="text-center mt-3">
-
-<Link
-href="/auth/reset"
-className="text-blue-600 text-sm"
->
-Forgot your password?
 </Link>
 
 </div>

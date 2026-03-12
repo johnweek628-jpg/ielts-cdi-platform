@@ -10,32 +10,48 @@ export default function RegisterPage(){
 const router = useRouter()
 
 const [email,setEmail] = useState("")
+const [name,setName] = useState("")
 const [password,setPassword] = useState("")
+const [error,setError] = useState("")
 const [loading,setLoading] = useState(false)
 
 const signup = async () => {
 
 setLoading(true)
+setError("")
 
-const { data, error } = await supabase.auth.signUp({
+const { error } = await supabase.auth.signUp({
 email,
-password
+password,
+options:{
+data:{
+full_name:name
+}
+}
 })
 
 setLoading(false)
 
 if(error){
-alert(error.message)
+setError(error.message)
 return
 }
 
-if(data.session){
+/* ACCOUNT YARALDI → LOGIN QILAMIZ */
+
+const { error:loginError } = await supabase.auth.signInWithPassword({
+email,
+password
+})
+
+if(loginError){
+setError(loginError.message)
+return
+}
+
+/* DASHBOARD */
+
 router.replace("/dashboard")
-return
-}
-
-alert("Account created. Please login.")
-router.replace("/auth/login")
 
 }
 
@@ -58,12 +74,26 @@ className="w-full border p-3 rounded mb-4"
 />
 
 <input
+type="text"
+placeholder="Full name"
+value={name}
+onChange={(e)=>setName(e.target.value)}
+className="w-full border p-3 rounded mb-4"
+/>
+
+<input
 type="password"
 placeholder="Password"
 value={password}
 onChange={(e)=>setPassword(e.target.value)}
-className="w-full border p-3 rounded mb-4"
+className="w-full border p-3 rounded mb-2"
 />
+
+{error && (
+<p className="text-red-500 text-sm mb-3">
+{error}
+</p>
+)}
 
 <button
 onClick={signup}
