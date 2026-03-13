@@ -13,6 +13,16 @@ export default function ReadingPractice() {
     { id: 4, title: "READING TEST 4" }
   ]
 
+  const handleClick = (id:number) => {
+
+    if(id <= 2){
+      router.push(`/practice/reading/test${id}`)
+    }else{
+      router.push("/pricing")
+    }
+
+  }
+
   return (
 
     <div className="min-h-screen bg-gray-100 p-10">
@@ -27,22 +37,34 @@ export default function ReadingPractice() {
 
           <div
             key={test.id}
-            className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition"
+            className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
           >
+
+            {/* LOCK ICON */}
+
+            {test.id > 2 && (
+              <span className="absolute top-3 right-3 text-xl">
+                🔒
+              </span>
+            )}
 
             <h2 className="text-xl font-semibold text-blue-900 mb-6">
               {test.title}
             </h2>
 
             <div className="flex justify-center">
+
               <button
-                onClick={() =>
-                  router.push(`/practice/reading/test${test.id}`)
-                }
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
+                onClick={() => handleClick(test.id)}
+                className={`px-6 py-2 rounded-lg transition text-white
+                ${test.id <= 2
+                  ? "bg-blue-600 hover:bg-blue-700"
+                  : "bg-gray-400 hover:bg-gray-500"
+                }`}
               >
-                Start Test
+                {test.id <= 2 ? "Start Test" : "Premium"}
               </button>
+
             </div>
 
           </div>

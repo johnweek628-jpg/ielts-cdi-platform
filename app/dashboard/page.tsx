@@ -25,24 +25,6 @@ return
 const user = data.session.user
 setEmail(user.email || "")
 
-/* SUBSCRIPTION CHECK */
-
-const { data:subscription, error } = await supabase
-.from("subscriptions")
-.select("status")
-.eq("user_id", user.id)
-.single()
-
-if(error || !subscription){
-router.replace("/pricing")
-return
-}
-
-if(subscription.status !== "active"){
-router.replace("/pricing")
-return
-}
-
 setLoading(false)
 
 }
