@@ -18,7 +18,6 @@ useEffect(()=>{
 const getUser = async () => {
 
 const { data } = await supabase.auth.getUser()
-
 setUser(data.user)
 setLoading(false)
 
@@ -26,7 +25,31 @@ setLoading(false)
 
 getUser()
 
+/* REAL TIME AUTH LISTENER */
+
+const { data: listener } = supabase.auth.onAuthStateChange(
+(event,session)=>{
+
+setUser(session?.user ?? null)
+
+}
+)
+
+return () => {
+listener.subscription.unsubscribe()
+}
+
 },[])
+
+/* LOGOUT */
+
+const logout = async () => {
+
+await supabase.auth.signOut()
+setUser(null)
+router.push("/")
+
+}
 
 if (pathname.startsWith("/practice/reading/test")) {
 return null
@@ -48,17 +71,28 @@ IELTS CDI Learning Platform
 
 {loading ? null : user ? (
 
+<div className="flex items-center gap-3">
+
 <div className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm">
 ✓ Signed In
+</div>
+
+<button
+onClick={logout}
+className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+>
+Logout
+</button>
+
 </div>
 
 ) : (
 
 <button
 onClick={()=>router.push("/auth/login")}
-className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg"
 >
-Login
+Sign In
 </button>
 
 )}

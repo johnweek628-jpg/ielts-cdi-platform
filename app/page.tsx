@@ -30,16 +30,19 @@ export default function HomePage() {
   const featureBtn =
     "bg-white text-blue-600 hover:text-blue-700 hover:-translate-y-[2px] hover:shadow-xl transition-all duration-200 p-4 rounded-xl shadow text-sm font-semibold flex items-center justify-center gap-2"
 
-  const handleClick = () => {
+  const handleClick = async () => {
 
-    if(!loggedIn){
-      alert("Please sign up first.")
-      return
-    }
+const { data } = await supabase.auth.getUser()
 
-    router.push("/dashboard")
+if(!data.user){
+alert("Please sign up first.")
+router.push("/auth/login")
+return
+}
 
-  }
+router.push("/dashboard")
+
+}
 
   return (
 
