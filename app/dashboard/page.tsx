@@ -27,13 +27,18 @@ setEmail(user.email || "")
 
 /* SUBSCRIPTION CHECK */
 
-const { data:subscription } = await supabase
+const { data:subscription, error } = await supabase
 .from("subscriptions")
 .select("status")
 .eq("user_id", user.id)
 .single()
 
-if(!subscription || subscription.status !== "active"){
+if(error || !subscription){
+router.replace("/pricing")
+return
+}
+
+if(subscription.status !== "active"){
 router.replace("/pricing")
 return
 }
@@ -47,10 +52,13 @@ checkAccess()
 },[router])
 
 
+/* LOGOUT */
+
 const logout = async () => {
 
 await supabase.auth.signOut()
-router.push("/auth/login")
+
+router.replace("/auth/login")
 
 }
 
@@ -66,7 +74,7 @@ Loading...
 
 return (
 
-<div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white relative">
+<div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
 
 {/* HEADER */}
 
@@ -84,7 +92,7 @@ IELTS Mock Test Platform
 
 <button
 onClick={logout}
-className="bg-red-600 px-4 py-2 rounded-lg"
+className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition"
 >
 Logout
 </button>
