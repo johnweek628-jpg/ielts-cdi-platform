@@ -170,7 +170,7 @@ Payment of Uzbek people
 <a
 href={ultimateEmail}
 target="_blank"
-className="block bg-white text-black font-bold px-6 py-3 rounded-lg mb-4 transition transform hover:scale-105 hover:bg-gray-200"
+className="block bg-white !text-black font-bold px-6 py-3 rounded-lg mb-4 transition transform hover:scale-105 hover:bg-gray-200"
 >
 Payment of Non-Uzbek people
 </a>
