@@ -6,6 +6,36 @@ export default function Pricing() {
 
 const router = useRouter()
 
+
+// STRIPE PAYMENT
+
+const buyPlan = async (plan:string) => {
+
+const res = await fetch("/api/stripe/checkout",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({plan})
+})
+
+const data = await res.json()
+
+window.location.href = data.url
+
+}
+
+
+// CLICK PAYMENT
+
+const payClick = () => {
+
+window.location.href =
+"https://my.click.uz/services/pay?service_id=XXXX"
+
+}
+
+
 return (
 
 <div className="min-h-screen bg-gray-100 p-10">
@@ -16,7 +46,8 @@ Choose your plan
 
 <div className="grid grid-cols-4 gap-8 max-w-7xl mx-auto">
 
-{/* PLAN 1 */}
+
+{/* FREE */}
 
 <div className="bg-white p-8 rounded-xl shadow text-center">
 
@@ -27,19 +58,6 @@ Starter
 <p className="text-4xl font-extrabold mb-6 text-black">
 $0
 </p>
-
-<p className="font-bold text-black mb-4">
-What you can have:
-</p>
-
-<ul className="text-black font-semibold space-y-2 mb-6">
-
-<li>2 Listening Tests</li>
-<li>2 Reading Tests</li>
-<li>1 Speaking Mock Test</li>
-<li>1 Writing Correction</li>
-
-</ul>
 
 <button
 onClick={()=>router.push("/dashboard")}
@@ -52,7 +70,7 @@ Start Free
 
 
 
-{/* PLAN 2 */}
+{/* BASIC */}
 
 <div className="bg-white p-8 rounded-xl shadow text-center">
 
@@ -64,32 +82,27 @@ Basic
 $9
 </p>
 
-<p className="font-bold text-black mb-4">
-What you can have:
-</p>
-
-<ul className="text-black font-semibold space-y-2 mb-6">
-
-<li>10 Listening Tests</li>
-<li>10 Reading Tests</li>
-<li>3 Speaking Mock Tests</li>
-<li>3 Writing Corrections</li>
-
-</ul>
-
 <button
+onClick={()=>buyPlan("pro")}
 className="bg-black text-white px-6 py-2 rounded-lg font-semibold"
 >
-Buy Now
+Pay with Card
+</button>
+
+<button
+onClick={payClick}
+className="mt-3 bg-blue-600 text-white px-6 py-2 rounded-lg"
+>
+Pay with Click
 </button>
 
 </div>
 
 
 
-{/* PLAN 3 */}
+{/* PREMIUM */}
 
-<div className="bg-white p-8 rounded-xl shadow text-center border-2 border-black">
+<div className="bg-white p-8 rounded-xl shadow text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">
 Premium
@@ -99,30 +112,18 @@ Premium
 $19
 </p>
 
-<p className="font-bold text-black mb-4">
-What you can have:
-</p>
-
-<ul className="text-black font-semibold space-y-2 mb-6">
-
-<li>25 Listening Tests</li>
-<li>25 Reading Tests</li>
-<li>6 Speaking Mock Tests</li>
-<li>6 Writing Corrections</li>
-
-</ul>
-
 <button
+onClick={()=>buyPlan("premium")}
 className="bg-black text-white px-6 py-2 rounded-lg font-semibold"
 >
-Get Premium
+Pay with Card
 </button>
 
 </div>
 
 
 
-{/* PLAN 4 */}
+{/* ULTIMATE */}
 
 <div className="bg-black p-8 rounded-xl shadow text-center text-white">
 
@@ -134,20 +135,8 @@ Ultimate
 $29
 </p>
 
-<p className="font-bold mb-4">
-What you can have:
-</p>
-
-<ul className="font-semibold space-y-2 mb-6">
-
-<li>Unlimited Listening Tests</li>
-<li>Unlimited Reading Tests</li>
-<li>Unlimited Speaking Mock Tests</li>
-<li>Unlimited Writing Corrections</li>
-
-</ul>
-
 <button
+onClick={()=>buyPlan("ultimate")}
 className="bg-white text-black px-6 py-2 rounded-lg font-bold"
 >
 Get Unlimited

@@ -9,6 +9,7 @@ export default function Dashboard() {
 const router = useRouter()
 
 const [email,setEmail] = useState("")
+const [plan,setPlan] = useState("free")
 const [loading,setLoading] = useState(true)
 
 useEffect(()=>{
@@ -25,6 +26,19 @@ return
 const user = data.session.user
 setEmail(user.email || "")
 
+
+// GET USER PLAN
+
+const { data: profile } = await supabase
+.from("profiles")
+.select("plan")
+.eq("id", user.id)
+.single()
+
+if(profile){
+setPlan(profile.plan)
+}
+
 setLoading(false)
 
 }
@@ -33,8 +47,6 @@ checkAccess()
 
 },[router])
 
-
-/* LOGOUT */
 
 const logout = async () => {
 
@@ -70,6 +82,10 @@ IELTS Mock Test Platform
 
 <span className="text-gray-400 text-sm">
 {email}
+</span>
+
+<span className="bg-green-600 px-3 py-1 rounded text-sm">
+{plan.toUpperCase()}
 </span>
 
 <button
