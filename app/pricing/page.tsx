@@ -46,16 +46,16 @@ Choose your plan
 
 <ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>2 Reading Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>1 Speaking Mock Test</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>1 Writing Correction</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>2 Reading Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>1 Speaking Mock Test</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>1 Writing Correction</li>
 
 </ul>
 
 <button
 onClick={() => router.push("/dashboard")}
-className="bg-black text-white px-6 py-3 rounded-lg font-semibold w-full"
+className="bg-black text-white px-6 py-3 rounded-lg font-semibold w-full transition transform hover:scale-105 hover:bg-gray-800"
 >
 Start Free
 </button>
@@ -74,17 +74,17 @@ Start Free
 
 <ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>10 Listening Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>3 Speaking Mock Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>10 Listening Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>3 Speaking Mock Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
 
 </ul>
 
 <a
 href={basicEmail}
 target="_blank"
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
+className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 transition transform hover:scale-105 hover:bg-gray-800"
 >
 Payment of Non-Uzbek people
 </a>
@@ -92,7 +92,7 @@ Payment of Non-Uzbek people
 <a
 href={basicTelegram}
 target="_blank"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
+className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-700"
 >
 Payment of Uzbek people
 </a>
@@ -119,17 +119,17 @@ Most Popular
 
 <ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>25 Listening Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>25 Reading Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>6 Speaking Mock Tests</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>25 Listening Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>25 Reading Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>6 Speaking Mock Tests</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
 
 </ul>
 
 <a
 href={premiumEmail}
 target="_blank"
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
+className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 transition transform hover:scale-105 hover:bg-gray-800"
 >
 Payment of Non-Uzbek people
 </a>
@@ -137,7 +137,7 @@ Payment of Non-Uzbek people
 <a
 href={premiumTelegram}
 target="_blank"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
+className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-700"
 >
 Payment of Uzbek people
 </a>
@@ -170,7 +170,7 @@ Payment of Uzbek people
 <a
 href={ultimateEmail}
 target="_blank"
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
+className="block bg-white text-black font-bold px-6 py-3 rounded-lg mb-4 transition transform hover:scale-105 hover:bg-gray-200"
 >
 Payment of Non-Uzbek people
 </a>
@@ -178,7 +178,7 @@ Payment of Non-Uzbek people
 <a
 href={ultimateTelegram}
 target="_blank"
-className="block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold"
+className="block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-600"
 >
 Payment of Uzbek people
 </a>
