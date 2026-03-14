@@ -18,21 +18,20 @@ const ultimateTelegram =
 "https://t.me/jasurbeksielts?text=Men%20Ultimate%20packageni%20sotib%20olmoqchi%20edim"
 
 
-
 return (
 
 <div className="min-h-screen bg-gray-100 p-10">
 
-<h1 className="text-4xl font-extrabold text-center mb-12 text-black">
+<h1 className="text-4xl font-extrabold text-center mb-16 text-black">
 Choose your plan
 </h1>
 
-<div className="grid grid-cols-4 gap-8 max-w-7xl mx-auto">
+<div className="grid grid-cols-4 gap-10 max-w-7xl mx-auto">
 
 
 {/* STARTER */}
 
-<div className="bg-white p-8 rounded-xl shadow text-center">
+<div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-blue-200 hover:-translate-y-1 transition text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">
 Starter
@@ -68,7 +67,7 @@ Start Free
 
 {/* BASIC */}
 
-<div className="bg-white p-8 rounded-xl shadow text-center">
+<div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-blue-200 hover:-translate-y-1 transition text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">
 Basic
@@ -92,8 +91,7 @@ What you can have:
 </ul>
 
 <a
-href={basicTelegram}
-target="_blank"
+href="#"
 className="block bg-black text-white px-6 py-2 rounded-lg font-semibold mb-3"
 >
 Payment of Non-Uzbek people
@@ -107,13 +105,23 @@ className="block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold"
 Payment of Uzbek people
 </a>
 
+<p className="text-sm mt-2 text-gray-600">
+49 880 so'm
+</p>
+
 </div>
 
 
 
 {/* PREMIUM */}
 
-<div className="bg-white p-8 rounded-xl shadow text-center border-2 border-black">
+<div className="relative bg-white p-10 rounded-2xl border-2 border-black shadow-xl hover:shadow-blue-300 hover:-translate-y-1 transition text-center scale-105">
+
+{/* MOST POPULAR */}
+
+<div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs px-4 py-1 rounded-full font-semibold">
+Most Popular
+</div>
 
 <h2 className="text-2xl font-bold mb-3 text-black">
 Premium
@@ -137,8 +145,7 @@ What you can have:
 </ul>
 
 <a
-href={premiumTelegram}
-target="_blank"
+href="#"
 className="block bg-black text-white px-6 py-2 rounded-lg font-semibold mb-3"
 >
 Payment of Non-Uzbek people
@@ -152,13 +159,17 @@ className="block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold"
 Payment of Uzbek people
 </a>
 
+<p className="text-sm mt-2 text-gray-600">
+118 800 so'm
+</p>
+
 </div>
 
 
 
 {/* ULTIMATE */}
 
-<div className="bg-black p-8 rounded-xl shadow text-center text-white">
+<div className="bg-black p-8 rounded-2xl shadow-lg hover:shadow-blue-300 hover:-translate-y-1 transition text-center text-white">
 
 <h2 className="text-2xl font-bold mb-3">
 Ultimate
@@ -182,8 +193,7 @@ What you can have:
 </ul>
 
 <a
-href={ultimateTelegram}
-target="_blank"
+href="#"
 className="block bg-white text-black px-6 py-2 rounded-lg font-bold mb-3"
 >
 Payment of Non-Uzbek people
@@ -196,6 +206,10 @@ className="block bg-blue-500 text-white px-6 py-2 rounded-lg font-bold"
 >
 Payment of Uzbek people
 </a>
+
+<p className="text-sm mt-2 text-gray-300">
+228 790 so'm
+</p>
 
 </div>
 
