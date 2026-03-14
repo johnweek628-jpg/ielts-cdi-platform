@@ -7,13 +7,13 @@ export default function Pricing() {
 const router = useRouter()
 
 const basicEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20($9).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20($9).%20Please%20send%20me%20payment%20instructions."
 
 const premiumEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20($19).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20($19).%20Please%20send%20me%20payment%20instructions."
 
 const ultimateEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20($29).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20($29).%20Please%20send%20me%20payment%20instructions."
 
 const basicTelegram =
 "https://t.me/jasurbeksielts?text=Men%20Basic%20packageni%20sotib%20olmoqchi%20edim"
@@ -44,12 +44,12 @@ Choose your plan
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-bold space-y-3 mb-8">
+<ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>2 Reading Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>1 Speaking Mock Test</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>1 Writing Correction</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>2 Reading Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>1 Speaking Mock Test</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>1 Writing Correction</li>
 
 </ul>
 
@@ -72,12 +72,12 @@ Start Free
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-bold space-y-3 mb-8">
+<ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>10 Listening Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>3 Speaking Mock Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>10 Listening Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>3 Speaking Mock Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
 
 </ul>
 
@@ -117,12 +117,12 @@ Most Popular
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-bold space-y-3 mb-8">
+<ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>25 Listening Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>25 Reading Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>6 Speaking Mock Tests</li>
-<li className="flex gap-3"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>25 Listening Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>25 Reading Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>6 Speaking Mock Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
 
 </ul>
 
@@ -158,19 +158,19 @@ Payment of Uzbek people
 
 <p className="font-bold mb-4">What you can have:</p>
 
-<ul className="text-left font-bold space-y-3 mb-8">
+<ul className="text-left space-y-3 mb-8">
 
-<li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Listening Tests</li>
-<li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Reading Tests</li>
-<li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Speaking Mock Tests</li>
-<li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Writing Corrections</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Listening Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Reading Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Speaking Mock Tests</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Writing Corrections</li>
 
 </ul>
 
 <a
 href={ultimateEmail}
 target="_blank"
-className="block bg-white text-black px-6 py-3 rounded-lg font-bold mb-4"
+className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
 >
 Payment of Non-Uzbek people
 </a>
