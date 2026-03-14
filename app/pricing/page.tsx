@@ -6,16 +6,14 @@ export default function Pricing() {
 
 const router = useRouter()
 
-const email = "jasurbeksielts@gmail.com"
-
 const basicEmail =
-`mailto:${email}?subject=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20(%249).%20Please%20send%20me%20payment%20instructions.`
+"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20($9).%20Please%20send%20me%20payment%20instructions."
 
 const premiumEmail =
-`mailto:${email}?subject=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20(%2419).%20Please%20send%20me%20payment%20instructions.`
+"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20($19).%20Please%20send%20me%20payment%20instructions."
 
 const ultimateEmail =
-`mailto:${email}?subject=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20(%2429).%20Please%20send%20me%20payment%20instructions.`
+"https://mail.google.com/mail/?view=cm&fs=1&to=jasurbeksielts@gmail.com&su=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20($29).%20Please%20send%20me%20payment%20instructions."
 
 const basicTelegram =
 "https://t.me/jasurbeksielts?text=Men%20Basic%20packageni%20sotib%20olmoqchi%20edim"
@@ -38,7 +36,7 @@ Choose your plan
 
 {/* STARTER */}
 
-<div className="bg-white p-8 rounded-2xl shadow-lg text-center transition hover:shadow-2xl hover:-translate-y-2">
+<div className="bg-white p-8 rounded-2xl shadow-lg text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Starter</h2>
 
@@ -46,7 +44,7 @@ Choose your plan
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-semibold space-y-3 mb-8">
+<ul className="text-left font-bold space-y-3 mb-8">
 
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>2 Reading Tests</li>
@@ -57,7 +55,7 @@ Choose your plan
 
 <button
 onClick={() => router.push("/dashboard")}
-className="bg-black text-white px-6 py-3 rounded-lg font-semibold w-full hover:bg-gray-800 transition"
+className="bg-black text-white px-6 py-3 rounded-lg font-semibold w-full"
 >
 Start Free
 </button>
@@ -66,7 +64,7 @@ Start Free
 
 {/* BASIC */}
 
-<div className="bg-white p-8 rounded-2xl shadow-lg text-center transition hover:shadow-2xl hover:-translate-y-2">
+<div className="bg-white p-8 rounded-2xl shadow-lg text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Basic</h2>
 
@@ -74,7 +72,7 @@ Start Free
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-semibold space-y-3 mb-8">
+<ul className="text-left font-bold space-y-3 mb-8">
 
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>10 Listening Tests</li>
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
@@ -85,7 +83,8 @@ Start Free
 
 <a
 href={basicEmail}
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 hover:bg-gray-800 transition"
+target="_blank"
+className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
 >
 Payment of Non-Uzbek people
 </a>
@@ -93,8 +92,7 @@ Payment of Non-Uzbek people
 <a
 href={basicTelegram}
 target="_blank"
-rel="noreferrer"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
 >
 Payment of Uzbek people
 </a>
@@ -107,9 +105,9 @@ Payment of Uzbek people
 
 {/* PREMIUM */}
 
-<div className="bg-white p-10 rounded-2xl border-2 border-blue-600 shadow-xl text-center scale-105 relative transition hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-3">
+<div className="bg-white p-10 rounded-2xl border-2 border-blue-600 shadow-xl text-center scale-105 relative">
 
-<div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm px-4 py-1 rounded-full shadow">
+<div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm px-4 py-1 rounded-full">
 Most Popular
 </div>
 
@@ -119,7 +117,7 @@ Most Popular
 
 <p className="font-bold text-black mb-4">What you can have:</p>
 
-<ul className="text-left font-semibold space-y-3 mb-8">
+<ul className="text-left font-bold space-y-3 mb-8">
 
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>25 Listening Tests</li>
 <li className="flex gap-3"><span className="text-emerald-500">✓</span>25 Reading Tests</li>
@@ -130,7 +128,8 @@ Most Popular
 
 <a
 href={premiumEmail}
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 hover:bg-gray-800 transition"
+target="_blank"
+className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4"
 >
 Payment of Non-Uzbek people
 </a>
@@ -138,8 +137,7 @@ Payment of Non-Uzbek people
 <a
 href={premiumTelegram}
 target="_blank"
-rel="noreferrer"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
 >
 Payment of Uzbek people
 </a>
@@ -152,7 +150,7 @@ Payment of Uzbek people
 
 {/* ULTIMATE */}
 
-<div className="bg-gradient-to-br from-black via-gray-900 to-black p-8 rounded-2xl shadow-xl text-center text-white transition hover:shadow-2xl hover:-translate-y-2">
+<div className="bg-gradient-to-br from-black via-gray-900 to-black p-8 rounded-2xl shadow-xl text-center text-white">
 
 <h2 className="text-2xl font-bold mb-3">Ultimate</h2>
 
@@ -160,7 +158,7 @@ Payment of Uzbek people
 
 <p className="font-bold mb-4">What you can have:</p>
 
-<ul className="text-left font-semibold space-y-3 mb-8">
+<ul className="text-left font-bold space-y-3 mb-8">
 
 <li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Listening Tests</li>
 <li className="flex gap-3"><span className="text-emerald-400">✓</span>Unlimited Reading Tests</li>
@@ -171,7 +169,8 @@ Payment of Uzbek people
 
 <a
 href={ultimateEmail}
-className="block bg-white text-black px-6 py-3 rounded-lg font-extrabold mb-4 hover:bg-gray-200 transition"
+target="_blank"
+className="block bg-white text-black px-6 py-3 rounded-lg font-bold mb-4"
 >
 Payment of Non-Uzbek people
 </a>
@@ -179,8 +178,7 @@ Payment of Non-Uzbek people
 <a
 href={ultimateTelegram}
 target="_blank"
-rel="noreferrer"
-className="block bg-blue-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-600 transition"
+className="block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold"
 >
 Payment of Uzbek people
 </a>
