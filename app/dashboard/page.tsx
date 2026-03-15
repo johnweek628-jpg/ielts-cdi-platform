@@ -11,6 +11,13 @@ const router = useRouter()
 const [email,setEmail] = useState("")
 const [plan,setPlan] = useState("free")
 const [loading,setLoading] = useState(true)
+const [stats,setStats] = useState({
+
+tests:0,
+band:0,
+time:0,
+accuracy:0
+})
 
 useEffect(()=>{
 
@@ -26,6 +33,8 @@ return
 const user = data.session.user
 setEmail(user.email || "")
 
+/* GET USER PLAN */
+
 const { data: profile } = await supabase
 .from("profiles")
 .select("plan")
@@ -35,6 +44,41 @@ const { data: profile } = await supabase
 if(profile){
 setPlan(profile.plan)
 }
+
+/* GET USER TEST RESULTS */
+
+const { data: results } = await supabase
+.from("test_results")
+.select("*")
+.eq("user_id", user.id)
+
+/* CALCULATE STATS */
+
+const completedTests = results?.length || 0
+
+const avgBand =
+results?.reduce((a,b)=>a+b.score,0) / completedTests || 0
+
+const totalTime =
+results?.reduce((a,b)=>a+b.time_spent,0) || 0
+
+const totalCorrect =
+results?.reduce((a,b)=>a+b.correct_answers,0) || 0
+
+const totalQuestions =
+results?.reduce((a,b)=>a+b.total_questions,0) || 0
+
+const accuracy =
+(totalCorrect / totalQuestions) * 100 || 0
+
+/* SET STATS */
+
+setStats({
+tests: completedTests,
+band: Number(avgBand.toFixed(1)),
+time: Math.floor(totalTime/3600),
+accuracy: Number(accuracy.toFixed(0))
+})
 
 setLoading(false)
 
