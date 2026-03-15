@@ -84,7 +84,7 @@ Start Free
 <a
 href={basicEmail}
 target="_blank"
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 transition transform hover:scale-105 hover:bg-gray-800"
+className="block bg-black text-white font-bold px-6 py-3 rounded-lg mb-4 text-center transition transform hover:scale-105 hover:bg-gray-800"
 >
 Payment of Non-Uzbek people
 </a>
@@ -92,7 +92,7 @@ Payment of Non-Uzbek people
 <a
 href={basicTelegram}
 target="_blank"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-700"
+className="block bg-blue-600 text-white font-bold px-6 py-3 rounded-lg text-center transition transform hover:scale-105 hover:bg-blue-700"
 >
 Payment of Uzbek people
 </a>
@@ -129,7 +129,7 @@ Most Popular
 <a
 href={premiumEmail}
 target="_blank"
-className="block bg-black text-white px-6 py-3 rounded-lg font-bold mb-4 transition transform hover:scale-105 hover:bg-gray-800"
+className="block bg-black text-white font-bold px-6 py-3 rounded-lg mb-4 text-center transition transform hover:scale-105 hover:bg-gray-800"
 >
 Payment of Non-Uzbek people
 </a>
@@ -137,7 +137,7 @@ Payment of Non-Uzbek people
 <a
 href={premiumTelegram}
 target="_blank"
-className="block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-700"
+className="block bg-blue-600 text-white font-bold px-6 py-3 rounded-lg text-center transition transform hover:scale-105 hover:bg-blue-700"
 >
 Payment of Uzbek people
 </a>
@@ -170,7 +170,7 @@ Payment of Uzbek people
 <a
 href={ultimateEmail}
 target="_blank"
-className="block bg-white !text-black font-bold px-6 py-3 rounded-lg mb-4 transition transform hover:scale-105 hover:bg-gray-200"
+className="block bg-black text-white font-bold px-6 py-3 rounded-lg mb-4 text-center"
 >
 Payment of Non-Uzbek people
 </a>
@@ -178,7 +178,7 @@ Payment of Non-Uzbek people
 <a
 href={ultimateTelegram}
 target="_blank"
-className="block bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105 hover:bg-blue-600"
+className="block bg-blue-600 text-white font-bold px-6 py-3 rounded-lg text-center transition transform hover:scale-105 hover:bg-blue-700"
 >
 Payment of Uzbek people
 </a>

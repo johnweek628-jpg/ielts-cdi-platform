@@ -74,7 +74,7 @@ router.push("/dashboard")
         <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 text-center">
 
           <h2 className="text-lg font-semibold">
-            Welcome to English Learning Platform!
+            Welcome to Niners Arena!
           </h2>
 
           {!loggedIn && (
