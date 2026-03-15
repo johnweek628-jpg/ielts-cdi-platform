@@ -77,6 +77,13 @@ IELTS CDI Learning Platform
 ✓ Signed In
 </div>
 
+<button
+onClick={logout}
+className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+>
+Logout
+</button>
+
 </div>
 
 ) : (

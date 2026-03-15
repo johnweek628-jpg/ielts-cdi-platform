@@ -140,6 +140,12 @@ Speaking Tests
 AI Writing Correction
 </button>
 
+<button
+className="text-left mb-4 text-gray-300 hover:text-white"
+>
+Results
+</button>
+
 </div>
 
 
@@ -167,13 +173,6 @@ IELTS Mock Test Platform
 {plan.toUpperCase()}
 </span>
 
-<button
-onClick={logout}
-className="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-lg transition transform hover:scale-105"
->
-Logout
-</button>
-
 </div>
 
 </div>
@@ -190,33 +189,6 @@ Welcome Back 👋
 <p className="text-gray-400">
 Your personal IELTS preparation dashboard
 </p>
-
-</div>
-
-
-{/* STATS */}
-
-<div className="max-w-6xl mx-auto mt-12 px-6 grid md:grid-cols-4 gap-6">
-
-<div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-<p className="text-gray-400 text-sm">Completed Tests</p>
-<h3 className="text-2xl font-bold mt-2">{stats.tests}</h3>
-</div>
-
-<div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-<p className="text-gray-400 text-sm">Average Band</p>
-<h3 className="text-2xl font-bold mt-2">{stats.band}</h3>
-</div>
-
-<div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-<p className="text-gray-400 text-sm">Study Time</p>
-<h3 className="text-2xl font-bold mt-2">{stats.time}h</h3>
-</div>
-
-<div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
-<p className="text-gray-400 text-sm">Accuracy</p>
-<h3 className="text-2xl font-bold mt-2">{stats.accuracy}%</h3>
-</div>
 
 </div>
 
