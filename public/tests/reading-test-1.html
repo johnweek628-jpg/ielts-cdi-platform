@@ -2259,5 +2259,52 @@ window.getSelection().removeAllRanges();
 };
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseClient = supabase.createClient(
+"https://uvcnkaolhovqnofzngtx.supabase.co",
+"sb_publishable_isYo8oo1flDwAo179fjjoA_39kv9o5l"
+);
+
+function getBand(correct){
+if(correct >= 39) return 9;
+if(correct >= 37) return 8.5;
+if(correct >= 35) return 8;
+if(correct >= 33) return 7.5;
+if(correct >= 30) return 7;
+if(correct >= 27) return 6.5;
+if(correct >= 23) return 6;
+return 5;
+}
+
+async function saveResult(correct,total,timeSpent){
+
+const sessionData = await supabaseClient.auth.getSession();
+
+if(!sessionData.data.session) return;
+
+const user = sessionData.data.session.user;
+
+const band = getBand(correct);
+
+await supabaseClient.from("test_results").insert({
+user_id: user.id,
+test_type: "reading",
+score: band,
+correct_answers: correct,
+total_questions: total,
+time_spent: timeSpent
+});
+
+}
+
+function sendResult(correct,total,timeSpent){
+saveResult(correct,total,timeSpent);
+}
+
+</script>
+
 </body>
 </html>
