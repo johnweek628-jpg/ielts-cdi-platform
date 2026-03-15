@@ -7,13 +7,13 @@ export default function Pricing() {
 const router = useRouter()
 
 const basicEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20($9).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek628@gmail.com&su=Basic%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Basic%20package%20($9).%20Please%20send%20me%20payment%20instructions."
 
 const premiumEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20($19).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek628@gmail.com&su=Premium%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Premium%20package%20($19).%20Please%20send%20me%20payment%20instructions."
 
 const ultimateEmail =
-"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek@gmail.com&su=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20($29).%20Please%20send%20me%20payment%20instructions."
+"https://mail.google.com/mail/?view=cm&fs=1&to=johnweek628@gmail.com&su=Ultimate%20Package%20Payment&body=Hello%2C%20I%20would%20like%20to%20buy%20the%20Ultimate%20package%20($29).%20Please%20send%20me%20payment%20instructions."
 
 const basicTelegram =
 "https://t.me/jasurbeksielts?text=Men%20Basic%20packageni%20sotib%20olmoqchi%20edim"
