@@ -106,7 +106,48 @@ Loading Dashboard...
 
 return (
 
-<div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+<div className="flex min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+
+
+{/* SIDEBAR */}
+
+<div className="w-64 bg-black border-r border-gray-800 p-6 flex flex-col">
+
+<h2 className="text-xl font-bold mb-10">
+Modules
+</h2>
+
+<button className="text-left mb-4 text-gray-300 hover:text-white">
+Listening Tests
+</button>
+
+<button
+onClick={()=>router.push("/practice/reading")}
+className="text-left mb-4 text-gray-300 hover:text-white"
+>
+Reading Tests
+</button>
+
+<button className="text-left mb-4 text-gray-300 hover:text-white">
+Writing Tests
+</button>
+
+<button className="text-left mb-4 text-gray-300 hover:text-white">
+Speaking Tests
+</button>
+
+<button className="text-left mb-4 text-gray-300 hover:text-white">
+AI Writing Correction
+</button>
+
+</div>
+
+
+
+{/* MAIN SECTION */}
+
+<div className="flex-1">
+
 
 {/* HEADER */}
 
@@ -159,22 +200,22 @@ Your personal IELTS preparation dashboard
 
 <div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
 <p className="text-gray-400 text-sm">Completed Tests</p>
-<h3 className="text-2xl font-bold mt-2">0</h3>
+<h3 className="text-2xl font-bold mt-2">{stats.tests}</h3>
 </div>
 
 <div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
 <p className="text-gray-400 text-sm">Average Band</p>
-<h3 className="text-2xl font-bold mt-2">0.0</h3>
+<h3 className="text-2xl font-bold mt-2">{stats.band}</h3>
 </div>
 
 <div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
 <p className="text-gray-400 text-sm">Study Time</p>
-<h3 className="text-2xl font-bold mt-2">0h</h3>
+<h3 className="text-2xl font-bold mt-2">{stats.time}h</h3>
 </div>
 
 <div className="bg-gray-900 p-6 rounded-xl shadow-lg hover:scale-105 transition">
 <p className="text-gray-400 text-sm">Accuracy</p>
-<h3 className="text-2xl font-bold mt-2">0%</h3>
+<h3 className="text-2xl font-bold mt-2">{stats.accuracy}%</h3>
 </div>
 
 </div>
@@ -250,34 +291,10 @@ Start Speaking
 
 </div>
 
-
 </div>
 
 </div>
 
-
-{/* QUICK ACTION */}
-
-<div className="max-w-6xl mx-auto mt-20 px-6 pb-20">
-
-<div className="bg-gray-900 rounded-2xl p-10 text-center shadow-xl">
-
-<h3 className="text-2xl font-bold mb-4">
-Ready to continue your preparation?
-</h3>
-
-<p className="text-gray-400 mb-8">
-Take a full mock test and measure your IELTS band score.
-</p>
-
-<button
-onClick={()=>router.push("/practice/reading")}
-className="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-semibold transition transform hover:scale-105"
->
-Start Full Reading Test
-</button>
-
-</div>
 
 </div>
 
