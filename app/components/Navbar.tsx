@@ -61,9 +61,9 @@ return (
 
 <Link
 href="/"
-className="flex items-center gap-2 hover:opacity-80 transition"
+className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
 >
-<img src="/home.png" alt="Home" className="w-6 h-6 invert"/>
+<img src="/home.png" alt="Home" className="w-6 h-6" />
 Home
 </Link>
 
