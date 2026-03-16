@@ -59,7 +59,7 @@ return (
 
 <div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center">
 
-<Link href="/" className="flex items-center gap-2 text-gray-700 font-semibold">
+<Link href="/" className="flex items-center gap-2 text-black font-bold hover:text-blue-600 transition">
 🏠 Home
 </Link>
 

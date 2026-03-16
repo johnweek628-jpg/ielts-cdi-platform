@@ -113,10 +113,6 @@ return (
 
 <div className="w-64 bg-black border-r border-gray-800 p-6 flex flex-col">
 
-<h2 className="text-xl font-bold mb-10 text-blue-500">
-Home
-</h2>
-
 <button className="text-left mb-4 text-gray-300 hover:text-white">
 Listening Tests
 </button>
@@ -189,7 +185,15 @@ IELTS Mock Test Platform
 {email}
 </span>
 
-<span className="bg-green-600 px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
+<span
+className={`px-4 py-1 rounded-full text-sm font-semibold shadow-lg
+${plan === "ultimate"
+? "bg-purple-600"
+: plan === "premium"
+? "bg-blue-600"
+: "bg-green-600"}
+`}
+>
 {plan.toUpperCase()}
 </span>
 
