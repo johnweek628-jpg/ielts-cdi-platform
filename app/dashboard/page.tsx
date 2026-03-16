@@ -113,8 +113,8 @@ return (
 
 <div className="w-64 bg-black border-r border-gray-800 p-6 flex flex-col">
 
-<h2 className="text-xl font-bold mb-10">
-Modules
+<h2 className="text-xl font-bold mb-10 text-blue-500">
+Home
 </h2>
 
 <button className="text-left mb-4 text-gray-300 hover:text-white">
@@ -147,6 +147,23 @@ AI Writing Correction
 className="text-left mb-4 text-gray-300 hover:text-white"
 >
 Results
+</button>
+
+{/* NEW BUTTONS */}
+
+<a
+href="https://t.me/jasurbeks_ielts"
+target="_blank"
+className="text-left mb-4 text-gray-300 hover:text-white"
+>
+Join us on Telegram channel
+</a>
+
+<button
+onClick={()=>router.push("/support")}
+className="text-left mb-4 text-gray-300 hover:text-white"
+>
+Support
 </button>
 
 </div>
