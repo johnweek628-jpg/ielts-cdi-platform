@@ -136,7 +136,10 @@ Writing Tests
 Speaking Tests
 </button>
 
-<button className="text-left mb-4 text-gray-300 hover:text-white">
+<button
+onClick={()=>router.push("/ai-writing")}
+className="text-left mb-4 text-gray-300 hover:text-white"
+>
 AI Writing Correction
 </button>
 
