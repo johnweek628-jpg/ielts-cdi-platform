@@ -7,6 +7,8 @@ export default function Task1Page(){
 const [essay,setEssay] = useState("")
 const [image,setImage] = useState<File | null>(null)
 const [preview,setPreview] = useState<string | null>(null)
+const [result,setResult] = useState("")
+const [loading,setLoading] = useState(false)
 
 const wordCount = essay.trim().split(/\s+/).filter(Boolean).length
 
@@ -49,6 +51,36 @@ e.preventDefault()
 const removeImage = ()=>{
 setImage(null)
 setPreview(null)
+}
+
+
+// CHECK ESSAY
+const handleCheck = async ()=>{
+
+if(!essay){
+alert("Write essay first")
+return
+}
+
+setLoading(true)
+
+const res = await fetch("/api/check-task1",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+essay:essay,
+image:preview
+})
+})
+
+const data = await res.json()
+
+setResult(data.result)
+
+setLoading(false)
+
 }
 
 
@@ -153,10 +185,30 @@ Words: {wordCount} / Recommended: 150+
 {/* CHECK BUTTON */}
 
 <button
+onClick={handleCheck}
 className="bg-white text-black font-bold px-8 py-3 rounded-lg hover:scale-105 transition"
 >
-Check My Essay
+{loading ? "Analyzing..." : "Check My Essay"}
 </button>
+
+
+{/* RESULT PANEL */}
+
+{result && (
+
+<div className="mt-10 bg-gray-800 p-6 rounded-lg">
+
+<h2 className="text-2xl font-bold mb-4">
+AI Evaluation
+</h2>
+
+<pre className="whitespace-pre-wrap text-gray-300">
+{result}
+</pre>
+
+</div>
+
+)}
 
 </div>
 
