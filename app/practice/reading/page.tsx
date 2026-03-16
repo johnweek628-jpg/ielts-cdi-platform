@@ -8,7 +8,11 @@ export default function ReadingPractice() {
 
   const router = useRouter()
 
-  const [subscription,setSubscription] = useState("free")
+  const [subscription,setSubscription] = useState(
+    typeof window !== "undefined"
+      ? localStorage.getItem("subscription") || "free"
+      : "free"
+  )
 
   const tests = [
     { id: 1, title: "READING TEST 1" },
@@ -21,16 +25,20 @@ export default function ReadingPractice() {
 
     const getSubscription = async () => {
 
-      const { data } = await supabase.auth.getSession()
+      const { data } = await supabase.auth.getUser()
 
-      const session = data.session
+      if(!data.user) return
 
-      if(!session) return
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("subscription")
+        .eq("email", data.user.email)
+        .single()
 
-      const userSubscription =
-        session.user.user_metadata?.subscription || "free"
-
-      setSubscription(userSubscription)
+      if(profile){
+        setSubscription(profile.subscription)
+        localStorage.setItem("subscription", profile.subscription)
+      }
 
     }
 
@@ -70,8 +78,6 @@ export default function ReadingPractice() {
             key={test.id}
             className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
           >
-
-            {/* LOCK ICON */}
 
             {test.id > 2 && subscription === "free" && (
               <span className="absolute top-3 right-3 text-xl">
