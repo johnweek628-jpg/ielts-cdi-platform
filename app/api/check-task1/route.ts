@@ -1,35 +1,41 @@
 import OpenAI from "openai"
 
-const openai = new OpenAI({
-apiKey: process.env.OPENAI_API_KEY
-})
-
 export async function POST(req: Request) {
 
-try{
+  if (!process.env.OPENAI_API_KEY) {
+    return Response.json({
+      error: "OPENAI_API_KEY not configured"
+    })
+  }
 
-const body = await req.json()
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  })
 
-const essay = body.essay
-const image = body.image
+  try {
 
-const response = await openai.chat.completions.create({
+    const body = await req.json()
 
-model: "gpt-4o",
+    const essay = body.essay
+    const image = body.image
 
-messages: [
+    const response = await openai.chat.completions.create({
 
-{
-role: "system",
-content: "You are a professional IELTS examiner."
-},
+      model: "gpt-4o",
 
-{
-role: "user",
-content: [
-{
-type: "text",
-text: `Evaluate this IELTS Writing Task 1 essay.
+      messages: [
+
+        {
+          role: "system",
+          content: "You are a professional IELTS examiner."
+        },
+
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: `Evaluate this IELTS Writing Task 1 essay.
 
 Score using IELTS band descriptors:
 
@@ -42,30 +48,30 @@ Provide band scores and detailed feedback.
 
 Essay:
 ${essay}`
-},
+            },
 
-{
-type: "image_url",
-image_url: { url: image }
-}
+            {
+              type: "image_url",
+              image_url: { url: image }
+            }
 
-]
-}
+          ]
+        }
 
-]
+      ]
 
-})
+    })
 
-return Response.json({
-result: response.choices[0].message.content
-})
+    return Response.json({
+      result: response.choices[0].message.content
+    })
 
-}catch(error){
+  } catch (error) {
 
-return Response.json({
-error: "AI request failed"
-})
+    return Response.json({
+      error: "AI request failed"
+    })
 
-}
+  }
 
 }
