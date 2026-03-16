@@ -1,10 +1,14 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { supabase } from "../../lib/supabase"
 
 export default function ReadingPractice() {
 
   const router = useRouter()
+
+  const [subscription,setSubscription] = useState("free")
 
   const tests = [
     { id: 1, title: "READING TEST 1" },
@@ -13,12 +17,42 @@ export default function ReadingPractice() {
     { id: 4, title: "READING TEST 4" }
   ]
 
+  useEffect(()=>{
+
+    const getSubscription = async () => {
+
+      const { data } = await supabase.auth.getUser()
+
+      if(!data.user) return
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("subscription")
+        .eq("id", data.user.id)
+        .single()
+
+      if(profile){
+        setSubscription(profile.subscription)
+      }
+
+    }
+
+    getSubscription()
+
+  },[])
+
   const handleClick = (id:number) => {
 
     if(id <= 2){
       router.push(`/practice/reading/test${id}`)
     }else{
-      router.push("/pricing")
+
+      if(subscription === "premium" || subscription === "ultimate"){
+        router.push(`/practice/reading/test${id}`)
+      }else{
+        router.push("/pricing")
+      }
+
     }
 
   }
@@ -42,7 +76,7 @@ export default function ReadingPractice() {
 
             {/* LOCK ICON */}
 
-            {test.id > 2 && (
+            {test.id > 2 && subscription === "free" && (
               <span className="absolute top-3 right-3 text-xl">
                 🔒
               </span>
@@ -57,12 +91,14 @@ export default function ReadingPractice() {
               <button
                 onClick={() => handleClick(test.id)}
                 className={`px-6 py-2 rounded-lg transition text-white
-                ${test.id <= 2
+                ${test.id <= 2 || subscription !== "free"
                   ? "bg-blue-600 hover:bg-blue-700"
                   : "bg-gray-400 hover:bg-gray-500"
                 }`}
               >
-                {test.id <= 2 ? "Start Test" : "Premium"}
+                {test.id <= 2 || subscription !== "free"
+                  ? "Start Test"
+                  : "Premium"}
               </button>
 
             </div>
