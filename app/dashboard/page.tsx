@@ -38,7 +38,7 @@ setEmail(user.email || "")
 const { data: profile } = await supabase
 .from("profiles")
 .select("plan")
-.eq("id", user.id)
+.eq("email", user.email)
 .single()
 
 if(profile){
