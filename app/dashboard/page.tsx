@@ -6,18 +6,18 @@ import { supabase } from "../lib/supabase"
 
 export default function Dashboard() {
 
-const router = useRouter()
+    const router = useRouter()
 
-const [email,setEmail] = useState("")
-const [plan,setPlan] = useState("free")
-const [loading,setLoading] = useState(true)
-const [stats,setStats] = useState({
+    const [email,setEmail] = useState("")
+    const [plan,setPlan] = useState("free")
+    const [loading,setLoading] = useState(true)
+    const [stats,setStats] = useState({
 
-tests:0,
-band:0,
-time:0,
-accuracy:0
-})
+    tests:0,
+    band:0,
+    time:0,
+    accuracy:0
+    })
 
 useEffect(()=>{
 
@@ -37,12 +37,12 @@ setEmail(user.email || "")
 
 const { data: profile } = await supabase
 .from("profiles")
-.select("plan")
+.select("subscription")
 .eq("email", user.email)
 .single()
 
 if(profile){
-setPlan(profile.plan)
+setPlan(profile.subscription)
 }
 
 /* GET USER TEST RESULTS */
@@ -50,7 +50,7 @@ setPlan(profile.plan)
 const { data: results } = await supabase
 .from("test_results")
 .select("*")
-.eq("user_id", user.id)
+.eq("user_email", user.email)
 
 /* CALCULATE STATS */
 

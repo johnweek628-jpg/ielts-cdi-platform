@@ -59,8 +59,12 @@ return (
 
 <div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center">
 
-<Link href="/" className="flex items-center gap-2 text-black font-bold hover:text-blue-600 transition">
-🏠 Home
+<Link
+href="/"
+className="flex items-center gap-2 hover:opacity-80 transition"
+>
+<img src="/home.png" alt="Home" className="w-6 h-6 invert"/>
+Home
 </Link>
 
 <h1 className="text-sm font-medium text-gray-600">
