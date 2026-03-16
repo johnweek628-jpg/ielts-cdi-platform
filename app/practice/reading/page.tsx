@@ -21,19 +21,16 @@ export default function ReadingPractice() {
 
     const getSubscription = async () => {
 
-      const { data } = await supabase.auth.getUser()
+      const { data } = await supabase.auth.getSession()
 
-      if(!data.user) return
+      const session = data.session
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("subscription")
-        .eq("email", data.user.email)
-        .single()
+      if(!session) return
 
-      if(profile){
-        setSubscription(profile.subscription)
-      }
+      const userSubscription =
+        session.user.user_metadata?.subscription || "free"
+
+      setSubscription(userSubscription)
 
     }
 
