@@ -61,10 +61,10 @@ return (
 
 <Link
 href="/"
-className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
+className="flex items-center gap-3 !text-black font-bold hover:text-blue-600 transition"
 >
-<img src="/home.png" alt="Home" className="w-6 h-6" />
-Home
+<img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
+<span className="font-bold text-black">Home</span>
 </Link>
 
 <h1 className="text-sm font-medium text-gray-600">
