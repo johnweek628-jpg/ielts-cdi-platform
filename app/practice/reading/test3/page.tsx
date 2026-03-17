@@ -27,7 +27,29 @@ export default function ReadingTest1() {
       .eq("id", user.id)
       .single()
 
-      const plan = profile?.plan || "free"
+      type Plan = "free" | "basic" | "premium" | "ultimate"
+
+const rawPlan = profile?.plan || "free"
+
+const plan: Plan =
+  rawPlan === "basic" ||
+  rawPlan === "premium" ||
+  rawPlan === "ultimate"
+    ? rawPlan
+    : "free"
+       const testId = 3
+
+      const limits = {
+        free: 2,
+        basic: 10,
+        premium: 25,
+        ultimate: 9999
+      }
+
+      if(testId > limits[plan]){
+        router.replace("/pricing")
+        return
+      }
 
     }
 
