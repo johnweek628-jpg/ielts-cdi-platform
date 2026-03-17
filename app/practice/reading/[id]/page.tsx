@@ -32,7 +32,12 @@ export default function ReadingTest() {
 
       type Plan = "free" | "basic" | "premium" | "ultimate"
 
-const rawPlan = profile?.plan || "free"
+      if(!profile){
+  console.log("PROFILE NOT READY YET")
+  return
+}
+
+const rawPlan = profile.plan
 
 const plan: Plan =
   rawPlan === "basic" ||
