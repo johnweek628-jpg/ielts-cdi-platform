@@ -24,7 +24,7 @@ export default function ReadingTest1() {
       const { data: profile } = await supabase
       .from("profiles")
       .select("plan")
-      .eq("id", user.id)
+      .eq("email", user.email)
       .single()
 
       type Plan = "free" | "basic" | "premium" | "ultimate"
