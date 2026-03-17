@@ -8,24 +8,23 @@ export function middleware(request: NextRequest) {
 
   const url = request.nextUrl.pathname
 
-  if(
-    url.startsWith("/practice/reading/test3") ||
-    url.startsWith("/practice/reading/test4")
-  ){
+  // test raqamini olish
+  const match = url.match(/test(\d+)/)
+  const testNumber = match ? parseInt(match[1]) : 1
 
-    if(subscription !== "premium" && subscription !== "ultimate"){
-      return NextResponse.redirect(new URL("/pricing", request.url))
-    }
+  let maxTests = 2 // free
 
+  if(subscription === "basic") maxTests = 10
+  if(subscription === "premium") maxTests = 25
+  if(subscription === "ultimate") maxTests = 9999
+
+  if(testNumber > maxTests){
+    return NextResponse.redirect(new URL("/pricing", request.url))
   }
 
   return NextResponse.next()
-
 }
 
 export const config = {
-  matcher: [
-    "/practice/reading/test3/:path*",
-    "/practice/reading/test4/:path*"
-  ]
+  matcher: ["/practice/reading/test:slug*"]
 }
