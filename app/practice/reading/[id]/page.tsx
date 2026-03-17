@@ -27,17 +27,14 @@ export default function ReadingTest() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("plan")
-        .eq("id", user.id)
+        .eq("email", user.email)
         .single()
 
       type Plan = "free" | "basic" | "premium" | "ultimate"
 
-      if(!profile){
-  console.log("PROFILE NOT READY YET")
-  return
-}
 
-const rawPlan = profile.plan
+
+const rawPlan = profile?.plan
 
 const plan: Plan =
   rawPlan === "basic" ||
