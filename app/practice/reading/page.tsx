@@ -68,43 +68,54 @@ export default function ReadingPractice() {
 
       <div className="grid grid-cols-3 gap-6">
 
-        {tests.map(test => (
+        {tests.map(test => {
 
-          <div
-            key={test.id}
-            className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
-          >
+          const isFree = subscription === "free"
+          const isLocked = test.id > 2 && isFree
 
-            {test.id > 2 && subscription === "free" && (
-              <span className="absolute top-3 right-3 text-xl">
-                🔒
-              </span>
-            )}
+          return (
 
-            <h2 className="text-xl font-semibold text-blue-900 mb-6">
-              {test.title}
-            </h2>
+            <div
+              key={test.id}
+              className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
+            >
 
-            <div className="flex justify-center">
+              {isLocked && (
+                <span className="absolute top-3 right-3 text-xl">
+                  🔒
+                </span>
+              )}
 
-              <button
-                onClick={() => handleClick(test.id)}
-                className={`px-6 py-2 rounded-lg transition text-white
-                ${test.id <= 2 || subscription !== "free"
-                  ? "bg-blue-600 hover:bg-blue-700"
-                  : "bg-gray-400 hover:bg-gray-500"
-                }`}
-              >
-                {test.id <= 2 || subscription !== "free"
-                  ? "Start Test"
-                  : "Premium"}
-              </button>
+              <h2 className="text-xl font-semibold text-blue-900 mb-6">
+                {test.title}
+              </h2>
+
+              <div className="flex justify-center">
+
+                <button
+                  onClick={() => {
+                    if (isLocked) {
+                      router.push("/pricing")
+                    } else {
+                      handleClick(test.id)
+                    }
+                  }}
+                  className={`px-6 py-2 rounded-lg transition text-white
+                  ${!isLocked
+                    ? "bg-blue-600 hover:bg-blue-700"
+                    : "bg-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  {!isLocked ? "Start Test" : "Premium"}
+                </button>
+
+              </div>
 
             </div>
 
-          </div>
+          )
 
-        ))}
+        })}
 
       </div>
 
