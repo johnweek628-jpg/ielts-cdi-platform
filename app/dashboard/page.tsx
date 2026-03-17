@@ -44,7 +44,7 @@ const { data: profile } = await supabase
 if(profile){
 setPlan(profile.subscription)
 // 🍪 COOKIE SET
-  document.cookie = `plan=${profile.subscription}; path=/`
+  document.cookie = `subscription=${profile.subscription}; path=/`
 }
 
 
