@@ -34,7 +34,7 @@ export default function ReadingTest() {
 
 
 
-const rawPlan = profile?.plan
+const rawPlan = profile?.plan?.toLowerCase().trim()
 
 const plan: Plan =
   rawPlan === "basic" ||

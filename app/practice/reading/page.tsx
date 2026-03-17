@@ -26,48 +26,29 @@ const tests = Array.from({ length: 100 }, (_, i) => ({
 
   useEffect(()=>{
 
-  const getSubscription = async () => {
+    const getSubscription = async () => {
 
-    const { data } = await supabase.auth.getUser()
+      const { data } = await supabase.auth.getUser()
 
-    if(!data.user){
-      console.log("❌ NO USER")
-      return
+      if(!data.user) return
+
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("plan")
+        .eq("email", data.user.email)
+        .single()
+
+      if(profile){
+        setSubscription(profile.plan)
+        localStorage.setItem("plan", profile.plan)
+      }
+
     }
 
-    const user = data.user
+    getSubscription()
+    
 
-    console.log("👤 USER EMAIL:", user.email)
-    console.log("🆔 USER ID:", user.id)
-
-    const { data: profile, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("email", user.email)
-      .single()
-
-    console.log("📦 PROFILE RESULT:", profile)
-    console.log("⚠️ ERROR:", error)
-
-    if(profile){
-      const rawPlan = profile.plan
-      console.log("🔥 RAW PLAN:", rawPlan)
-
-      const cleanPlan = rawPlan?.toLowerCase()?.trim()
-      console.log("🧼 CLEAN PLAN:", cleanPlan)
-
-      setSubscription(cleanPlan)
-      localStorage.setItem("plan", cleanPlan)
-    }else{
-      console.log("🚨 PROFILE NOT FOUND → DEFAULT FREE")
-      setSubscription("free")
-    }
-
-  }
-
-  getSubscription()
-
-},[])
+  },[])
 
   const handleClick = (id:number) => {
 
