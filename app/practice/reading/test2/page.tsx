@@ -29,18 +29,6 @@ export default function ReadingTest1() {
 
       const plan = profile?.plan || "free"
 
-      // FREE USER faqat 2 ta reading test
-      if(plan === "free"){
-        const allowedTests = ["/practice/reading/test1","/practice/reading/test2"]
-
-        const current = window.location.pathname
-
-        if(!allowedTests.includes(current)){
-          alert("Upgrade your plan to access more reading tests")
-          router.push("/pricing")
-        }
-      }
-
     }
 
     checkLimit()
