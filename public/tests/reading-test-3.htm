@@ -1272,787 +1272,24 @@ border: 1px solid #c3e6cb;
 border-radius: 4px;
 padding: 4px;
 }
-
-/* ===== UI Refresh / IDP-like polish ===== */
-body{
-color:#1c2430;
-background:#f3f6fb;
-}
-.header{
-background:rgba(255,255,255,0.96);
-backdrop-filter:blur(10px);
-box-shadow:0 2px 18px rgba(24,39,75,0.06);
-border-bottom:1px solid #e6edf7;
-}
-.telegram-link{
-font-weight:700;
-padding:8px 14px;
-border-radius:999px;
-background:#eef7ff;
-color:#1784d8;
-transition:transform .2s ease, box-shadow .22s ease, background-color .22s ease;
-}
-.telegram-link:hover{
-text-decoration:none;
-transform:translateY(-1px);
-box-shadow:0 10px 24px rgba(23,132,216,.14);
-background:#e4f2ff;
-}
-.part-header{
-background:linear-gradient(180deg,#f9fbff,#f1f6fd);
-border:1px solid #dfe9f6;
-border-radius:16px;
-box-shadow:0 8px 26px rgba(40,72,120,.05);
-}
-.passage-panel,.questions-panel{
-background:#ffffff;
-}
-.passage-panel{
-box-shadow:inset 0 0 0 1px rgba(230,237,247,.8);
-}
-.questions-panel{
-border-left:1px solid #e6edf7;
-box-shadow:inset 0 0 0 1px rgba(230,237,247,.8);
-}
-.reading-passage h4.text-center{
-font-size:26px;
-letter-spacing:.1px;
-margin-bottom:22px;
-}
-.question,.tf-question,.mc-question,.paragraph-matching-question,.summary-table,.example-box{
-scroll-margin-top:90px;
-}
-.example-box{
-border:1px solid #e4ebf4;
-background:#f8fbff;
-border-radius:16px;
-}
-.answer-input, select.answer-input{
-border:1.5px solid #b8c7db;
-border-radius:16px;
-padding:5px 10px;
-background:#fff;
-transition:transform .2s ease, box-shadow .25s ease, border-color .25s ease, background-color .25s ease;
-}
-.answer-input:hover, select.answer-input:hover{
-transform:translateY(-1px);
-border-color:#7eb8ff;
-box-shadow:0 8px 20px rgba(74,144,226,.12);
-}
-.answer-input:focus, .answer-input.active-input, select.answer-input:focus{
-outline:none;
-border-color:#4a90e2;
-box-shadow:0 0 0 4px rgba(74,144,226,.12),0 12px 28px rgba(74,144,226,.14);
-}
-.answer-input.correct{
-background:#eefaf1;
-border-color:#4caf50;
-}
-.answer-input.incorrect{
-background:#fdeeee;
-border-color:#ef5350;
-color:#9f2f2f;
-}
-.tf-option,.multi-choice-option{
-position:relative;
-overflow:hidden;
-border:1px solid transparent;
-border-radius:16px;
-transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background-color .22s ease;
-}
-.tf-option:hover,.multi-choice-option:hover{
-transform:translateY(-3px);
-box-shadow:0 10px 24px rgba(74,144,226,.10);
-border-color:rgba(74,144,226,.18);
-background:rgba(74,144,226,.04);
-}
-.tf-option label,.multi-choice-option label{
-width:100%;
-padding:10px 12px;
-border-radius:16px;
-}
-.tf-option input[type="radio"], .multi-choice-option input[type="radio"], .multi-choice-option input[type="checkbox"]{
-appearance:none;
--webkit-appearance:none;
-width:22px;
-height:22px;
-min-width:22px;
-border-radius:50%;
-border:2px solid #97a4b4;
-background:radial-gradient(circle at center,#2f80ff 0 0,transparent 0 100%);
-background-repeat:no-repeat;
-background-position:center;
-background-size:0% 0%;
-box-shadow:inset 0 0 0 5px #fff;
-transition:transform .24s cubic-bezier(.2,.8,.2,1), border-color .24s ease, background-size .32s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease;
-cursor:pointer;
-}
-.multi-choice-option input[type="checkbox"]{
-border-radius:8px;
-}
-.tf-option:hover input[type="radio"], .multi-choice-option:hover input[type="radio"], .multi-choice-option:hover input[type="checkbox"]{
-transform:scale(1.08);
-border-color:#4a90e2;
-box-shadow:inset 0 0 0 5px #fff, 0 0 0 7px rgba(74,144,226,.08);
-}
-.tf-option input[type="radio"]:checked, .multi-choice-option input[type="radio"]:checked, .multi-choice-option input[type="checkbox"]:checked{
-border-color:#2f80ff;
-background-size:100% 100%;
-box-shadow:inset 0 0 0 4px #fff, 0 0 0 8px rgba(47,128,255,.12), 0 6px 18px rgba(47,128,255,.18);
-animation:blueFillPop .35s cubic-bezier(.2,.85,.25,1);
-}
-@keyframes blueFillPop{
-0%{transform:scale(.84);background-size:12% 12%;}
-50%{transform:scale(1.12);background-size:74% 74%;}
-100%{transform:scale(1);background-size:100% 100%;}
-}
-.result-row{
-display:grid;
-grid-template-columns:40px 1fr 1fr;
-gap:15px;
-padding:10px 10px;
-margin-bottom:8px;
-border-bottom:none;
-border-radius:14px;
-}
-.result-row.correct-row{
-background:#e8f5e9 !important;
-}
-.result-row.wrong-row{
-background:#fdecea !important;
-}
-.result-row .user-ans{
-font-weight:600;
-}
-.result-row.correct-row .user-ans,.result-row.correct-row .correct-ans{
-color:#256c2c;
-}
-.result-row.wrong-row .user-ans{
-color:#c23a3a;
-}
-.result-row.wrong-row .correct-ans{
-color:#256c2c;
-}
-.modal-content{
-border-radius:20px;
-box-shadow:0 24px 70px rgba(7,32,71,.22);
-border:1px solid #e5edf7;
-}
-.results-details-container{
-background:transparent;
-}
-.highlight{
-background:#fff59d;
-border-radius:999px;
-padding:1px 2px;
-box-decoration-break:clone;
--webkit-box-decoration-break:clone;
-}
-.comment-highlight{
-background:transparent;
-text-decoration:underline 2px #2f80ff;
-text-underline-offset:3px;
-border-radius:999px;
-padding:1px 1px;
-box-decoration-break:clone;
--webkit-box-decoration-break:clone;
-position:relative;
-cursor:pointer;
-}
-.comment-tooltip{
-position:absolute;
-left:50%;
-bottom:calc(100% + 8px);
-transform:translateX(-50%);
-background:#ffffff;
-color:#1e293b;
-border:1px solid #dbe6f2;
-padding:8px 10px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(15,23,42,.16);
-font-size:13px;
-white-space:nowrap;
-max-width:260px;
-overflow:hidden;
-text-overflow:ellipsis;
-pointer-events:none;
-opacity:0;
-transition:opacity .023s linear;
-z-index:1200;
-}
-.comment-highlight:hover .comment-tooltip{
-opacity:1;
-}
-.context-menu{
-position:fixed;
-display:none;
-align-items:center;
-gap:8px;
-background:#ffffff;
-border:1px solid #dfe8f2;
-box-shadow:0 16px 40px rgba(15,23,42,.16);
-border-radius:14px;
-padding:8px;
-z-index:1500;
-min-width:auto;
-}
-.context-menu-item{
-padding:8px 14px;
-border-radius:10px;
-font-size:14px;
-font-weight:700;
-border-bottom:none;
-}
-.context-menu-item:hover{
-background:#f4f8fe;
-}
-#menu-highlight{background:#fff7bf;}
-#menu-note{background:#eef6ff;}
-#menu-clear{background:#fff2f2;}
-#menu-clear-all{background:#f7f8fa;}
-.note-modal{
-position:fixed;
-inset:0;
-background:rgba(15,23,42,.26);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1800;
-}
-.note-modal.visible{
-display:flex;
-}
-.note-modal-card{
-width:min(360px,92vw);
-background:#ffffff;
-border:1px solid #e5edf7;
-border-radius:20px;
-padding:20px;
-box-shadow:0 24px 70px rgba(7,32,71,.24);
-}
-.note-modal-card h3{
-font-size:18px;
-margin-bottom:10px;
-}
-.note-selected-preview{
-font-size:13px;
-color:#64748b;
-background:#f8fbff;
-border-left:3px solid #4a90e2;
-padding:8px 10px;
-border-radius:0 10px 10px 0;
-margin-bottom:12px;
-max-height:62px;
-overflow:hidden;
-}
-#note-text{
-width:100%;
-min-height:90px;
-padding:10px 12px;
-border:1px solid #cad8ea;
-border-radius:12px;
-resize:vertical;
-font-family:Arial,sans-serif;
-font-size:14px;
-}
-#note-text::placeholder{
-font-family:Arial,sans-serif;
-}
-#note-text:focus{
-outline:none;
-border-color:#4a90e2;
-box-shadow:0 0 0 4px rgba(74,144,226,.12);
-}
-.note-actions{
-display:flex;
-justify-content:flex-end;
-gap:10px;
-margin-top:14px;
-}
-.note-btn{
-border:none;
-padding:10px 16px;
-border-radius:12px;
-font-weight:700;
-cursor:pointer;
-transition:transform .18s ease, box-shadow .2s ease, filter .2s ease;
-}
-.note-btn:hover{
-transform:translateY(-1px);
-box-shadow:0 8px 18px rgba(15,23,42,.10);
-}
-.note-btn-save{
-background:#9fdfac;
-color:#13411a;
-}
-.note-btn-cancel{
-background:#f7b0b0;
-color:#6f1616;
-}
-.cursor-bloom{
-position:fixed;
-width:18px;
-height:18px;
-margin-left:-9px;
-margin-top:-9px;
-border-radius:50%;
-pointer-events:none;
-z-index:99999;
-background:radial-gradient(circle, rgba(124,197,255,.78) 0%, rgba(124,197,255,.32) 40%, rgba(124,197,255,0) 72%);
-animation:cursorBloom .72s ease-out forwards;
-}
-@keyframes cursorBloom{
-0%{transform:scale(.7);opacity:.95;}
-60%{transform:scale(3.5);opacity:.34;}
-100%{transform:scale(5.2);opacity:0;}
-}
-
-
-/* ===== Inspera-style header + options system ===== */
-:root{
-  --inspera-red:#ee1238;
-  --inspera-text:#000;
-  --inspera-bg:#ffffff;
-  --inspera-soft:#f3f3f3;
-  --inspera-border:#cfcfcf;
-}
-body.theme-black-on-white{
-  background:#ffffff !important;
-  color:#000 !important;
-}
-body.theme-white-on-black,
-body.theme-white-on-black .passage-panel,
-body.theme-white-on-black .questions-panel,
-body.theme-white-on-black .part-header,
-body.theme-white-on-black .modal-content,
-body.theme-white-on-black .options-card-list,
-body.theme-white-on-black .options-screen,
-body.theme-white-on-black .summary-table table,
-body.theme-white-on-black .example-box{
-  background:#111 !important;
-  color:#fff !important;
-  border-color:#444 !important;
-}
-body.theme-white-on-black .answer-input,
-body.theme-white-on-black select.answer-input,
-body.theme-white-on-black input,
-body.theme-white-on-black textarea{
-  background:#1a1a1a !important;
-  color:#fff !important;
-  border-color:#666 !important;
-}
-body.theme-yellow-on-black,
-body.theme-yellow-on-black .passage-panel,
-body.theme-yellow-on-black .questions-panel,
-body.theme-yellow-on-black .part-header,
-body.theme-yellow-on-black .modal-content,
-body.theme-yellow-on-black .options-card-list,
-body.theme-yellow-on-black .options-screen,
-body.theme-yellow-on-black .summary-table table,
-body.theme-yellow-on-black .example-box{
-  background:#000 !important;
-  color:#ffe65c !important;
-  border-color:#756f2c !important;
-}
-body.theme-yellow-on-black .answer-input,
-body.theme-yellow-on-black select.answer-input,
-body.theme-yellow-on-black input,
-body.theme-yellow-on-black textarea{
-  background:#0b0b0b !important;
-  color:#ffe65c !important;
-  border-color:#756f2c !important;
-}
-body.text-small{font-size:14px !important;}
-body.text-medium{font-size:16px !important;}
-body.text-large{font-size:19px !important;}
-body.text-small .reading-passage, body.text-small .questions-container{font-size:14px !important;}
-body.text-medium .reading-passage, body.text-medium .questions-container{font-size:16px !important;}
-body.text-large .reading-passage, body.text-large .questions-container{font-size:19px !important; line-height:1.62;}
-.inspera-header{
-  height:64px;
-  background:#fff;
-  border-bottom:1px solid #d9d9d9;
-  box-shadow:none;
-  justify-content:space-between;
-  padding:0 18px;
-}
-.header-left,.header-center,.header-right{
-  display:flex;
-  align-items:center;
-  min-width:0;
-}
-.header-center{justify-content:center; flex:1;}
-.header-left{flex:1;}
-.header-right{flex:1; justify-content:flex-end; gap:6px;}
-.ielts-brand{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-.brand-logo{
-  font-size:30px;
-  line-height:1;
-  font-weight:800;
-  color:#e01b3c;
-  letter-spacing:-1px;
-}
-.brand-id{
-  font-size:16px;
-  font-weight:700;
-  color:#111;
-}
-.header-icon-btn{
-  width:42px;
-  height:42px;
-  border:none;
-  background:transparent;
-  color:#111;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
-.header-icon-btn:hover{background:#f2f2f2;}
-.header-icon-btn svg{width:24px;height:24px;fill:currentColor;}
-.timer-container{
-  font-size:16px;
-  font-weight:700;
-}
-.timer-display{min-width:62px;display:inline-block;text-align:center;}
-.resizer{
-  width:18px;
-  background:#b8b8b8;
-  position:relative;
-}
-.resizer::before{
-  content:"↔";
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:32px;
-  height:32px;
-  border:2px solid #777;
-  background:#f0f0f0;
-  color:#555;
-  border-radius:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  z-index:5;
-}
-.footer__deliverButton___3FM07{
-  min-width:160px;
-  background:#fff;
-  border:1px solid #bfbfbf;
-  border-radius:0;
-  box-shadow:none;
-}
-.footer__deliverButton___3FM07:hover{background:#f5f5f5;}
-.options-overlay{
-  position:fixed;
-  inset:0;
-  background:#f3f3f3;
-  z-index:4000;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
-  padding-top:26px;
-}
-.options-overlay.hidden{display:none;}
-.options-screen{
-  width:min(920px,92vw);
-  position:relative;
-}
-.options-title{
-  text-align:center;
-  font-size:34px;
-  font-weight:500;
-  color:#000;
-  margin:10px 0 34px;
-}
-.options-close-btn,.options-back-btn{
-  position:absolute;
-  top:0;
-  background:none;
-  border:none;
-  color:#000;
-  cursor:pointer;
-  font-size:34px;
-  font-weight:700;
-}
-.options-close-btn{right:0;}
-.options-back-btn{
-  left:0;
-  font-size:24px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.options-back-btn span{font-size:20px;font-weight:500;}
-.options-submit-card{
-  background:var(--inspera-red);
-  color:#fff;
-  border-radius:4px;
-  min-height:132px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 46px;
-  margin-bottom:24px;
-  cursor:pointer;
-}
-.options-card-left{
-  display:flex;
-  align-items:center;
-  gap:22px;
-}
-.options-card-icon{
-  font-size:40px;
-  transform:rotate(-45deg);
-  display:inline-block;
-}
-.options-card-text{
-  font-size:24px;
-  font-weight:500;
-}
-.options-chevron{
-  font-size:62px;
-  line-height:1;
-}
-.options-card-list{
-  background:#f3f3f3;
-  border:1px solid #bdbdbd;
-  border-radius:4px;
-  overflow:hidden;
-}
-.options-row-btn,.options-choice-btn{
-  width:100%;
-  border:none;
-  background:transparent;
-  min-height:98px;
-  padding:0 46px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  font-size:22px;
-  color:#000;
-  cursor:pointer;
-}
-.options-row-btn + .options-row-btn,
-.options-choice-btn + .options-choice-btn{
-  border-top:1px solid #c9c9c9;
-}
-.options-row-left{
-  display:flex;
-  align-items:center;
-  gap:22px;
-}
-.options-row-icon{
-  font-size:32px;
-  width:42px;
-  text-align:center;
-  color:#b3b3b3;
-}
-.options-choice-btn{
-  justify-content:flex-start;
-  gap:24px;
-}
-.choice-check{
-  width:42px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  font-size:40px;
-  opacity:0;
-}
-.options-choice-btn.active .choice-check{opacity:1;}
-@media (max-width: 800px){
-  .brand-id{display:none;}
-  .options-title{font-size:28px;}
-  .options-row-btn,.options-choice-btn{padding:0 20px;font-size:19px;min-height:80px;}
-  .options-submit-card{padding:0 20px;min-height:110px;}
-  .options-card-text{font-size:22px;}
-}
-
-
-/* ===== Review / explanation / evidence highlight upgrade ===== */
-.review-action-bar{display:flex;gap:12px;justify-content:center;align-items:center;margin:0 0 18px 0;flex-wrap:wrap;}
-.review-main-btn,.review-secondary-btn{border:none;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;}
-.review-main-btn{background:#111;color:#fff;}
-.review-secondary-btn{background:#ececec;color:#222;}
-.review-main-btn:hover,.review-secondary-btn:hover{filter:brightness(.97);}
-.explanation-box{margin-top:14px;padding:14px 16px;border-radius:14px;border:1px solid #d9e3ee;background:#f8fbff;color:#1d2a3a;font-size:14px;line-height:1.55;}
-.explanation-box strong{display:block;margin-bottom:6px;font-size:14px;}
-.evidence-hit{background:#fff6a8;border-radius:10px;padding:1px 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone;position:relative;}
-.evidence-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border-radius:999px;background:#111;color:#fff;font-size:12px;font-weight:700;margin-right:6px;vertical-align:middle;}
-body.theme-white-on-black .evidence-hit{background:#365d8c;color:#fff;}
-body.theme-yellow-on-black .evidence-hit{background:#524900;color:#ffe65c;}
-.correct-answer-inline{display:inline-block;margin-left:10px;padding:4px 8px;border-radius:999px;background:#e8f5e9;color:#1f6b2d;font-size:12px;font-weight:700;}
-.incorrect-answer-inline{display:inline-block;margin-left:10px;padding:4px 8px;border-radius:999px;background:#fdecea;color:#b42318;font-size:12px;font-weight:700;}
-.tf-option.review-correct,.multi-choice-option.review-correct{background:#e8f5e9 !important;border:1px solid #49a35f !important;}
-.tf-option.review-wrong,.multi-choice-option.review-wrong{background:#fdecea !important;border:1px solid #dc5c5c !important;}
-.paragraph-matching-question.review-correct,.text-review-box.review-correct,tr.review-correct{background:#e8f5e9 !important;border-radius:12px;}
-.paragraph-matching-question.review-wrong,.text-review-box.review-wrong,tr.review-wrong{background:#fdecea !important;border-radius:12px;}
-.review-scroll-tip{font-size:13px;color:#555;text-align:center;margin-top:4px;}
-
 </style>
-
-<style>
-/* === final fix pack === */
-:root{--theme-bg:#fff;--theme-text:#000;--theme-soft:#f3f3f3;--theme-border:#cfcfcf;--theme-input:#fff;--theme-accent:#ffe65c;}
-body.theme-black-on-white{
-  --theme-bg:#fff;--theme-text:#000;--theme-soft:#f3f3f3;--theme-border:#cfcfcf;--theme-input:#fff;
-}
-body.theme-white-on-black{
-  --theme-bg:#000;--theme-text:#fff;--theme-soft:#000;--theme-border:#6b6b6b;--theme-input:#111;
-}
-body.theme-yellow-on-black{
-  --theme-bg:#000;--theme-text:#ffe65c;--theme-soft:#000;--theme-border:#8b8030;--theme-input:#111;
-}
-body.theme-white-on-black,
-body.theme-yellow-on-black{background:var(--theme-bg)!important;color:var(--theme-text)!important;}
-body.theme-white-on-black .header,
-body.theme-yellow-on-black .header,
-body.theme-white-on-black .inspera-header,
-body.theme-yellow-on-black .inspera-header,
-body.theme-white-on-black .main-container,
-body.theme-yellow-on-black .main-container,
-body.theme-white-on-black .passage-panel,
-body.theme-yellow-on-black .passage-panel,
-body.theme-white-on-black .questions-panel,
-body.theme-yellow-on-black .questions-panel,
-body.theme-white-on-black .part-header,
-body.theme-yellow-on-black .part-header,
-body.theme-white-on-black .nav-row,
-body.theme-yellow-on-black .nav-row,
-body.theme-white-on-black .options-overlay,
-body.theme-yellow-on-black .options-overlay,
-body.theme-white-on-black .options-screen,
-body.theme-yellow-on-black .options-screen,
-body.theme-white-on-black .options-card-list,
-body.theme-yellow-on-black .options-card-list,
-body.theme-white-on-black .modal-content,
-body.theme-yellow-on-black .modal-content,
-body.theme-white-on-black table,
-body.theme-yellow-on-black table,
-body.theme-white-on-black tbody,
-body.theme-yellow-on-black tbody,
-body.theme-white-on-black thead,
-body.theme-yellow-on-black thead,
-body.theme-white-on-black tr,
-body.theme-yellow-on-black tr,
-body.theme-white-on-black td,
-body.theme-yellow-on-black td,
-body.theme-white-on-black th,
-body.theme-yellow-on-black th,
-body.theme-white-on-black .example-box,
-body.theme-yellow-on-black .example-box{
-  background:var(--theme-bg)!important;
-  color:var(--theme-text)!important;
-  border-color:var(--theme-border)!important;
-  box-shadow:none!important;
-}
-body.theme-white-on-black .options-submit-card,
-body.theme-yellow-on-black .options-submit-card{background:#ee1238!important;color:#fff!important;}
-body.theme-white-on-black .footer__questionNo___3WNct,
-body.theme-yellow-on-black .footer__questionNo___3WNct,
-body.theme-white-on-black .section-prefix,
-body.theme-yellow-on-black .section-prefix,
-body.theme-white-on-black .sectionNr,
-body.theme-yellow-on-black .sectionNr,
-body.theme-white-on-black .attemptedCount,
-body.theme-yellow-on-black .attemptedCount,
-body.theme-white-on-black .options-title,
-body.theme-yellow-on-black .options-title,
-body.theme-white-on-black .options-row-btn,
-body.theme-yellow-on-black .options-row-btn,
-body.theme-white-on-black .options-choice-btn,
-body.theme-yellow-on-black .options-choice-btn,
-body.theme-white-on-black .brand-id,
-body.theme-yellow-on-black .brand-id,
-body.theme-white-on-black .timer-display,
-body.theme-yellow-on-black .timer-display,
-body.theme-white-on-black p, body.theme-white-on-black div, body.theme-white-on-black span, body.theme-white-on-black li, body.theme-white-on-black h2, body.theme-white-on-black h4,
-body.theme-yellow-on-black p, body.theme-yellow-on-black div, body.theme-yellow-on-black span, body.theme-yellow-on-black li, body.theme-yellow-on-black h2, body.theme-yellow-on-black h4{
-  color:var(--theme-text)!important;
-}
-body.theme-white-on-black .header-icon-btn,
-body.theme-yellow-on-black .header-icon-btn{color:var(--theme-text)!important;}
-body.theme-white-on-black .header-icon-btn svg,
-body.theme-yellow-on-black .header-icon-btn svg{fill:currentColor!important;}
-body.theme-white-on-black .answer-input,
-body.theme-yellow-on-black .answer-input,
-body.theme-white-on-black input,
-body.theme-yellow-on-black input,
-body.theme-white-on-black select,
-body.theme-yellow-on-black select,
-body.theme-white-on-black textarea,
-body.theme-yellow-on-black textarea,
-body.theme-white-on-black .subQuestion,
-body.theme-yellow-on-black .subQuestion{
-  background:var(--theme-input)!important;
-  color:var(--theme-text)!important;
-  border-color:var(--theme-border)!important;
-}
-body.theme-yellow-on-black .tf-option.review-correct,
-body.theme-yellow-on-black .multi-choice-option.review-correct,
-body.theme-yellow-on-black .paragraph-matching-question.review-correct,
-body.theme-yellow-on-black tr.review-correct{background:#102a10!important;}
-body.theme-yellow-on-black .tf-option.review-wrong,
-body.theme-yellow-on-black .multi-choice-option.review-wrong,
-body.theme-yellow-on-black .paragraph-matching-question.review-wrong,
-body.theme-yellow-on-black tr.review-wrong{background:#2e1111!important;}
-body.theme-white-on-black .tf-option.review-correct,
-body.theme-white-on-black .multi-choice-option.review-correct,
-body.theme-white-on-black .paragraph-matching-question.review-correct,
-body.theme-white-on-black tr.review-correct{background:#102a10!important;}
-body.theme-white-on-black .tf-option.review-wrong,
-body.theme-white-on-black .multi-choice-option.review-wrong,
-body.theme-white-on-black .paragraph-matching-question.review-wrong,
-body.theme-white-on-black tr.review-wrong{background:#2e1111!important;}
-.review-mode .timer-container{display:none!important;}
-.passage-panel,.questions-panel{min-width:260px;}
-.panels-container{display:flex;flex:1;overflow:hidden;min-height:0;}
-.resizer{user-select:none;touch-action:none;}
-.question-set,.reading-passage{min-width:0;}
-</style>
-
 </head>
 <body>
-<div class="header inspera-header">
-  <div class="header-left">
-    <div class="ielts-brand">
-      <span class="brand-logo">IELTS</span>
-      <span class="brand-id">Test taker ID</span>
-    </div>
-  </div>
-  <div class="header-center">
-    <div class="timer-container">
-      <span class="timer-display">60:00</span>
-      <div class="timer-controls">
-        <button id="timer-toggle-btn" title="Pause/Resume Timer">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
-        </button>
-        <button id="timer-reset-btn" title="Reset Timer">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="header-right">
-    <button class="header-icon-btn" type="button" aria-label="Connection status" title="Connection status">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 18.5l-2.5-2.5a3.5 3.5 0 0 1 5 0L12 18.5zm-5-5-2.5-2.4a10.5 10.5 0 0 1 15 0L17 13.5a7 7 0 0 0-10 0zm-5-5L0 6a17.5 17.5 0 0 1 24 0l-2 2.5a14 14 0 0 0-20 0z"/></svg>
-    </button>
-    <button class="header-icon-btn" type="button" aria-label="Notifications" title="Notifications">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm7-6V11a7 7 0 1 0-14 0v5l-2 2v1h18v-1l-2-2z"/></svg>
-    </button>
-    <button id="open-options-btn" class="header-icon-btn" type="button" aria-label="Options" title="Options">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-    </button>
-  </div>
+<div class="header">
+<div class="timer-container">
+<span class="timer-display">60:00</span>
+<div class="timer-controls">
+<button id="timer-toggle-btn" title="Pause/Resume Timer">
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>
+</button>
+<button id="timer-reset-btn" title="Reset Timer">
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+</button>
+</div>
+</div>
+<a href="https://t.me/ielts9_reading_listening" target="_blank" class="telegram-link">
+For More CD Mocks
+</a>
 </div>
 
 <div class="main-container" id="main-container">
@@ -2614,90 +1851,26 @@ The oldest group, however, reacted in the same way as
 </div>
 </div>
 
-<button id="deliver-button" aria-label="Open options" class="footer__deliverButton___3FM07">
+<button id="deliver-button" aria-label="Review your answers" class="footer__deliverButton___3FM07">
 <i class="fa fa fa-check" aria-hidden="true"></i>
-<span>Options</span>
+<span>Check Answers</span>
 </button>
 </nav>
 
 <!-- Context Menu -->
-
 <div id="contextMenu" class="context-menu">
-<div id="menu-highlight" class="context-menu-item" onclick="highlightText()">Highlight</div>
-<div id="menu-note" class="context-menu-item" onclick="addNote()">Notes</div>
-<div id="menu-clear" class="context-menu-item" onclick="clearHighlight()">Clear</div>
-<div id="menu-clear-all" class="context-menu-item" onclick="clearAllHighlights()">Clear All</div>
+<div id="menu-highlight" class="context-menu-item" onclick="highlightText()">
+Highlight
 </div>
-
-<div id="noteModal" class="note-modal">
-  <div class="note-modal-card">
-    <h3>Add note</h3>
-    <div id="noteSelectedPreview" class="note-selected-preview"></div>
-    <textarea id="note-text" placeholder="Write your note ..."></textarea>
-    <div class="note-actions">
-      <button type="button" class="note-btn note-btn-cancel" id="cancelNoteBtn">Cancel</button>
-      <button type="button" class="note-btn note-btn-save" id="saveNoteBtn">Save</button>
-    </div>
-  </div>
+<div id="menu-note" class="context-menu-item" onclick="addNote()">
+Note
 </div>
-
-
-<div id="options-modal" class="options-overlay hidden" aria-hidden="true">
-  <div class="options-screen options-main-screen">
-    <button type="button" class="options-close-btn" onclick="closeOptionsModal()" aria-label="Close options">&times;</button>
-    <h2 class="options-title">Options</h2>
-    <div class="options-card options-submit-card" onclick="submitTheTest()">
-      <div class="options-card-left">
-        <span class="options-card-icon">➤</span>
-        <span class="options-card-text">Submit the test</span>
-      </div>
-      <span class="options-chevron">›</span>
-    </div>
-    <div class="options-card-list">
-      <button type="button" class="options-row-btn" onclick="showOptionsPanel('contrast')">
-        <span class="options-row-left"><span class="options-row-icon">◐</span>Contrast</span>
-        <span class="options-chevron">›</span>
-      </button>
-      <button type="button" class="options-row-btn" onclick="showOptionsPanel('text-size')">
-        <span class="options-row-left"><span class="options-row-icon">🔎</span>Text size</span>
-        <span class="options-chevron">›</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="options-screen hidden" id="contrast-screen">
-    <button type="button" class="options-back-btn" onclick="showOptionsPanel('main')" aria-label="Back to options">❮ <span>Options</span></button>
-    <button type="button" class="options-close-btn" onclick="closeOptionsModal()" aria-label="Close options">&times;</button>
-    <h2 class="options-title">Contrast</h2>
-    <div class="options-card-list options-choice-list">
-      <button type="button" class="options-choice-btn" data-contrast="black-on-white" onclick="applyContrastTheme('black-on-white', this)">
-        <span class="choice-check">✓</span><span>Black on white</span>
-      </button>
-      <button type="button" class="options-choice-btn" data-contrast="white-on-black" onclick="applyContrastTheme('white-on-black', this)">
-        <span class="choice-check">✓</span><span>White on black</span>
-      </button>
-      <button type="button" class="options-choice-btn" data-contrast="yellow-on-black" onclick="applyContrastTheme('yellow-on-black', this)">
-        <span class="choice-check">✓</span><span>Yellow on black</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="options-screen hidden" id="text-size-screen">
-    <button type="button" class="options-back-btn" onclick="showOptionsPanel('main')" aria-label="Back to options">❮ <span>Options</span></button>
-    <button type="button" class="options-close-btn" onclick="closeOptionsModal()" aria-label="Close options">&times;</button>
-    <h2 class="options-title">Text size</h2>
-    <div class="options-card-list options-choice-list">
-      <button type="button" class="options-choice-btn" data-size="small" onclick="applyTextSize('small', this)">
-        <span class="choice-check">✓</span><span>Small</span>
-      </button>
-      <button type="button" class="options-choice-btn" data-size="medium" onclick="applyTextSize('medium', this)">
-        <span class="choice-check">✓</span><span>Medium</span>
-      </button>
-      <button type="button" class="options-choice-btn" data-size="large" onclick="applyTextSize('large', this)">
-        <span class="choice-check">✓</span><span>Large</span>
-      </button>
-    </div>
-  </div>
+<div id="menu-clear" class="context-menu-item" onclick="clearHighlight()">
+Clear
+</div>
+<div id="menu-clear-all" class="context-menu-item" onclick="clearAllHighlights()">
+Clear All
+</div>
 </div>
 
 <div id="results-modal" class="modal-overlay hidden">
@@ -2708,20 +1881,40 @@ The oldest group, however, reacted in the same way as
 <p>Score: <span id="results-score"></span> / 40</p>
 <p>IELTS Band: <span id="results-band"></span></p>
 </div>
-<div class="review-action-bar">
-  <button id="review-answers-btn" type="button" class="review-main-btn">Review answers</button>
-  <button id="close-results-btn" type="button" class="review-secondary-btn">Close</button>
-</div>
 <div id="results-details" class="results-details-container">
 <!-- Results for each question will be injected here -->
 </div>
 </div>
 </div>
 
-
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  const correctAnswers = {
+document.addEventListener('DOMContentLoaded', () => {
+// --- STATE VARIABLES ---
+let currentPassage = 1;
+let currentQuestion = 1;
+let selectedRange = null;
+let timeInSeconds = 3600;
+let timerInterval;
+let draggedItem = null;
+let activeQuestionElement = null;
+let selectedDragItem = null;
+
+// --- DOM ELEMENTS ---
+const timerDisplay = document.querySelector('.timer-display');
+const timerToggleButton = document.getElementById('timer-toggle-btn');
+const timerResetButton = document.getElementById('timer-reset-btn');
+const deliverButton = document.getElementById('deliver-button');
+const resizer = document.getElementById('resizer');
+const passagePanel = document.getElementById('passage-panel');
+const questionsPanel = document.getElementById('questions-panel');
+const contextMenu = document.getElementById('contextMenu');
+
+// --- ICON SVGs ---
+const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>';
+const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+// --- ANSWERS ---
+const correctAnswers = {
 '1': 'TRUE', '2': 'NOT GIVEN', '3': 'FALSE', '4': 'TRUE', '5': 'TRUE',
 '6': 'NOT GIVEN', '7': 'FALSE', '8': 'Strips', '9': 'Sheep', '10': 'Stretched',
 '11': 'Bark', '12': 'Samarkand', '13': 'Stone',
@@ -2734,564 +1927,721 @@ document.addEventListener('DOMContentLoaded', function(){
 '31': 'C', '32': 'B', '33': 'C', '34': 'A', '35': 'A',
 '36': 'Age', '37': 'Two weeks old', '38': 'Human beings', '39': 'Good motor control', '40': 'Mature monkeys'
 };
-  const evidenceMap = {
-1:{passage:1,snippet:'The light material of silk was sometimes used, but was normally too expensive to consider.',explanation:'The keyword is “sometimes used”. The statement says silk was occasionally used in Ancient China, and the passage says exactly that. Because the two ideas match neatly, the answer is TRUE.'},
-2:{passage:1,snippet:'tea was served from baskets with multi-colored paper cups and paper napkins of different sizes and shapes.',explanation:'The passage only says that multi-coloured paper cups already existed during the Tang Dynasty. It does not say that coloured paper was invented then. Since the text never gives an invention date, the answer is NOT GIVEN.'},
-3:{passage:1,snippet:'a Chinese caravan was captured which happened to include several papermakers. They were taken away to Samarkand',explanation:'The direction of capture matters here. The papermakers were not captured by the Chinese; they were in a Chinese caravan that was captured and then taken to Samarkand. That directly contradicts the statement, so the answer is FALSE.'},
-4:{passage:1,snippet:'bulk manufacturing of paper began in Iran',explanation:'The statement uses “large-scale industry”, and the passage says “bulk manufacturing of paper began in Iran”. Those are equivalent ideas, so the answer is TRUE.'},
-5:{passage:1,snippet:'when the Moors from North Africa invaded Spain and Portugal they brought the technology with them',explanation:'This sentence clearly traces the route into Europe through North Africa. Since the passage explicitly gives that path, the answer is TRUE.'},
-6:{passage:1,snippet:'The early European papers were made from recycled cotton and linen',explanation:'The passage tells us about cheap rag-based paper after printing demand rose, but it does not state whether paper materials were very expensive exactly when Gutenberg invented movable type. The timing and price claim are not directly given, so the answer is NOT GIVEN.'},
-7:{passage:1,snippet:'Yet soon this source became insufficient and some curious attempts were made to find new materials.',explanation:'The statement blames transport difficulties, but the passage says the rag source simply became insufficient. Because the given reason is different, the answer is FALSE.'},
-8:{passage:1,snippet:'The Egyptians cut the plant into strips which they softened in water.',explanation:'The table asks what part of the plant was processed. The exact word used in the passage is “strips”, so that is the correct one-word answer.'},
-9:{passage:1,snippet:'a single book written on parchment required the skins of 300 sheep.',explanation:'The table asks for the animal. The passage names “sheep” explicitly, so Sheep is correct.'},
-10:{passage:1,snippet:'they were then stretched on a special frame.',explanation:'After drying, the skins were “stretched”. The task requires one word only, so Stretched is the correct completion.'},
-11:{passage:1,snippet:'mixing finely chopped mulberry bark and hemp rags',explanation:'The missing material is the part of the mulberry tree used in papermaking. The passage clearly says “bark”, so Bark is correct.'},
-12:{passage:1,snippet:'They were taken away to Samarkand',explanation:'The table asks for the place linked to the 751 AD transfer of paper technology. The passage names Samarkand directly.'},
-13:{passage:1,snippet:'They began to prepare it in stone mills',explanation:'The table asks what the mills were made of. The passage says “stone mills”, so Stone is the correct one-word answer.'},
-14:{passage:2,snippet:'The tidy brick and wood apartments and townhouses would not look out of place in some of the city’s most affluent suburbs',explanation:'Paragraph A stresses the surprisingly high quality and appearance of the housing. That matches heading iv, “The unexpectedly high standard of the housing.”'},
-15:{passage:2,snippet:'Initially, there was a strong sense of neighbourliness.',explanation:'Paragraph B looks back at the original Talbot Park and the close-knit atmosphere around the central garden. That fits heading ix, “A close community in the original Talbot Park development.”'},
-16:{passage:2,snippet:'The new arrivals didn’t always integrate... standards dropped... petty crime was on the rise and the garden was considered unsafe.',explanation:'Paragraph C catalogues the decline: weak integration, lower standards, more petty crime and an unsafe garden. This is heading i, “Some of the problems that developed at Talbot Park.”'},
-17:{passage:2,snippet:'Doing this required a fresh approach that can be summed up as “mix and match”.',explanation:'Paragraph D explains the design style, variety of housing plans, conservative architecture and openness. That makes heading x, “Details of the style of buildings used in the makeover,” the best fit.'},
-18:{passage:2,snippet:'The population today is cosmopolitan: 50% Pacific Islanders, 20% Maori, 15% Asian',explanation:'Paragraph E is all about the ethnic composition of the new community. Therefore heading iii is correct.'},
-19:{passage:2,snippet:'Talbot Park and its surrounding suburb of Tamaki are low socio-economic areas.',explanation:'Paragraph F focuses on income levels, state housing proportions and economic hardship. That matches heading v, “Financial hardship in Talbot Park and a neighbouring community.”'},
-20:{passage:2,snippet:'The Tenancy Manager walks the site every day, knows everyone by name and deals with problems quickly.',explanation:'Paragraph G is about intensive tenancy management and helping residents live together smoothly. This aligns with heading vii, “How to co-ordinate and assist the people who live at Talbot Park.”'},
-21:{passage:2,snippet:'The new arrivals didn’t always integrate with the community and a “them and us” mentality developed.',explanation:'The cause of deterioration in paragraph C is weak social integration and division. In the list, that idea corresponds to option D.'},
-22:{passage:2,snippet:'There is no reason why state housing should look cheap in my view',explanation:'Paragraph A emphasises appearance and quality. The option that captures that point is A.'},
-23:{passage:2,snippet:'The focus is on frequent inspections and setting clear guidelines and boundaries regarding the sort of behaviour we expect from tenants',explanation:'Paragraph G centres on management rules and behavioural control. That best matches option C.'},
-24:{passage:2,snippet:'the new development has actually made the density of housing in Talbot Park greater',explanation:'The one-word completion comes straight from the passage: the controversial issue was increased density. Therefore Density is correct.'},
-25:{passage:2,snippet:'employing a variety of plans by different architects',explanation:'The people responsible for the varied plans were “architects”. That exact word completes the summary.'},
-26:{passage:2,snippet:'ensure the project did not go over budget.',explanation:'The design choices were partly made to control spending. The exact one-word answer from the text is Budget.'},
-27:{passage:3,snippet:'These positions are no more frightening than those that primates encounter frequently in the wild',explanation:'The passage says the situations were ordinary rather than extreme. Option B best reflects that idea.'},
-28:{passage:3,snippet:'The monkeys reduced their activity greatly and sometimes froze for extended periods of time.',explanation:'This choice concerns the response in the no-eye-contact condition, where freezing and reduced activity appeared. That matches option C.'},
-29:{passage:3,snippet:'The monkeys made several hostile gestures: barking ... and staring back.',explanation:'The stare condition triggered hostile, defensive displays. Option D is the best match for that response pattern.'},
-30:{passage:3,snippet:'These responses help to draw the mother’s attention.',explanation:'In the alone condition, calls and activity were attempts to regain the mother’s attention. That corresponds to option A.'},
-31:{passage:3,snippet:'Only animals in the oldest group ... conducted themselves differently in each situation',explanation:'Selective responses appeared only in the oldest group, not in the youngest or intermediate ones. That matches option C.'},
-32:{passage:3,snippet:'they lacked some motor control and seemed to act randomly',explanation:'The youngest monkeys did show behaviour, but it was random and poorly controlled. Option B is therefore correct.'},
-33:{passage:3,snippet:'their actions seemed unrelated to the test condition.',explanation:'The intermediate groups had movement control, but they still did not respond appropriately to each situation. That idea fits option C.'},
-34:{passage:3,snippet:'This finding meant motor control was not the prime determinant',explanation:'The researchers concluded that motor control alone did not explain selective fear behaviour. Option A best reflects that conclusion.'},
-35:{passage:3,snippet:'nine to 12 weeks is the critical age for the appearance of a monkey’s ability',explanation:'The final conclusion identifies a critical age window for adaptive modulation of defensive behaviour. That corresponds to option A.'},
-36:{passage:3,snippet:'gain clues to the regions that underlie the regulation of fear and fear-related behavior.',explanation:'The summary is about what factor the researchers linked to the emergence of selective fear responses. They compared it with stages of brain development and the relevant organising concept is Age.'},
-37:{passage:3,snippet:'the infants in the youngest group (no more than two weeks old)',explanation:'The youngest group is described explicitly as no more than two weeks old. So Two weeks old is the exact answer.'},
-38:{passage:3,snippet:'as if they had not noticed the human beings that were present.',explanation:'The youngest infants seemed unaware of the people involved in the experiment. The exact phrase required is Human beings.'},
-39:{passage:3,snippet:'Babies in the two intermediate-age groups had good motor control',explanation:'The intermediate groups are characterised by one clear advantage: good motor control. That exact phrase completes the note.'},
-40:{passage:3,snippet:'identical to those of mature monkeys.',explanation:'The oldest infants responded in ways identical to mature monkeys. Hence Mature monkeys is the correct completion.'}
+
+
+
+// --- INITIALIZATION ---
+function initialize() {
+startTimer();
+initializeDragAndDrop();
+setupCheckboxLimits();
+setupExampleHeading();
+switchToPart(1); // Also calls goToQuestion(1) and updateNavigation
+
+document.body.addEventListener('input', updateAllIndicators);
+document.body.addEventListener('change', updateAllIndicators);
+deliverButton.addEventListener('click', checkAnswers);
+timerToggleButton.addEventListener('click', toggleTimer);
+timerResetButton.addEventListener('click', resetTimer);
+
+// Add click listeners to question containers for navigation
+document.querySelectorAll('[data-q-start]').forEach(el => {
+el.addEventListener('click', () => {
+const qNum = parseInt(el.dataset.qStart, 10);
+if (currentQuestion !== qNum) {
+goToQuestion(qNum);
+}
+});
+});
+
+resizer.addEventListener('mousedown', initResize, false);
+initializeContextMenu();
+}
+
+// --- CORE TEST LOGIC ---
+
+function checkAnswers() {
+clearInterval(timerInterval);
+let score = 0;
+const totalQuestions = 40;
+const resultsDetailsContainer = document.getElementById('results-details');
+resultsDetailsContainer.innerHTML = '';
+
+document.querySelectorAll('.correct, .incorrect, .correct-answer-highlight').forEach(el => {
+el.classList.remove('correct', 'incorrect', 'correct-answer-highlight');
+});
+document.querySelectorAll('.correct-answer-display').forEach(el => el.remove());
+
+for (let i = 1; i <= totalQuestions; i++) {
+const questionKey = String(i);
+const correctAnswer = correctAnswers[questionKey];
+let userAnswer = '';
+let isCorrect = false;
+let element;
+
+const tfRadio = document.querySelector(`input[name="q${i}"]:checked`);
+const textInput = document.getElementById(`q${i}`);
+
+if (tfRadio) { // TF/NG or Multiple Choice Radio
+userAnswer = tfRadio.value;
+element = tfRadio.closest('.tf-question');
+if (userAnswer === correctAnswer) {
+isCorrect = true;
+}
+} else if (textInput && textInput.tagName === 'INPUT') { // Text input
+userAnswer = textInput.value.trim();
+element = textInput;
+if (Array.isArray(correctAnswer)) {
+isCorrect = correctAnswer.some(ans => userAnswer.toLowerCase() === ans.toLowerCase());
+} else {
+isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+}
+} else if (textInput && textInput.tagName === 'SELECT') { // Select/Dropdown
+userAnswer = textInput.value;
+element = textInput.closest('.paragraph-matching-question');
+if (userAnswer === correctAnswer) {
+isCorrect = true;
+}
+}
+
+if (isCorrect) {
+score++;
+if (element) element.classList.add('correct');
+} else {
+if (element) element.classList.add('incorrect');
+}
+
+// For showing results in the modal
+let userAnswerDisplay = userAnswer || 'Not Answered';
+let correctAnswerDisplay = Array.isArray(correctAnswer) ? correctAnswer.join(' / ') : correctAnswer;
+
+const resultRow = `
+<div class="result-row ${isCorrect ? '' : 'incorrect'}">
+<span class="q-num">${i}</span>
+<span class="user-ans">${userAnswerDisplay}</span>
+<span class="correct-ans">${correctAnswerDisplay}</span>
+</div>`;
+resultsDetailsContainer.innerHTML += resultRow;
+}
+
+// --- Update Score and Band ---
+document.getElementById('results-score').textContent = score;
+document.getElementById('results-band').textContent = calculateBandScore(score);
+document.getElementById('results-modal').classList.remove('hidden');
+}
+
+function calculateBandScore(score) {
+if (score >= 39) return '9.0';
+const mapping = {
+40: 9.0, 39: 9.0, 38: 8.5, 37: 8.5, 36: 8.0, 35: 8.0, 34: 7.5,
+33: 7.5, 32: 7.0, 31: 7.0, 30: 7.0, 29: 6.5, 28: 6.5, 27: 6.5,
+26: 6.0, 25: 6.0, 24: 6.0, 23: 5.5, 22: 5.5, 21: 5.5, 20: 5.5,
+19: 5.0, 18: 5.0, 17: 5.0, 16: 5.0, 15: 4.5, 14: 4.5, 13: 4.5,
+12: 4.0, 11: 4.0, 10: 3.5, 9: 3.5, 8: 3.0, 7: 3.0, 6: 2.5, 5: 2.5
 };
-  let currentPart = 1;
-  let currentQuestion = 1;
-  let timeInSeconds = 3600;
-  let timerInterval = null;
-  let timerRunning = false;
-  let reviewedState = null;
-  let isResizing = false;
+if (score <= 0) return 0.0;
+if (score === 1) return 1.0;
+if (score <= 3) return 2.0;
+if (score <= 5) return 2.5;
+return mapping[score] || 0.0;
+}
 
-  const timerDisplay = document.querySelector('.timer-display');
-  const timerToggleButton = document.getElementById('timer-toggle-btn');
-  const timerResetButton = document.getElementById('timer-reset-btn');
-  const deliverButton = document.getElementById('deliver-button');
-  const openOptionsBtn = document.getElementById('open-options-btn');
-  const resizer = document.getElementById('resizer');
-  const panelsContainer = document.querySelector('.panels-container');
-  const passagePanel = document.getElementById('passage-panel');
-  const questionsPanel = document.getElementById('questions-panel');
-  const contextMenu = document.getElementById('contextMenu');
-  const noteModal = document.getElementById('noteModal');
-  const noteText = document.getElementById('note-text');
-  const noteSelectedPreview = document.getElementById('noteSelectedPreview');
-  const saveNoteBtn = document.getElementById('saveNoteBtn');
-  const cancelNoteBtn = document.getElementById('cancelNoteBtn');
-  let selectedRange = null;
+function getUserAnswer(qNum) {
+const textInput = document.getElementById(`q${qNum}`);
+const radioInput = document.querySelector(`input[name="q${qNum}"]:checked`);
+const dropZone = document.querySelector(`.drop-zone[data-q-start="${qNum}"]`);
 
-  const playIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 5v14l11-7L8 5z"/></svg>';
-  const pauseIcon = '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+if (textInput) { // Handles <input type="text"> and <select>
+return { value: textInput.value, text: textInput.value || 'N/A' };
+}
+if (radioInput) {
+return { value: radioInput.value, text: radioInput.value };
+}
+if (dropZone) {
+const droppedItem = dropZone.querySelector('.drag-item');
+return { 
+value: droppedItem ? droppedItem.dataset.value : null, 
+text: droppedItem ? droppedItem.textContent.trim() : 'N/A' 
+};
+}
+return { value: null, text: 'N/A' };
+}
 
-  function updateTimerDisplay(){
-    const m = Math.floor(timeInSeconds / 60);
-    const s = timeInSeconds % 60;
-    if (timerDisplay) timerDisplay.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  }
-  function startTimer(){
-    if (timerRunning) return;
-    timerRunning = true;
-    if (timerToggleButton) timerToggleButton.innerHTML = pauseIcon;
-    timerInterval = setInterval(() => {
-      if (timeInSeconds > 0) {
-        timeInSeconds -= 1;
-        updateTimerDisplay();
-      } else {
-        pauseTimer();
-      }
-    }, 1000);
-  }
-  function pauseTimer(){
-    timerRunning = false;
-    clearInterval(timerInterval);
-    if (timerToggleButton) timerToggleButton.innerHTML = playIcon;
-  }
-  function hideTimer(){
-    pauseTimer();
-    document.body.classList.add('review-mode');
-  }
-  function toggleTimer(){ timerRunning ? pauseTimer() : startTimer(); }
-  function resetTimer(){ timeInSeconds = 3600; updateTimerDisplay(); startTimer(); }
+function displayCorrectAnswer(qNum, correctAnswer) {
+// Handle multi-choice group questions (e.g., 38-40)
+if (qNum >= 38 && qNum <= 40) {
+const correctAnswersArr = Array.isArray(correctAnswer) ? correctAnswer : [correctAnswer];
+correctAnswersArr.forEach(ansValue => {
+const correctInput = document.querySelector(`input[name="q38-40"][value="${ansValue}"]`);
+correctInput?.closest('.multi-choice-option')?.classList.add('correct-answer-highlight');
+});
+return;
+}
 
-  function qPart(q){ return q <= 13 ? 1 : (q <= 26 ? 2 : 3); }
-  function firstQuestionOfPart(part){ return {1:1,2:14,3:27}[part]; }
+// Handle radio button questions by highlighting the correct label
+const correctRadioInput = document.querySelector(`input[name="q${qNum}"][value="${correctAnswer}"]`);
+if (correctRadioInput) {
+const parentOption = correctRadioInput.closest('.tf-option, .multi-choice-option');
+if (parentOption) {
+parentOption.classList.add('correct-answer-highlight');
+return;
+}
+}
 
-  function findQuestionContainer(q){
-    const byId = document.getElementById('q' + q);
-    if (byId) return byId.closest('.paragraph-matching-question, tr, .question, .multi-choice-question, .tf-question') || byId.parentElement;
-    const byName = document.querySelector('input[name="q' + q + '"]');
-    if (byName) return byName.closest('.tf-question, .multi-choice-question, .question') || byName.parentElement;
-    const ranged = Array.from(document.querySelectorAll('[data-q-start][data-q-end]')).find(el => {
-      const s = parseInt(el.dataset.qStart || '0', 10);
-      const e = parseInt(el.dataset.qEnd || s, 10);
-      return q >= s && q <= e;
-    });
-    return ranged || null;
-  }
+// Handle text inputs, select dropdowns, and others by showing the answer next to them
+const inputEl = document.getElementById(`q${qNum}`);
+if (inputEl) {
+const displaySpan = document.createElement('span');
+displaySpan.className = 'correct-answer-display';
+displaySpan.textContent = ` ✓ ${correctAnswer}`;
+inputEl.insertAdjacentElement('afterend', displaySpan);
+return; // Done
+}
 
-  function scrollToQuestion(q){
-    const container = findQuestionContainer(q);
-    if (container) {
-      container.scrollIntoView({behavior:'smooth', block:'center'});
-    }
-  }
+// Fallback for questions identified by a container (e.g., some T/F/NG questions)
+const element = findQuestionElement(qNum);
+if (element) {
+const displaySpan = document.createElement('span');
+displaySpan.className = 'correct-answer-display';
+displaySpan.textContent = ` ✓ ${correctAnswer}`;
+const itemContainer = element.querySelector('.tf-question-text');
+if (itemContainer) {
+itemContainer.appendChild(displaySpan);
+} else {
+element.appendChild(displaySpan);
+}
+}
+}
 
-  function updateNavigation(){
-    document.querySelectorAll('.footer__questionWrapper___1tZ46').forEach((wrapper, idx) => {
-      wrapper.classList.toggle('selected', idx + 1 === currentPart);
-    });
-    document.querySelectorAll('.subQuestion').forEach(btn => btn.classList.remove('active'));
-    const activeBtn = document.querySelector('.subQuestion[onclick="goToQuestion(' + currentQuestion + ')"]');
-    if (activeBtn) activeBtn.classList.add('active');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    if (prevBtn) prevBtn.disabled = currentQuestion <= 1;
-    if (nextBtn) nextBtn.disabled = currentQuestion >= 40;
-  }
+function findQuestionElement(qNum) {
+return document.querySelector(`[data-q-start="${qNum}"]`);
+}
 
-  function switchToPart(part, keepQuestion){
-    currentPart = part;
-    document.querySelectorAll('.reading-passage, .question-set, .part-header').forEach(el => el.classList.add('hidden'));
-    const p = document.getElementById('passage-text-' + part);
-    const q = document.getElementById('questions-' + part);
-    const h = document.getElementById('part-header-' + part);
-    if (p) p.classList.remove('hidden');
-    if (q) q.classList.remove('hidden');
-    if (h) h.classList.remove('hidden');
-    if (!keepQuestion) currentQuestion = firstQuestionOfPart(part);
-    updateNavigation();
-    setTimeout(() => scrollToQuestion(currentQuestion), 30);
-  }
-  window.switchToPart = switchToPart;
+function addResultToModal(qNum, userAnswer, correctAnswer, isCorrect) {
+const resultsDetails = document.getElementById('results-details');
+const row = document.createElement('div');
+row.className = 'result-row';
+if (!isCorrect) {
+row.classList.add('incorrect');
+}
+row.innerHTML = `
+<span class="q-num">${qNum}</span>
+<span class="user-ans">${userAnswer}</span>
+<span class="correct-ans">${correctAnswer}</span>
+`;
+resultsDetails.appendChild(row);
+}
 
-  function goToQuestion(q){
-    currentQuestion = q;
-    const part = qPart(q);
-    if (currentPart !== part) switchToPart(part, true);
-    updateNavigation();
-    scrollToQuestion(q);
-  }
-  window.goToQuestion = goToQuestion;
-  window.nextQuestion = function(){ if (currentQuestion < 40) goToQuestion(currentQuestion + 1); };
-  window.previousQuestion = function(){ if (currentQuestion > 1) goToQuestion(currentQuestion - 1); };
+function showResultsModal() {
+document.getElementById('results-modal').classList.remove('hidden');
+}
 
-  function getQuestionValue(q){
-    const input = document.getElementById('q' + q);
-    if (input) return (input.value || '').trim();
-    const radio = document.querySelector('input[name="q' + q + '"]:checked');
-    if (radio) return radio.value;
-    const checks = Array.from(document.querySelectorAll('input[name="q' + q + '"]:checked')).map(el => el.value.trim());
-    if (checks.length) return checks.join('|');
-    return '';
-  }
-  function normalize(v){ return String(v || '').trim().replace(/\s+/g,' ').toLowerCase(); }
-  function isCorrect(q, userValue){
-    const correct = correctAnswers[String(q)];
-    if (Array.isArray(correct)) return correct.map(normalize).includes(normalize(userValue));
-    return normalize(userValue) === normalize(correct);
-  }
-  function isAnswered(q){
-    const input = document.getElementById('q' + q);
-    if (input) return String(input.value || '').trim() !== '';
-    return !!document.querySelector('input[name="q' + q + '"]:checked');
-  }
-  function updateAttemptedIndicators(){
-    for (let q = 1; q <= 40; q++) {
-      const btn = document.querySelector('.subQuestion[onclick="goToQuestion(' + q + ')"]');
-      if (btn) btn.classList.toggle('answered', isAnswered(q));
-    }
-    const parts = [{part:1,start:1,end:13,total:13},{part:2,start:14,end:26,total:13},{part:3,start:27,end:40,total:14}];
-    parts.forEach(cfg => {
-      let count = 0;
-      for (let q = cfg.start; q <= cfg.end; q++) if (isAnswered(q)) count++;
-      const wrap = document.querySelectorAll('.footer__questionWrapper___1tZ46')[cfg.part - 1];
-      if (wrap) {
-        const attempted = wrap.querySelector('.attemptedCount');
-        if (attempted) attempted.textContent = count + ' of ' + cfg.total;
-      }
-    });
-  }
+window.closeResultsModal = function() {
+document.getElementById('results-modal').classList.add('hidden');
+}
 
-  function initResize(e){
-    e.preventDefault();
-    const containerRect = panelsContainer.getBoundingClientRect();
-    isResizing = true;
-    function onMove(ev){
-      let leftWidth = ev.clientX - containerRect.left;
-      const min = 260;
-      const max = containerRect.width - min - resizer.offsetWidth;
-      if (leftWidth < min) leftWidth = min;
-      if (leftWidth > max) leftWidth = max;
-      passagePanel.style.flex = 'none';
-      questionsPanel.style.flex = 'none';
-      passagePanel.style.width = leftWidth + 'px';
-      questionsPanel.style.width = (containerRect.width - leftWidth - resizer.offsetWidth) + 'px';
-    }
-    function onUp(){
-      isResizing = false;
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-    }
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', onUp);
-  }
+function disableInputs() {
+deliverButton.innerHTML = `<span>Checked! View Results.</span>`;
+deliverButton.removeEventListener('click', checkAnswers);
+deliverButton.onclick = showResultsModal;
 
-  function closeContextMenu(){ if (contextMenu) contextMenu.style.display='none'; }
-  function unwrapElement(element){
-    const parent = element && element.parentNode;
-    if (!parent) return;
-    while (element.firstChild) parent.insertBefore(element.firstChild, element);
-    parent.removeChild(element);
-    parent.normalize();
-  }
-  function showSelectionMenu(pageX, pageY){
-    if (!contextMenu) return;
-    contextMenu.style.display = 'flex';
-    const menuWidth = contextMenu.offsetWidth || 180;
-    const menuHeight = contextMenu.offsetHeight || 50;
-    let left = Math.max(8, Math.min(pageX, window.innerWidth - menuWidth - 8));
-    let top = pageY - menuHeight - 8;
-    if (top < 8) top = pageY + 12;
-    contextMenu.style.left = left + 'px';
-    contextMenu.style.top = top + 'px';
-  }
-  window.highlightText = function(){
-    if (selectedRange && !selectedRange.collapsed) {
-      const span = document.createElement('span');
-      span.className = 'highlight';
-      span.appendChild(selectedRange.extractContents());
-      selectedRange.insertNode(span);
-      window.getSelection().removeAllRanges();
-      selectedRange = null;
-    }
-    closeContextMenu();
-  };
-  window.addNote = function(){
-    if (!selectedRange || selectedRange.collapsed || !noteModal) return;
-    noteSelectedPreview.textContent = selectedRange.toString().trim();
-    noteText.value = '';
-    noteModal.classList.add('visible');
-    noteText.focus();
-    closeContextMenu();
-  };
-  window.clearHighlight = function(){
-    const target = contextMenu && contextMenu.targetElementForClear;
-    if (target) unwrapElement(target);
-    closeContextMenu();
-  };
-  window.clearAllHighlights = function(){
-    document.querySelectorAll('.highlight, .comment-highlight').forEach(unwrapElement);
-    closeContextMenu();
-  };
+document.querySelectorAll('input, select').forEach(el => {
+el.disabled = true;
+if (el.matches('input[type=radio], input[type=checkbox]')) {
+el.style.cursor = 'not-allowed';
+el.parentElement.style.cursor = 'not-allowed';
+}
+});
+document.querySelectorAll('.drag-item').forEach(el => {
+el.setAttribute('draggable', 'false');
+el.style.cursor = 'default';
+});
+document.querySelectorAll('.drop-zone').forEach(el => {
+el.classList.add('disabled');
+});
+}
 
-  if (cancelNoteBtn) cancelNoteBtn.addEventListener('click', () => { noteModal.classList.remove('visible'); });
-  if (saveNoteBtn) saveNoteBtn.addEventListener('click', () => {
-    const note = noteText.value.trim();
-    if (note && selectedRange && !selectedRange.collapsed) {
-      const span = document.createElement('span');
-      span.className = 'comment-highlight';
-      span.appendChild(selectedRange.extractContents());
-      const tooltip = document.createElement('span');
-      tooltip.className = 'comment-tooltip';
-      tooltip.textContent = note;
-      span.appendChild(tooltip);
-      selectedRange.insertNode(span);
-    }
-    noteModal.classList.remove('visible');
-    closeContextMenu();
-    window.getSelection().removeAllRanges();
-    selectedRange = null;
-  });
-  if (noteModal) noteModal.addEventListener('click', e => { if (e.target === noteModal) noteModal.classList.remove('visible'); });
-  document.addEventListener('selectionchange', () => {
-    const sel = window.getSelection();
-    if (!sel || sel.isCollapsed || !contextMenu) return;
-    const range = sel.getRangeAt(0);
-    if (passagePanel.contains(range.commonAncestorContainer) || questionsPanel.contains(range.commonAncestorContainer)) {
-      selectedRange = range.cloneRange();
-    }
-  });
-  document.addEventListener('mouseup', e => {
-    const target = e.target.closest('.highlight, .comment-highlight');
-    const sel = window.getSelection();
-    if (target && contextMenu) {
-      contextMenu.targetElementForClear = target;
-      document.getElementById('menu-highlight').style.display = 'none';
-      document.getElementById('menu-note').style.display = 'none';
-      document.getElementById('menu-clear').style.display = 'flex';
-      document.getElementById('menu-clear-all').style.display = 'flex';
-      showSelectionMenu(e.pageX, e.pageY);
-      return;
-    }
-    if (sel && !sel.isCollapsed && sel.toString().trim()) {
-      const range = sel.getRangeAt(0);
-      if (passagePanel.contains(range.commonAncestorContainer) || questionsPanel.contains(range.commonAncestorContainer)) {
-        selectedRange = range.cloneRange();
-        if (contextMenu) {
-          document.getElementById('menu-highlight').style.display = 'flex';
-          document.getElementById('menu-note').style.display = 'flex';
-          document.getElementById('menu-clear').style.display = 'none';
-          document.getElementById('menu-clear-all').style.display = 'flex';
-          showSelectionMenu(e.pageX, e.pageY);
-        }
-        return;
-      }
-    }
-    if (contextMenu && !contextMenu.contains(e.target)) closeContextMenu();
-  });
-  document.addEventListener('click', e => { if (contextMenu && !contextMenu.contains(e.target) && !e.target.closest('#noteModal')) closeContextMenu(); });
+function checkValue(userValue, correctValue) {
+if (userValue === null || userValue === undefined) return false;
+const formattedUserValue = userValue.trim().toLowerCase();
+if (Array.isArray(correctValue)) {
+return correctValue.map(v => v.toLowerCase()).includes(formattedUserValue);
+} else {
+return formattedUserValue === String(correctValue).toLowerCase();
+}
+}
 
-  function clearReviewDecorations(){
-    document.querySelectorAll('.review-correct,.review-wrong').forEach(el => el.classList.remove('review-correct','review-wrong'));
-    document.querySelectorAll('.correct-answer-inline,.incorrect-answer-inline,.explanation-box').forEach(el => el.remove());
-    document.querySelectorAll('.answer-input.correct,.answer-input.incorrect').forEach(el => el.classList.remove('correct','incorrect'));
-    document.querySelectorAll('.tf-option.review-correct,.tf-option.review-wrong,.multi-choice-option.review-correct,.multi-choice-option.review-wrong,label.review-correct,label.review-wrong').forEach(el => el.classList.remove('review-correct','review-wrong'));
-    document.querySelectorAll('.evidence-hit').forEach(span => {
-      const parent = span.parentNode; if (!parent) return;
-      const textNodes = Array.from(span.childNodes).filter(n => !(n.nodeType === 1 && n.classList && n.classList.contains('evidence-badge')));
-      textNodes.forEach(n => parent.insertBefore(n, span));
-      parent.removeChild(span); parent.normalize();
-    });
-  }
+function markQuestion(qNum, isCorrect) {
+const subQuestionBtn = document.querySelector(`.subQuestion[onclick="goToQuestion(${qNum})"]`);
+subQuestionBtn?.classList.add(isCorrect ? 'correct' : 'incorrect');
 
-  function highlightSnippet(passageNo, snippet, qNum){
-    const root = document.getElementById('passage-text-' + passageNo);
-    if (!root || !snippet) return false;
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode(node) { return node.nodeValue && node.nodeValue.includes(snippet) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; }
-    });
-    const node = walker.nextNode();
-    if (!node) return false;
-    const idx = node.nodeValue.indexOf(snippet);
-    if (idx < 0) return false;
-    const before = node.nodeValue.slice(0, idx);
-    const match = node.nodeValue.slice(idx, idx + snippet.length);
-    const after = node.nodeValue.slice(idx + snippet.length);
-    const wrap = document.createElement('span');
-    wrap.className = 'evidence-hit';
-    const badge = document.createElement('span');
-    badge.className = 'evidence-badge';
-    badge.textContent = qNum;
-    wrap.appendChild(badge);
-    wrap.appendChild(document.createTextNode(match));
-    const frag = document.createDocumentFragment();
-    if (before) frag.appendChild(document.createTextNode(before));
-    frag.appendChild(wrap);
-    if (after) frag.appendChild(document.createTextNode(after));
-    node.parentNode.replaceChild(frag, node);
-    return true;
-  }
+const elementsToMark = [
+document.querySelector(`.tf-question[data-q-start="${qNum}"]`),
+document.querySelector(`.multi-choice-question[data-q-start="${qNum}"]`),
+document.querySelector(`.matching-question-item[data-q-start="${qNum}"]`),
+document.querySelector(`.drop-zone[data-q-start="${qNum}"]`),
+document.getElementById(`q${qNum}`),
+document.querySelector(`input[name="q${qNum}"]:checked`)?.closest('.tf-option'),
+document.querySelector(`input[name="q${qNum}"]:checked`)?.closest('.multi-choice-option')
+];
 
-  function addExplanation(q, userValue){
-    const meta = evidenceMap[q] || {snippet:'', explanation:'The answer has been checked against the stored key.'};
-    const correct = correctAnswers[String(q)];
-    const box = document.createElement('div');
-    box.className = 'explanation-box';
-    box.innerHTML = '<strong>Explanation for Question ' + q + '</strong>' +
-      '<div><b>Your answer:</b> ' + (userValue || 'Not answered') + ' &nbsp; <b>Correct answer:</b> ' + correct + '</div>' +
-      '<div style="margin-top:8px">' + meta.explanation + '</div>' +
-      (meta.snippet ? '<div style="margin-top:8px"><b>Evidence used:</b> “' + meta.snippet + '”</div>' : '');
-    const container = findQuestionContainer(q);
-    if (container) container.appendChild(box);
-  }
+elementsToMark.forEach(el => {
+if (el) el.classList.add(isCorrect ? 'correct' : 'incorrect');
+});
 
-  function markReview(q, ok, userValue){
-    const correct = correctAnswers[String(q)];
-    const input = document.getElementById('q' + q);
-    if (input) {
-      const container = findQuestionContainer(q);
-      if (container) container.classList.add(ok ? 'review-correct' : 'review-wrong');
-      input.classList.add(ok ? 'correct' : 'incorrect');
-      const badge = document.createElement('span');
-      badge.className = ok ? 'correct-answer-inline' : 'incorrect-answer-inline';
-      badge.textContent = ok ? 'Correct' : 'Correct answer: ' + correct;
-      input.insertAdjacentElement('afterend', badge);
-      return;
-    }
-    const options = document.querySelectorAll('input[name="q' + q + '"]');
-    if (options.length) {
-      options.forEach(opt => {
-        const holder = opt.closest('.tf-option,.multi-choice-option,label');
-        if (!holder) return;
-        if (opt.checked && normalize(opt.value) !== normalize(correct)) holder.classList.add('review-wrong');
-        if (normalize(opt.value) === normalize(correct)) holder.classList.add('review-correct');
-      });
-      const container = findQuestionContainer(q);
-      if (container) container.classList.add(ok ? 'review-correct' : 'review-wrong');
-    }
-  }
+if (qNum === 14 || qNum === 15) {
+const multiChoiceContainer = document.querySelector('.multi-choice-question[data-q-start="14"]');
+if (multiChoiceContainer) multiChoiceContainer.classList.add(isCorrect ? 'correct' : 'incorrect');
+} else if (qNum >= 1 && qNum <= 5) {
+const pMatchInput = document.getElementById(`q${qNum}`);
+if (pMatchInput) pMatchInput.classList.add(isCorrect ? 'correct' : 'incorrect');
+} else if (qNum >= 38 && qNum <= 40) {
+// For this group, individual options are marked, not the container.
+}
+}
 
-  function calcBand(score){
-    if (score >= 39) return '9.0';
-    const mapping = {40:'9.0',39:'9.0',38:'8.5',37:'8.5',36:'8.0',35:'8.0',34:'7.5',33:'7.5',32:'7.0',31:'7.0',30:'7.0',29:'6.5',28:'6.5',27:'6.5',26:'6.0',25:'6.0',24:'6.0',23:'5.5',22:'5.5',21:'5.5',20:'5.5',19:'5.0',18:'5.0',17:'5.0',16:'5.0',15:'4.5',14:'4.5',13:'4.5',12:'4.0',11:'4.0',10:'3.5',9:'3.5',8:'3.0',7:'3.0',6:'2.5',5:'2.5'};
-    if (score <= 0) return '0.0';
-    if (score === 1) return '1.0';
-    if (score <= 3) return '2.0';
-    if (score <= 5) return '2.5';
-    return mapping[String(score)] || '0.0';
-  }
+window.switchToPart = function(partNumber) {
+currentPassage = partNumber;
+document.querySelectorAll('.reading-passage, .question-set, .part-header').forEach(el => el.classList.add('hidden'));
+document.getElementById(`passage-text-${partNumber}`)?.classList.remove('hidden');
+document.getElementById(`questions-${partNumber}`)?.classList.remove('hidden');
+document.getElementById(`part-header-${partNumber}`)?.classList.remove('hidden');
 
-  function buildResults(){
-    clearReviewDecorations();
-    let score = 0;
-    const details = [];
-    for (let q = 1; q <= 40; q++) {
-      const ua = getQuestionValue(q);
-      const ok = isCorrect(q, ua);
-      if (ok) score++;
-      details.push({q:q, ua:ua, correct:correctAnswers[String(q)], ok:ok});
-    }
-    reviewedState = {score:score, details:details, band:calcBand(score)};
-    return reviewedState;
-  }
+const firstQuestionOfPart = { 1: 1, 2: 14, 3: 27 }[partNumber];
+goToQuestion(firstQuestionOfPart);
+}
 
-  function saveHistory(state){
-    const key = 'dashboardResults';
-    const existing = JSON.parse(localStorage.getItem(key) || '[]');
-    const attempted = state.details.filter(d => d.ua).length;
-    const record = {
-      id: 'reading-' + Date.now(),
-      testName: document.title || 'IELTS Full Reading Practice',
-      section: 'Reading',
-      score: state.score,
-      total: 40,
-      band: String(state.band),
-      accuracy: Math.round((state.score / 40) * 100),
-      attempted: attempted,
-      createdAt: new Date().toISOString()
-    };
-    existing.unshift(record);
-    localStorage.setItem(key, JSON.stringify(existing.slice(0, 50)));
-    localStorage.setItem('latestReadingResult', JSON.stringify(record));
-  }
+window.goToQuestion = function(questionNumber) {
+currentQuestion = questionNumber;
 
-  function showResultsModal(){
-    const state = buildResults();
-    saveHistory(state);
-    hideTimer();
-    const modal = document.getElementById('results-modal');
-    document.getElementById('results-score').textContent = state.score;
-    document.getElementById('results-band').textContent = state.band;
-    document.getElementById('results-details').innerHTML =
-      '<div class="review-scroll-tip">Click “Review answers” to see your choices, correct answers, evidence highlights and explanations.</div>' +
-      state.details.map(d => '<div class="result-row ' + (d.ok ? 'correct-row' : 'wrong-row') + '"><span class="q-num">' + d.q + '</span><span class="user-ans">' + (d.ua || 'Not answered') + '</span><span class="correct-ans">' + d.correct + '</span></div>').join('');
-    if (modal) modal.classList.remove('hidden');
-  }
-  window.closeResultsModal = function(){ const m = document.getElementById('results-modal'); if (m) m.classList.add('hidden'); };
-  window.submitTheTest = function(){ showResultsModal(); closeOptionsModal(); };
+let passageNumber = 1;
+if (questionNumber >= 14 && questionNumber <= 26) passageNumber = 2;
+else if (questionNumber >= 27) passageNumber = 3;
 
-  function reviewAnswers(){
-    const state = reviewedState || buildResults();
-    hideTimer();
-    clearReviewDecorations();
-    state.details.forEach(d => {
-      markReview(d.q, d.ok, d.ua);
-      addExplanation(d.q, d.ua);
-      const meta = evidenceMap[d.q];
-      if (meta) highlightSnippet(meta.passage, meta.snippet, d.q);
-    });
-    window.closeResultsModal();
-    const target = state.details.find(d => !d.ok) || state.details[0];
-    if (target) {
-      switchToPart(qPart(target.q), true);
-      goToQuestion(target.q);
-    }
-  }
+if (currentPassage !== passageNumber) {
+switchToPart(passageNumber);
+return; 
+}
 
-  function openOptionsModal(){
-    const modal = document.getElementById('options-modal');
-    if (!modal) return;
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden','false');
-    showOptionsPanel('main');
-  }
-  function closeOptionsModal(){
-    const modal = document.getElementById('options-modal');
-    if (!modal) return;
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden','true');
-  }
-  function showOptionsPanel(which){
-    const main = document.querySelector('.options-main-screen');
-    const contrast = document.getElementById('contrast-screen');
-    const textSize = document.getElementById('text-size-screen');
-    if (main) main.classList.toggle('hidden', which !== 'main');
-    if (contrast) contrast.classList.toggle('hidden', which !== 'contrast');
-    if (textSize) textSize.classList.toggle('hidden', which !== 'text-size');
-  }
-  function applyContrastTheme(theme, btn){
-    document.body.classList.remove('theme-black-on-white','theme-white-on-black','theme-yellow-on-black');
-    if (theme === 'white-on-black') document.body.classList.add('theme-white-on-black');
-    else if (theme === 'yellow-on-black') document.body.classList.add('theme-yellow-on-black');
-    else document.body.classList.add('theme-black-on-white');
-    localStorage.setItem('ielts_contrast_theme', theme);
-    document.querySelectorAll('.options-choice-btn[data-contrast]').forEach(el => el.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  }
-  function applyTextSize(size, btn){
-    document.body.classList.remove('text-small','text-medium','text-large');
-    document.body.classList.add('text-' + size);
-    localStorage.setItem('ielts_text_size', size);
-    document.querySelectorAll('.options-choice-btn[data-size]').forEach(el => el.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-  }
-  function syncOptionStates(){
-    const theme = localStorage.getItem('ielts_contrast_theme') || 'black-on-white';
-    const size = localStorage.getItem('ielts_text_size') || 'medium';
-    const themeBtn = document.querySelector('.options-choice-btn[data-contrast="' + theme + '"]') || document.querySelector('.options-choice-btn[data-contrast="black-on-white"]');
-    const sizeBtn = document.querySelector('.options-choice-btn[data-size="' + size + '"]') || document.querySelector('.options-choice-btn[data-size="medium"]');
-    applyContrastTheme(theme, themeBtn);
-    applyTextSize(size, sizeBtn);
-  }
-  window.openOptionsModal = openOptionsModal;
-  window.closeOptionsModal = closeOptionsModal;
-  window.showOptionsPanel = showOptionsPanel;
-  window.applyContrastTheme = applyContrastTheme;
-  window.applyTextSize = applyTextSize;
+if (activeQuestionElement) {
+activeQuestionElement.classList.remove('active-question', 'active-input');
+}
 
-  if (timerToggleButton) timerToggleButton.addEventListener('click', toggleTimer);
-  if (timerResetButton) timerResetButton.addEventListener('click', resetTimer);
-  if (deliverButton) deliverButton.addEventListener('click', openOptionsModal);
-  if (openOptionsBtn) openOptionsBtn.addEventListener('click', openOptionsModal);
-  if (resizer) resizer.addEventListener('mousedown', initResize);
-  const reviewBtn = document.getElementById('review-answers-btn');
-  const closeResultsBtn = document.getElementById('close-results-btn');
-  if (reviewBtn) reviewBtn.addEventListener('click', reviewAnswers);
-  if (closeResultsBtn) closeResultsBtn.addEventListener('click', window.closeResultsModal);
+let targetEl = document.querySelector(`[data-q-start="${questionNumber}"]`);
 
-  document.body.addEventListener('input', updateAttemptedIndicators);
-  document.body.addEventListener('change', updateAttemptedIndicators);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOptionsModal(); });
-  const optionsModal = document.getElementById('options-modal');
-  if (optionsModal) optionsModal.addEventListener('click', e => { if (e.target === optionsModal) closeOptionsModal(); });
+if (targetEl) {
+activeQuestionElement = targetEl;
+if (targetEl.matches('input[type="text"]') || targetEl.matches('select')) {
+targetEl.classList.add('active-input');
+} else {
+targetEl.classList.add('active-question');
+}
+scrollIntoViewIfNeeded(targetEl);
+} else {
+const pMatch = document.querySelector(`.paragraph-matching-question select[id="q${questionNumber}"]`);
+if(pMatch) {
+activeQuestionElement = pMatch;
+pMatch.classList.add('active-input');
+scrollIntoViewIfNeeded(pMatch);
+}
+}
 
-  updateTimerDisplay();
-  startTimer();
-  syncOptionStates();
-  switchToPart(1, false);
-  updateAttemptedIndicators();
+updateNavigation();
+}
+
+// --- UI & NAVIGATION ---
+
+function updateNavigation() {
+document.querySelectorAll('.footer__questionWrapper___1tZ46').forEach((wrapper, index) => {
+wrapper.classList.toggle('selected', index + 1 === currentPassage);
+});
+
+document.querySelectorAll('.subQuestion').forEach(btn => btn.classList.remove('active'));
+document.querySelector(`.subQuestion[onclick="goToQuestion(${currentQuestion})"]`)?.classList.add('active');
+
+document.getElementById('prevBtn').disabled = currentQuestion === 1;
+document.getElementById('nextBtn').disabled = currentQuestion === 40;
+}
+
+function selectDragItem(item) {
+if (selectedDragItem) {
+selectedDragItem.classList.remove('selected');
+}
+selectedDragItem = item;
+if (selectedDragItem) {
+selectedDragItem.classList.add('selected');
+}
+}
+
+window.nextQuestion = () => currentQuestion < 40 && goToQuestion(currentQuestion + 1);
+window.previousQuestion = () => currentQuestion > 1 && goToQuestion(currentQuestion - 1);
+
+function updateAllIndicators() {
+updateAnsweredIndicators();
+updateAttemptedCounts();
+}
+
+function updateAnsweredIndicators() {
+for (let qNum = 1; qNum <= 40; qNum++) {
+const btn = document.querySelector(`.subQuestion[onclick="goToQuestion(${qNum})"]`);
+if (!btn || btn.classList.contains('correct') || btn.classList.contains('incorrect')) continue;
+
+let isAnswered = false;
+const textInput = document.getElementById(`q${qNum}`);
+const radioInput = document.querySelector(`input[name="q${qNum}"]:checked`);
+const dropZone = document.querySelector(`.drop-zone[data-q-start="${qNum}"]`);
+const selectInput = document.querySelector(`select[id="q${qNum}"]`);
+
+if (qNum === 14 || qNum === 15) {
+isAnswered = !!document.querySelector('input[name="q14-15"]:checked');
+} else if (qNum >= 38 && qNum <= 40) {
+isAnswered = !!document.querySelector('input[name="q38-40"]:checked');
+} else if (textInput && textInput.value.trim() !== '') {
+isAnswered = true;
+} else if (radioInput) {
+isAnswered = true;
+} else if (dropZone && dropZone.querySelector('.drag-item')) {
+isAnswered = true;
+} else if (selectInput && selectInput.value !== '') {
+isAnswered = true;
+}
+
+btn.classList.toggle('answered', isAnswered);
+}
+}
+
+function updateAttemptedCounts() {
+const passageConfigs = {
+1: { total: 13, start: 1, end: 13 },
+2: { total: 13, start: 14, end: 26 },
+3: { total: 14, start: 27, end: 40 }
+};
+
+for(const partNum in passageConfigs){
+const config = passageConfigs[partNum];
+const answeredQuestions = new Set();
+
+for(let i = config.start; i <= config.end; i++){
+const btn = document.querySelector(`.subQuestion[onclick="goToQuestion(${i})"]`);
+if(btn && btn.classList.contains('answered')) {
+answeredQuestions.add(i);
+}
+}
+
+const countDisplay = document.querySelector(`.footer__questionWrapper___1tZ46:nth-child(${partNum}) .attemptedCount`);
+if (countDisplay) countDisplay.textContent = `${answeredQuestions.size} of ${config.total}`;
+}
+}
+
+function scrollIntoViewIfNeeded(element) {
+const panel = element.closest('.questions-panel, .passage-panel');
+const panelRect = panel.getBoundingClientRect();
+const elementRect = element.getBoundingClientRect();
+if (elementRect.top < panelRect.top || elementRect.bottom > panelRect.bottom) {
+element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+}
+
+// --- DRAG AND DROP ---
+
+function initializeDragAndDrop() {
+document.querySelectorAll('.drag-item').forEach(item => {
+item.addEventListener('dragstart', handleDragStart);
+item.addEventListener('dragend', handleDragEnd);
+item.addEventListener('click', () => selectDragItem(item));
+});
+document.querySelectorAll('.drop-zone, .drag-options-container').forEach(zone => {
+zone.addEventListener('dragover', handleDragOver);
+zone.addEventListener('dragleave', handleDragLeave);
+zone.addEventListener('drop', handleDrop);
+});
+}
+
+function handleDragStart(e) {
+draggedItem = e.target;
+setTimeout(() => e.target.classList.add('dragging'), 0);
+}
+
+function handleDragEnd(e) {
+e.target.classList.remove('dragging');
+draggedItem = null;
+}
+
+function handleDragOver(e) {
+e.preventDefault();
+const targetZone = e.currentTarget;
+if (draggedItem && draggedItem.dataset.dndGroup === targetZone.dataset.dndGroup) {
+targetZone.classList.add('drag-over');
+}
+}
+
+function handleDragLeave(e) {
+e.currentTarget.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+e.preventDefault();
+const targetZone = e.currentTarget;
+targetZone.classList.remove('drag-over');
+
+if (!draggedItem || draggedItem.dataset.dndGroup !== targetZone.dataset.dndGroup) {
+return;
+}
+
+const sourceZone = draggedItem.parentElement;
+if (sourceZone === targetZone) return; // Prevent dropping on itself
+
+const existingItemInTarget = targetZone.classList.contains('drop-zone') 
+? targetZone.querySelector('.drag-item') 
+: null;
+
+// First, clear the target drop-zone of any text (like question numbers) before adding the new item.
+if (targetZone.classList.contains('drop-zone')) {
+Array.from(targetZone.childNodes).forEach(node => {
+if (node.nodeType === Node.TEXT_NODE) {
+node.remove();
+}
+});
+}
+
+// Move the item that was in the target (if any) to the source zone.
+if (existingItemInTarget) {
+sourceZone.appendChild(existingItemInTarget);
+}
+
+// Finally, move the dragged item to the target zone.
+targetZone.appendChild(draggedItem);
+targetZone.classList.add('filled');
+
+// After the move, clean up the source zone if it's a drop-zone and is now empty.
+if (sourceZone.classList.contains('drop-zone') && !sourceZone.querySelector('.drag-item')) {
+sourceZone.classList.remove('filled');
+const qNum = sourceZone.dataset.qStart;
+sourceZone.innerText = qNum; // Restore the question number
+}
+
+updateAllIndicators();
+}
+
+// --- MISC HELPERS ---
+
+function startTimer() {
+if (timerInterval) clearInterval(timerInterval); // Ensure no multiple intervals
+timerInterval = setInterval(() => {
+timeInSeconds--;
+const minutes = Math.floor(timeInSeconds / 60);
+const seconds = timeInSeconds % 60;
+timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+if (timeInSeconds <= 0) {
+clearInterval(timerInterval);
+timerDisplay.textContent = "Time's up!";
+// checkAnswers(); // Disabled to prevent modal from opening automatically.
+}
+}, 1000);
+timerToggleButton.innerHTML = pauseIcon;
+}
+
+function pauseTimer() {
+clearInterval(timerInterval);
+timerToggleButton.innerHTML = playIcon;
+}
+
+function toggleTimer() {
+// Check based on the icon currently displayed
+if (timerToggleButton.innerHTML.includes('M6 19h4V5H6v14z')) { // Check for pause icon shape
+pauseTimer();
+} else {
+startTimer();
+}
+}
+
+function resetTimer() {
+pauseTimer();
+timeInSeconds = 3600;
+// Optionally, could also reset all the answers here.
+// For now, just resets the timer display and restarts it.
+timerDisplay.textContent = '60:00';
+// Consider if you want to automatically start the timer after reset, or leave it paused.
+startTimer();
+
+}
+
+function setupCheckboxLimits() {
+const checkboxGroups = [
+{ name: 'q38-40', limit: 3 }
+];
+checkboxGroups.forEach(group => {
+const checkboxes = document.querySelectorAll(`input[name="${group.name}"]`);
+checkboxes.forEach(checkbox => {
+checkbox.addEventListener('change', () => {
+const checkedCount = document.querySelectorAll(`input[name="${group.name}"]:checked`).length;
+if (checkedCount > group.limit) checkbox.checked = false;
+updateAllIndicators();
+});
+});
+});
+}
+
+function setupExampleHeading() {
+const exampleHeading = document.querySelector('.drag-item[data-value="x"]');
+const exampleDropZone = document.querySelector('.drop-zone[data-question="q_H_example"]');
+if (exampleHeading && exampleDropZone) {
+exampleDropZone.innerHTML = '';
+exampleDropZone.appendChild(exampleHeading);
+exampleDropZone.classList.add('correct', 'disabled');
+exampleHeading.setAttribute('draggable', 'false');
+exampleHeading.style.cursor = 'default';
+}
+}
+
+function initResize(e) {
+e.preventDefault();
+const startX = e.clientX;
+const startWidth = passagePanel.offsetWidth;
+
+const doDrag = (e) => {
+const newWidth = startWidth + e.clientX - startX;
+if (newWidth > 200 && (document.body.clientWidth - newWidth - resizer.offsetWidth) > 200) {
+passagePanel.style.flex = `0 0 ${newWidth}px`;
+}
+};
+const stopDrag = () => {
+window.removeEventListener('mousemove', doDrag, false);
+window.removeEventListener('mouseup', stopDrag, false);
+};
+
+window.addEventListener('mousemove', doDrag, false);
+window.addEventListener('mouseup', stopDrag, false);
+}
+
+// --- CONTEXT MENU (Highlighting) ---
+
+function initializeContextMenu() {
+const panels = [passagePanel, questionsPanel];
+let targetElementForClear = null;
+
+// This listener simply tracks the last valid text selection in either panel.
+document.addEventListener('selectionchange', () => {
+const selection = window.getSelection();
+if (selection && !selection.isCollapsed && selection.toString().trim().length > 0) {
+const range = selection.getRangeAt(0);
+if (panels.some(panel => panel.contains(range.commonAncestorContainer))) {
+selectedRange = range;
+targetElementForClear = null; // New selection overrides clearing a specific element
+}
+}
+});
+
+const showContextMenu = (e) => {
+const target = e.target;
+const isClickOnHighlight = target.closest('.highlight, .comment-highlight');
+const isSelectionActive = selectedRange && selectedRange.toString().trim().length > 0;
+
+let showMenu = false;
+
+if (isClickOnHighlight) {
+document.getElementById('menu-highlight').style.display = 'none';
+document.getElementById('menu-note').style.display = 'none';
+document.getElementById('menu-clear').style.display = 'block';
+document.getElementById('menu-clear-all').style.display = 'block';
+contextMenu.targetElementForClear = isClickOnHighlight;
+showMenu = true;
+} else if (isSelectionActive && panels.some(panel => panel.contains(selectedRange.commonAncestorContainer))) {
+document.getElementById('menu-highlight').style.display = 'flex';
+document.getElementById('menu-note').style.display = 'flex';
+document.getElementById('menu-clear').style.display = 'none';
+document.getElementById('menu-clear-all').style.display = 'block'; // Always show clear all
+showMenu = true;
+}
+
+if (showMenu) {
+e.preventDefault();
+contextMenu.style.display = 'block';
+const menuHeight = contextMenu.offsetHeight;
+const menuWidth = contextMenu.offsetWidth;
+let left = e.pageX;
+let top = e.pageY;
+if (left + menuWidth > window.innerWidth) left = window.innerWidth - menuWidth - 5;
+if (top + menuHeight > window.innerHeight) top = e.pageY - menuHeight - 5;
+else top = e.pageY - menuHeight - 5;
+
+contextMenu.style.left = `${left}px`;
+contextMenu.style.top = `${top}px`;
+}
+};
+
+panels.forEach(panel => {
+panel.addEventListener('contextmenu', showContextMenu);
+});
+
+document.addEventListener('click', (e) => {
+if (contextMenu.style.display === 'block' && !contextMenu.contains(e.target)) {
+closeContextMenu();
+}
+});
+}
+
+function closeContextMenu() {
+contextMenu.style.display = 'none';
+selectedRange = null; // Clear range after menu closes
+}
+
+function unwrapElement(element) {
+const parent = element.parentNode;
+if (!parent) return;
+while (element.firstChild) {
+parent.insertBefore(element.firstChild, element);
+}
+parent.removeChild(element);
+parent.normalize();
+}
+
+window.highlightText = () => {
+if (selectedRange && !selectedRange.collapsed) {
+const span = document.createElement('span');
+span.className = 'highlight';
+span.appendChild(selectedRange.extractContents());
+selectedRange.insertNode(span);
+}
+closeContextMenu();
+window.getSelection().removeAllRanges();
+};
+
+window.addNote = () => {
+const note = prompt('Enter your note:');
+if (note && selectedRange && !selectedRange.collapsed) {
+const span = document.createElement('span');
+span.className = 'comment-highlight';
+const tooltip = document.createElement('span');
+tooltip.className = 'comment-tooltip';
+tooltip.textContent = note;
+span.appendChild(selectedRange.extractContents());
+span.appendChild(tooltip);
+selectedRange.insertNode(span);
+}
+closeContextMenu();
+window.getSelection().removeAllRanges();
+};
+
+window.clearHighlight = () => {
+const elementToClear = contextMenu.targetElementForClear;
+if (elementToClear) {
+unwrapElement(elementToClear);
+}
+closeContextMenu();
+window.getSelection().removeAllRanges();
+};
+
+window.clearAllHighlights = () => {
+document.querySelectorAll('.highlight, .comment-highlight').forEach(unwrapElement);
+closeContextMenu();
+window.getSelection().removeAllRanges();
+};
+
+// --- START THE APP ---
+initialize();
 });
 </script>
 </body>
 </html>
+
