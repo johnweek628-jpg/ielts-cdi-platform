@@ -32,7 +32,7 @@ export default function ReadingPractice() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("plan")
-        .eq("email", data.user.email)
+        .eq("id", data.user.id)
         .single()
 
       if(profile){
@@ -52,7 +52,7 @@ export default function ReadingPractice() {
       router.push(`/practice/reading/${id}`)
     }else{
 
-      if(subscription === "premium" || subscription === "ultimate"){
+      if(subscription !== "free"){
         router.push(`/practice/reading/${id}`)
       }else{
         router.push("/pricing")
