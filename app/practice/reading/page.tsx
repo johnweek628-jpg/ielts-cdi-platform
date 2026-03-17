@@ -84,8 +84,16 @@ const tests = Array.from({ length: 100 }, (_, i) => ({
 
         {tests.map(test => {
 
-          const isFree = subscription === "free"
-          const isLocked = test.id > 2 && isFree
+          const limits = {
+  free: 2,
+  basic: 10,
+  premium: 25,
+  ultimate: 100
+}
+
+const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
+
+const isLocked = test.id > currentLimit
 
           return (
 
