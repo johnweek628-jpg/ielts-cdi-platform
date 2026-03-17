@@ -10,12 +10,19 @@ export default function ReadingPractice() {
 
   const [subscription, setSubscription] = useState<string | null>(null)
 
-  const tests = [
-    { id: 1, title: "READING TEST 1" },
-    { id: 2, title: "READING TEST 2" },
-    { id: 3, title: "READING TEST 3" },
-    { id: 4, title: "READING TEST 4" }
-  ]
+  const limits = {
+  free: 2,
+  basic: 10,
+  premium: 25,
+  ultimate: 100
+}
+
+const maxTests = limits[(subscription as keyof typeof limits) || "free"]
+
+const tests = Array.from({ length: 100 }, (_, i) => ({
+  id: i + 1,
+  title: `READING TEST ${i + 1}`
+}))
 
   useEffect(()=>{
 
