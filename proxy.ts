@@ -8,9 +8,14 @@ export function proxy(request: NextRequest) {
   const subscription =
     request.cookies.get("subscription")?.value || "free"
 
+  console.log("URL:", url)
   console.log("SUB:", subscription)
 
-  const match = url.match(/reading-test-(\d+)/)
+  // 🔥 ENG MUHIM JOY
+  let match =
+    url.match(/reading-test-(\d+)/) ||
+    url.match(/test(\d+)/)
+
   const testNumber = match ? parseInt(match[1]) : 1
 
   let maxTests = 2
@@ -27,5 +32,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/tests/:path*"]
+  matcher: [
+    "/practice/reading/:path*",
+    "/tests/:path*"
+  ]
 }
