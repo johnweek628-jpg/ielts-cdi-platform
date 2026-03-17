@@ -8,11 +8,7 @@ export default function ReadingPractice() {
 
   const router = useRouter()
 
-  const [subscription,setSubscription] = useState(
-    typeof window !== "undefined"
-      ? localStorage.getItem("plan") || "free"
-      : "free"
-  )
+  const [subscription, setSubscription] = useState<string | null>(null)
 
   const tests = [
     { id: 1, title: "READING TEST 1" },
@@ -61,6 +57,14 @@ export default function ReadingPractice() {
     }
 
   }
+
+  if(subscription === null){
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-xl">Wait a second...</p>
+    </div>
+  )
+}
 
   return (
 
