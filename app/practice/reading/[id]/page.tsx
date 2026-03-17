@@ -9,7 +9,7 @@ export default function ReadingTest() {
   const router = useRouter()
   const params = useParams()
 
-  const testId = Number(params.id)
+  const testId = parseInt(params.id as string) || 1
 
   useEffect(()=>{
 

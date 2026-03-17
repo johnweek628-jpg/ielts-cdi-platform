@@ -37,15 +37,9 @@ setEmail(user.email || "")
 
 const { data: profile } = await supabase
 .from("profiles")
-.select("subscription")
-.eq("email", user.email)
+.select("plan")
+.eq("id", user.id)
 .single()
-
-if(profile){
-setPlan(profile.subscription)
-// 🍪 COOKIE SET
-  document.cookie = `subscription=${profile.subscription}; path=/`
-}
 
 
 /* GET USER TEST RESULTS */
@@ -53,7 +47,7 @@ setPlan(profile.subscription)
 const { data: results } = await supabase
 .from("test_results")
 .select("*")
-.eq("user_email", user.email)
+.eq("user_id", user.id)
 
 /* CALCULATE STATS */
 

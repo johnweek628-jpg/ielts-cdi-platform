@@ -10,7 +10,7 @@ export default function ReadingPractice() {
 
   const [subscription,setSubscription] = useState(
     typeof window !== "undefined"
-      ? localStorage.getItem("subscription") || "free"
+      ? localStorage.getItem("plan") || "free"
       : "free"
   )
 
@@ -31,13 +31,13 @@ export default function ReadingPractice() {
 
       const { data: profile } = await supabase
         .from("profiles")
-        .select("subscription")
+        .select("plan")
         .eq("email", data.user.email)
         .single()
 
       if(profile){
-        setSubscription(profile.subscription)
-        localStorage.setItem("subscription", profile.subscription)
+        setSubscription(profile.plan)
+        localStorage.setItem("plan", profile.plan)
       }
 
     }
@@ -49,11 +49,11 @@ export default function ReadingPractice() {
   const handleClick = (id:number) => {
 
     if(id <= 2){
-      router.push(`/practice/reading/test${id}`)
+      router.push(`/practice/reading/${id}`)
     }else{
 
       if(subscription === "premium" || subscription === "ultimate"){
-        router.push(`/practice/reading/test${id}`)
+        router.push(`/practice/reading/${id}`)
       }else{
         router.push("/pricing")
       }
