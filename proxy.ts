@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
 
   const url = request.nextUrl.pathname
 
   const subscription =
     request.cookies.get("subscription")?.value || "free"
 
-  console.log("URL:", url)
   console.log("SUB:", subscription)
 
-  // test number olish
   const match = url.match(/reading-test-(\d+)/)
   const testNumber = match ? parseInt(match[1]) : 1
 
