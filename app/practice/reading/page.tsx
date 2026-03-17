@@ -58,14 +58,6 @@ export default function ReadingPractice() {
 
   }
 
-  if(subscription === null){
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-xl">Wait a second...</p>
-    </div>
-  )
-}
-
   return (
 
     <div className="min-h-screen bg-gray-100 p-10">
