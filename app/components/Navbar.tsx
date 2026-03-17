@@ -51,25 +51,14 @@ router.push("/")
 
 }
 
-if (pathname.startsWith("/practice/reading/test")) {
-return null
+if (/^\/practice\/reading\/\d+$/.test(pathname)) {
+  return null
 }
 
 return (
 
-<>
-{/* 🔥 TRIGGER ZONE */}
-<div className="fixed top-0 left-0 w-full h-6 z-40 group"></div>
+<div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center">
 
-{/* 🚀 FLOATING NAVBAR */}
-<div className="fixed top-0 left-0 w-full z-50 
-opacity-0 -translate-y-full 
-transition-all duration-300 ease-in-out 
-group-hover:opacity-100 group-hover:translate-y-0">
-
-<div className="bg-white/90 backdrop-blur-md border-b px-6 py-4 flex justify-between items-center">
-
-{/* LEFT */}
 <Link
 href="/"
 className="flex items-center gap-3 !text-black font-bold hover:text-blue-600 transition"
@@ -78,25 +67,23 @@ className="flex items-center gap-3 !text-black font-bold hover:text-blue-600 tra
 <span className="font-bold text-black">Home</span>
 </Link>
 
-{/* CENTER */}
 <h1 className="text-sm font-medium text-gray-600">
 IELTS CDI Learning Platform
 </h1>
 
-{/* RIGHT */}
 <div>
 
 {loading ? null : user ? (
 
 <div className="flex items-center gap-3">
 
-<div className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-bold">
+<div className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm">
 ✓ Signed In
 </div>
 
 <button
 onClick={logout}
-className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg font-bold hover:scale-105 transition"
+className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
 >
 Logout
 </button>
@@ -107,7 +94,7 @@ Logout
 
 <button
 onClick={()=>router.push("/auth/login")}
-className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg font-bold hover:scale-105 transition"
+className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg"
 >
 Sign In
 </button>
@@ -117,9 +104,6 @@ Sign In
 </div>
 
 </div>
-
-</div>
-</>
 
 )
 
