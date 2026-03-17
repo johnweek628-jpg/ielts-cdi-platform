@@ -32,6 +32,7 @@ export default function ReadingPractice() {
         .single()
 
       if(profile){
+        console.log("PLAN:", profile?.plan)
         setSubscription(profile.plan)
         localStorage.setItem("plan", profile.plan)
       }
