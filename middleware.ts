@@ -3,16 +3,19 @@ import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
 
+  const url = request.nextUrl.pathname
+
   const subscription =
     request.cookies.get("subscription")?.value || "free"
 
-  const url = request.nextUrl.pathname
+  console.log("URL:", url)
+  console.log("SUB:", subscription)
 
-  // test raqamini olish
-  const match = url.match(/test(\d+)/)
+  // test number olish
+  const match = url.match(/reading-test-(\d+)/)
   const testNumber = match ? parseInt(match[1]) : 1
 
-  let maxTests = 2 // free
+  let maxTests = 2
 
   if(subscription === "basic") maxTests = 10
   if(subscription === "premium") maxTests = 25
@@ -26,5 +29,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/practice/reading/test:slug*"]
+  matcher: ["/tests/:path*"]
 }
