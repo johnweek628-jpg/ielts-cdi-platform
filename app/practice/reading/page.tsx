@@ -8,7 +8,13 @@ export default function ReadingPractice() {
 
   const router = useRouter()
 
-  const [subscription, setSubscription] = useState<string | null>(null)
+  // ✅ FAqat shu joy o‘zgardi
+  const [subscription, setSubscription] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("plan") || "free"
+    }
+    return "free"
+  })
 
   const limits = {
   free: 2,

@@ -15,6 +15,30 @@ export default function ReadingTest() {
 
     const checkLimit = async () => {
 
+      // ✅ INSTANT PLAN (flicker va bypass fix)
+      let localPlan = "free"
+
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("plan")
+        if (stored) {
+          localPlan = stored.toLowerCase().trim()
+        }
+      }
+
+      const limits = {
+        free: 2,
+        basic: 10,
+        premium: 25,
+        ultimate: 100
+      }
+
+      // ✅ DARROV CHECK (user ko‘rmasdan bloklanadi)
+      if(testId > limits[localPlan as keyof typeof limits]){
+        router.replace("/pricing")
+        return
+      }
+
+      // 🔽 backend check (backup security)
       const { data } = await supabase.auth.getSession()
 
       if(!data.session){
@@ -32,24 +56,16 @@ export default function ReadingTest() {
 
       type Plan = "free" | "basic" | "premium" | "ultimate"
 
+      const rawPlan = profile?.plan?.toLowerCase().trim()
 
+      const plan: Plan =
+        rawPlan === "basic" ||
+        rawPlan === "premium" ||
+        rawPlan === "ultimate"
+          ? rawPlan
+          : "free"
 
-const rawPlan = profile?.plan?.toLowerCase().trim()
-
-const plan: Plan =
-  rawPlan === "basic" ||
-  rawPlan === "premium" ||
-  rawPlan === "ultimate"
-    ? rawPlan
-    : "free"
-
-      const limits = {
-        free: 2,
-        basic: 10,
-        premium: 25,
-        ultimate: 9999
-      }
-
+      // ✅ FINAL CHECK (real security)
       if(testId > limits[plan]){
         router.replace("/pricing")
         return
