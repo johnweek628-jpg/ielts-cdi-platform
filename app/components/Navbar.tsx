@@ -13,6 +13,10 @@ const router = useRouter()
 const [user,setUser] = useState<any>(null)
 const [loading,setLoading] = useState(true)
 
+/* 🔥 NEW STATES */
+const [menuOpen,setMenuOpen] = useState(false)
+const [confirm,setConfirm] = useState(false)
+
 useEffect(()=>{
 
 const getUser = async () => {
@@ -25,13 +29,9 @@ setLoading(false)
 
 getUser()
 
-/* REAL TIME AUTH LISTENER */
-
 const { data: listener } = supabase.auth.onAuthStateChange(
 (event,session)=>{
-
 setUser(session?.user ?? null)
-
 }
 )
 
@@ -44,11 +44,9 @@ listener.subscription.unsubscribe()
 /* LOGOUT */
 
 const logout = async () => {
-
 await supabase.auth.signOut()
 setUser(null)
 router.push("/")
-
 }
 
 if (/^\/practice\/reading\/\d+$/.test(pathname)) {
@@ -57,33 +55,47 @@ if (/^\/practice\/reading\/\d+$/.test(pathname)) {
 
 return (
 
-<div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center">
+<div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center relative">
+
+{/* LEFT */}
+<div className="flex items-center gap-3">
+
+<button
+onClick={()=>setMenuOpen(!menuOpen)}
+className="text-2xl font-bold text-black hover:text-blue-600 transition"
+>
+☰
+</button>
 
 <Link
 href="/"
-className="flex items-center gap-3 !text-black font-bold hover:text-blue-600 transition"
+className="flex items-center gap-2 font-bold text-black hover:text-blue-600 transition"
 >
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
 <span className="font-bold text-black">Home</span>
 </Link>
 
+</div>
+
+{/* CENTER */}
 <h1 className="text-sm font-medium text-gray-600">
 IELTS CDI Learning Platform
 </h1>
 
+{/* RIGHT */}
 <div>
 
 {loading ? null : user ? (
 
 <div className="flex items-center gap-3">
 
-<div className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-sm">
+<div className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
 ✓ Signed In
 </div>
 
 <button
 onClick={logout}
-className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg"
+className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
 >
 Logout
 </button>
@@ -94,7 +106,7 @@ Logout
 
 <button
 onClick={()=>router.push("/auth/login")}
-className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg"
+className="px-5 py-2 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-md hover:scale-105 hover:shadow-xl transition-all duration-200"
 >
 Sign In
 </button>
@@ -102,6 +114,81 @@ Sign In
 )}
 
 </div>
+
+{/* 🔥 PROFILE MENU */}
+{menuOpen && (
+<div className="absolute top-16 left-4 w-72 bg-white shadow-2xl rounded-xl p-6 z-50">
+
+<div className="flex flex-col items-center">
+
+<img
+src="/default-avatar.png"
+className="w-20 h-20 rounded-full mb-3 object-cover"
+/>
+
+<p className="font-bold text-gray-800">Your Plan</p>
+
+</div>
+
+<div className="mt-6 flex flex-col gap-3">
+
+<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+Reset my password
+</button>
+
+<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+Edit profile
+</button>
+
+<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+My Progress
+</button>
+
+<button
+onClick={()=>setConfirm(true)}
+className="text-red-600 border border-red-500 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+>
+Delete Account
+</button>
+
+</div>
+
+</div>
+)}
+
+{/* 🔥 DELETE MODAL */}
+{confirm && (
+<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+<div className="bg-white p-6 rounded-xl w-[400px] text-center">
+
+<h2 className="text-lg font-bold mb-3">
+Do you really want to DELETE YOUR ACCOUNT?
+</h2>
+
+<p className="text-sm text-gray-600 mb-5">
+If you do so, your subscription will be cancelled and no refund will be issued.
+</p>
+
+<div className="flex justify-center gap-4">
+
+<button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+Yes
+</button>
+
+<button
+onClick={()=>setConfirm(false)}
+className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+>
+Cancel
+</button>
+
+</div>
+
+</div>
+
+</div>
+)}
 
 </div>
 
