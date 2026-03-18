@@ -60,6 +60,25 @@ router.push("/dashboard")
               IELTS CDI
             </h1>
           </div>
+  {/* 🔥 PROFILE BLOCK */}
+
+<div className="flex flex-col items-center mt-6">
+
+  <img
+    src="/me.jpg"
+    alt="profile"
+    className="w-20 h-20 rounded-full object-cover border mb-3 shadow"
+  />
+
+  <p className="text-sm font-semibold text-gray-800 text-center">
+    Jasurbek Abdullayev
+  </p>
+
+  <p className="text-xs text-gray-500 text-center mt-1 leading-relaxed px-2">
+    The creator of this website is an IELTS instructor helping students achieve Band 7+ through structured practice and real exam strategies.
+  </p>
+
+</div>
 
         </div>
 

@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { supabase } from "../lib/supabase"
 
 export default function Navbar() {
@@ -13,18 +13,17 @@ const router = useRouter()
 const [user,setUser] = useState<any>(null)
 const [loading,setLoading] = useState(true)
 
-/* 🔥 NEW STATES */
 const [menuOpen,setMenuOpen] = useState(false)
 const [confirm,setConfirm] = useState(false)
+
+const menuRef = useRef<any>(null)
 
 useEffect(()=>{
 
 const getUser = async () => {
-
 const { data } = await supabase.auth.getUser()
 setUser(data.user)
 setLoading(false)
-
 }
 
 getUser()
@@ -37,6 +36,23 @@ setUser(session?.user ?? null)
 
 return () => {
 listener.subscription.unsubscribe()
+}
+
+},[])
+
+/* 🔥 CLICK OUTSIDE CLOSE */
+useEffect(()=>{
+
+const handleClickOutside = (e:any) => {
+if(menuRef.current && !menuRef.current.contains(e.target)){
+setMenuOpen(false)
+}
+}
+
+document.addEventListener("mousedown", handleClickOutside)
+
+return () => {
+document.removeEventListener("mousedown", handleClickOutside)
 }
 
 },[])
@@ -69,6 +85,7 @@ className="text-2xl font-bold text-black hover:text-blue-600 transition"
 
 <Link
 href="/"
+onClick={()=>setMenuOpen(false)}
 className="flex items-center gap-2 font-bold text-black hover:text-blue-600 transition"
 >
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
@@ -117,36 +134,42 @@ Sign In
 
 {/* 🔥 PROFILE MENU */}
 {menuOpen && (
-<div className="absolute top-16 left-4 w-72 bg-white shadow-2xl rounded-xl p-6 z-50">
+<div ref={menuRef} className="absolute top-16 left-4 w-72 bg-white shadow-2xl rounded-xl p-6 z-50">
 
 <div className="flex flex-col items-center">
 
+<div className="relative">
 <img
 src="/default-avatar.png"
-className="w-20 h-20 rounded-full mb-3 object-cover"
+className="w-20 h-20 rounded-full object-cover border"
 />
 
-<p className="font-bold text-gray-800">Your Plan</p>
+<div className="absolute bottom-0 right-0 bg-blue-600 text-white w-6 h-6 flex items-center justify-center rounded-full text-sm cursor-pointer">
++
+</div>
+</div>
+
+<p className="font-bold text-black text-lg mt-2">Your Profile</p>
 
 </div>
 
 <div className="mt-6 flex flex-col gap-3">
 
-<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
 Reset my password
 </button>
 
-<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
 Edit profile
 </button>
 
-<button className="border px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
 My Progress
 </button>
 
 <button
 onClick={()=>setConfirm(true)}
-className="text-red-600 border border-red-500 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+className="text-red-600 border border-red-500 px-4 py-2 rounded-lg font-semibold hover:bg-red-50 transition"
 >
 Delete Account
 </button>
@@ -162,11 +185,11 @@ Delete Account
 
 <div className="bg-white p-6 rounded-xl w-[400px] text-center">
 
-<h2 className="text-lg font-bold mb-3">
+<h2 className="text-lg font-bold text-black mb-3">
 Do you really want to DELETE YOUR ACCOUNT?
 </h2>
 
-<p className="text-sm text-gray-600 mb-5">
+<p className="text-sm text-gray-700 mb-5">
 If you do so, your subscription will be cancelled and no refund will be issued.
 </p>
 
