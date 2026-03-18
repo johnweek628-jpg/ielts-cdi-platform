@@ -65,7 +65,7 @@ router.push("/dashboard")
 <div className="flex flex-col items-center mt-6">
 
   <img
-    src="/me.jpg"
+    src="student.png"
     alt="profile"
     className="w-20 h-20 rounded-full object-cover border mb-3 shadow"
   />
