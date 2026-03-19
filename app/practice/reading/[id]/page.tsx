@@ -99,28 +99,28 @@ export default function ReadingTest() {
 
         <div className="bg-white p-10 rounded-xl shadow-lg max-w-2xl w-full">
 
-          <h1 className="text-xl font-bold mb-4">
+          <h1 className="text-xl font-bold text-black mb-4">
             IELTS Reading
           </h1>
 
-          <p className="mb-4">
+          <p className="mb-4 text-black">
             Time: 60 minutes
           </p>
 
-          <h2 className="font-bold mt-6 mb-2">
+          <h2 className="font-bold text-black mt-6 mb-2">
             INSTRUCTIONS TO CANDIDATES
           </h2>
 
-          <ul className="list-disc ml-5 mb-4">
+          <ul className="list-disc ml-5 mb-4 text-black">
             <li>Answer all the questions.</li>
             <li>You can change your answers at any time during the test.</li>
           </ul>
 
-          <h2 className="font-bold mt-6 mb-2">
+          <h2 className="font-bold text-black mt-6 mb-2">
             INFORMATION FOR CANDIDATES
           </h2>
 
-          <ul className="list-disc ml-5 mb-6">
+          <ul className="list-disc ml-5 mb-6 text-black">
             <li>There are 40 questions in this test.</li>
             <li>Each question carries one mark.</li>
             <li>The test clock will show you when there are 10 and 5 minutes remaining.</li>
@@ -130,7 +130,7 @@ export default function ReadingTest() {
 
             <button
               onClick={() => setStarted(true)}
-              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition"
             >
               Start Test
             </button>

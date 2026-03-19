@@ -90,8 +90,8 @@ return (
 
 <div className={`fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center transition-all duration-300
 ${scrolled 
-? "bg-white/70 backdrop-blur-xl shadow-lg border-b border-white/30" 
-: "bg-white/40 backdrop-blur-md border-b border-white/20"}
+? "bg-white shadow-lg border-b border-gray-200" 
+: "bg-white border-b border-gray-100"}
 `}>
 
 {/* LEFT */}
