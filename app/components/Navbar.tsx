@@ -106,17 +106,9 @@ IELTS CDI Learning Platform
 
 <div className="flex items-center gap-3">
 
-  {/* 🔥 PRICING BUTTON */}
   <button
     onClick={() => router.push("/pricing")}
-    className="
-      px-4 py-2 
-      text-sm font-semibold text-white
-      bg-gradient-to-r from-purple-600 to-blue-600
-      rounded-lg shadow-md
-      hover:scale-105 hover:shadow-xl
-      transition-all duration-200
-    "
+    className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-md hover:scale-105 hover:shadow-xl transition-all duration-200"
   >
     💎 Upgrade
   </button>
@@ -147,7 +139,7 @@ Sign In
 
 </div>
 
-{/* 🔥 PROFILE MENU */}
+{/* PROFILE MENU */}
 {menuOpen && (
 <div ref={menuRef} className="absolute top-16 left-4 w-72 bg-white shadow-2xl rounded-xl p-6 z-50">
 
@@ -212,7 +204,7 @@ Delete Account
 </div>
 )}
 
-{/* 🔥 DELETE MODAL */}
+{/* DELETE MODAL */}
 {confirm && (
 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
@@ -233,13 +225,20 @@ onClick={async () => {
   if (!user) return
 
   try {
-    await fetch("/api/delete-user", {
+    const res = await fetch("/api/delete-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ userId: user.id })
     })
+
+    const data = await res.json()
+
+    if (!data.success) {
+      alert("Failed to delete account")
+      return
+    }
 
     setConfirm(false)
     setMenuOpen(false)
@@ -250,6 +249,7 @@ onClick={async () => {
     router.push("/")
   } catch (err) {
     console.error(err)
+    alert("Something went wrong")
   }
 }}
 className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
