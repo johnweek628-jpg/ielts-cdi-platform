@@ -16,8 +16,11 @@ const [loading,setLoading] = useState(true)
 const [menuOpen,setMenuOpen] = useState(false)
 const [confirm,setConfirm] = useState(false)
 
+const [scrolled,setScrolled] = useState(false)
+
 const menuRef = useRef<any>(null)
 
+/* 🔥 USER FETCH */
 useEffect(()=>{
 
 const getUser = async () => {
@@ -40,7 +43,20 @@ listener.subscription.unsubscribe()
 
 },[])
 
-/* 🔥 CLICK OUTSIDE CLOSE */
+/* 🔥 SCROLL EFFECT */
+useEffect(()=>{
+
+const handleScroll = () => {
+setScrolled(window.scrollY > 10)
+}
+
+window.addEventListener("scroll", handleScroll)
+
+return () => window.removeEventListener("scroll", handleScroll)
+
+},[])
+
+/* 🔥 CLICK OUTSIDE */
 useEffect(()=>{
 
 const handleClickOutside = (e:any) => {
@@ -57,8 +73,7 @@ document.removeEventListener("mousedown", handleClickOutside)
 
 },[])
 
-/* LOGOUT */
-
+/* 🔥 LOGOUT */
 const logout = async () => {
 await supabase.auth.signOut()
 setUser(null)
@@ -71,7 +86,11 @@ if (/^\/practice\/reading\/\d+$/.test(pathname)) {
 
 return (
 
-<div className="w-full bg-white border-b px-6 py-4 flex justify-between items-center relative">
+<div className={`fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center transition-all duration-300
+${scrolled 
+? "bg-white/80 backdrop-blur-lg shadow-md border-b border-gray-200" 
+: "bg-white/50 backdrop-blur-md border-b border-white/30"}
+`}>
 
 {/* LEFT */}
 <div className="flex items-center gap-3">
@@ -86,16 +105,16 @@ className="text-2xl font-bold text-black hover:text-blue-600 transition"
 <Link
 href="/"
 onClick={()=>setMenuOpen(false)}
-className="flex items-center gap-2 font-bold text-black hover:text-blue-600 transition"
+className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
 >
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
-<span className="font-bold text-black">Home</span>
+<span className="font-extrabold tracking-tight">Home</span>
 </Link>
 
 </div>
 
 {/* CENTER */}
-<h1 className="text-sm font-medium text-gray-600">
+<h1 className="text-sm font-medium text-gray-700 tracking-wide">
 IELTS CDI Learning Platform
 </h1>
 
@@ -141,7 +160,7 @@ Sign In
 
 {/* PROFILE MENU */}
 {menuOpen && (
-<div ref={menuRef} className="absolute top-16 left-4 w-72 bg-white shadow-2xl rounded-xl p-6 z-50">
+<div ref={menuRef} className="absolute top-16 left-4 w-72 bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl p-6 z-50 border border-gray-200">
 
 <div className="flex flex-col items-center">
 
@@ -206,9 +225,9 @@ Delete Account
 
 {/* DELETE MODAL */}
 {confirm && (
-<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+<div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
 
-<div className="bg-white p-6 rounded-xl w-[400px] text-center">
+<div className="bg-white p-6 rounded-xl w-[400px] text-center shadow-xl">
 
 <h2 className="text-lg font-bold text-black mb-3">
 Do you really want to DELETE YOUR ACCOUNT?
