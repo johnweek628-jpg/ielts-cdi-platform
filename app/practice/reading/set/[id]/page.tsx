@@ -65,7 +65,7 @@ export default function SetPage() {
 
             <div
               key={testNumber}
-              onClick={() => router.push(`/practice/reading/test/${realTestId}`)}
+              onClick={() => router.push(`/practice/reading/${realTestId}`)}
               className="
                 relative
                 p-6
