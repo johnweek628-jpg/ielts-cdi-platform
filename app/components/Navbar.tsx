@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
 import { supabase } from "../lib/supabase"
+import { Menu } from "lucide-react"
 
 export default function Navbar() {
 
@@ -80,7 +81,8 @@ setUser(null)
 router.push("/")
 }
 
-if (/^\/practice\/reading\/\d+$/.test(pathname)) {
+/* 🔥 HIDE NAVBAR ONLY ON REAL TEST PAGE */
+if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
   return null
 }
 
@@ -88,8 +90,8 @@ return (
 
 <div className={`fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center transition-all duration-300
 ${scrolled 
-? "bg-white/80 backdrop-blur-lg shadow-md border-b border-gray-200" 
-: "bg-white/50 backdrop-blur-md border-b border-white/30"}
+? "bg-white/70 backdrop-blur-xl shadow-lg border-b border-white/30" 
+: "bg-white/40 backdrop-blur-md border-b border-white/20"}
 `}>
 
 {/* LEFT */}
@@ -97,9 +99,14 @@ ${scrolled
 
 <button
 onClick={()=>setMenuOpen(!menuOpen)}
-className="text-2xl font-bold text-black hover:text-blue-600 transition"
+className="
+p-2 rounded-xl
+bg-white/40 backdrop-blur-md
+border border-white/30
+hover:scale-105 transition
+"
 >
-☰
+<Menu size={20} />
 </button>
 
 <Link
@@ -108,14 +115,14 @@ onClick={()=>setMenuOpen(false)}
 className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
 >
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
-<span className="font-extrabold tracking-tight">Home</span>
+<span className="tracking-tight">Home</span>
 </Link>
 
 </div>
 
 {/* CENTER */}
 <h1 className="text-sm font-medium text-gray-700 tracking-wide">
-IELTS CDI Learning Platform
+IELTS CDI Platform
 </h1>
 
 {/* RIGHT */}
@@ -127,18 +134,33 @@ IELTS CDI Learning Platform
 
   <button
     onClick={() => router.push("/pricing")}
-    className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg shadow-md hover:scale-105 hover:shadow-xl transition-all duration-200"
+    className="
+      px-4 py-2 text-sm font-semibold text-white
+      bg-gradient-to-r from-purple-600 to-blue-600
+      rounded-xl
+      shadow-md
+      hover:scale-105 hover:shadow-xl
+      transition-all duration-200
+    "
   >
     💎 Upgrade
   </button>
 
-  <div className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+  <div className="
+    flex items-center gap-2
+    bg-gradient-to-r from-green-500 to-emerald-600
+    text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md
+  ">
     ✓ Signed In
   </div>
 
   <button
     onClick={logout}
-    className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+    className="
+      px-4 py-2 text-sm
+      bg-red-500 text-white rounded-xl
+      hover:bg-red-600 transition
+    "
   >
     Logout
   </button>
@@ -149,7 +171,13 @@ IELTS CDI Learning Platform
 
 <button
 onClick={()=>router.push("/auth/login")}
-className="px-5 py-2 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg shadow-md hover:scale-105 hover:shadow-xl transition-all duration-200"
+className="
+  px-5 py-2 text-sm font-bold text-white
+  bg-gradient-to-r from-blue-600 to-purple-600
+  rounded-xl shadow-md
+  hover:scale-105 hover:shadow-xl
+  transition-all duration-200
+"
 >
 Sign In
 </button>
@@ -158,9 +186,14 @@ Sign In
 
 </div>
 
-{/* PROFILE MENU */}
+{/* 🍏 DROPDOWN MENU */}
 {menuOpen && (
-<div ref={menuRef} className="absolute top-16 left-4 w-72 bg-white/90 backdrop-blur-lg shadow-2xl rounded-xl p-6 z-50 border border-gray-200">
+<div ref={menuRef} className="
+absolute top-16 left-4 w-72
+bg-white/80 backdrop-blur-xl
+shadow-2xl rounded-2xl p-6 z-50
+border border-white/30
+">
 
 <div className="flex flex-col items-center">
 
@@ -170,7 +203,12 @@ src="/default-avatar.png"
 className="w-20 h-20 rounded-full object-cover border"
 />
 
-<div className="absolute bottom-0 right-0 bg-blue-600 text-white w-6 h-6 flex items-center justify-center rounded-full text-sm cursor-pointer">
+<div className="
+absolute bottom-0 right-0
+bg-blue-600 text-white
+w-6 h-6 flex items-center justify-center
+rounded-full text-sm cursor-pointer
+">
 +
 </div>
 </div>
@@ -186,9 +224,9 @@ onClick={() => {
   router.push("/auth/reset")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
 >
-Reset my password
+Reset Password
 </button>
 
 <button
@@ -196,9 +234,9 @@ onClick={() => {
   router.push("/dashboard")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
 >
-Edit profile
+Dashboard
 </button>
 
 <button
@@ -206,14 +244,14 @@ onClick={() => {
   router.push("/dashboard")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
 >
 My Progress
 </button>
 
 <button
 onClick={()=>setConfirm(true)}
-className="text-red-600 border border-red-500 px-4 py-2 rounded-lg font-semibold hover:bg-red-50 transition"
+className="text-red-600 border border-red-500 px-4 py-2 rounded-xl font-semibold hover:bg-red-50 transition"
 >
 Delete Account
 </button>
@@ -223,18 +261,18 @@ Delete Account
 </div>
 )}
 
-{/* DELETE MODAL */}
+{/* 🔴 DELETE MODAL */}
 {confirm && (
 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
 
-<div className="bg-white p-6 rounded-xl w-[400px] text-center shadow-xl">
+<div className="bg-white p-6 rounded-2xl w-[400px] text-center shadow-xl">
 
 <h2 className="text-lg font-bold text-black mb-3">
-Do you really want to DELETE YOUR ACCOUNT?
+Delete your account permanently?
 </h2>
 
 <p className="text-sm text-gray-700 mb-5">
-If you do so, your subscription will be cancelled and no refund will be issued.
+Your subscription will be cancelled. No refunds.
 </p>
 
 <div className="flex justify-center gap-4">
@@ -271,14 +309,14 @@ onClick={async () => {
     alert("Something went wrong")
   }
 }}
-className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition"
 >
 Yes
 </button>
 
 <button
 onClick={()=>setConfirm(false)}
-className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600 transition"
 >
 Cancel
 </button>
@@ -293,5 +331,4 @@ Cancel
 </div>
 
 )
-
 }
