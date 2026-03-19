@@ -7,13 +7,25 @@ export default function ResetPage(){
 
 const [email,setEmail] = useState("")
 const [sent,setSent] = useState(false)
+const [error,setError] = useState("")
 
 const sendReset = async () => {
 
-await supabase.auth.resetPasswordForEmail(email,{
+if(!email){
+  setError("Please enter your email")
+  return
+}
+
+const { error } = await supabase.auth.resetPasswordForEmail(email,{
 redirectTo:"https://ielts-cdi-platform-production.up.railway.app/update-password"
 })
 
+if(error){
+  setError(error.message)
+  return
+}
+
+setError("")
 setSent(true)
 
 }
@@ -46,6 +58,12 @@ value={email}
 onChange={(e)=>setEmail(e.target.value)}
 className="w-full border p-3 rounded mb-4"
 />
+
+{error && (
+<p className="text-red-500 text-sm mb-3 text-center">
+{error}
+</p>
+)}
 
 <button
 onClick={sendReset}

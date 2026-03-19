@@ -170,15 +170,33 @@ className="w-20 h-20 rounded-full object-cover border"
 
 <div className="mt-6 flex flex-col gap-3">
 
-<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
+<button
+onClick={() => {
+  router.push("/auth/reset")
+  setMenuOpen(false)
+}}
+className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+>
 Reset my password
 </button>
 
-<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
+<button
+onClick={() => {
+  router.push("/dashboard")
+  setMenuOpen(false)
+}}
+className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+>
 Edit profile
 </button>
 
-<button className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition">
+<button
+onClick={() => {
+  router.push("/dashboard")
+  setMenuOpen(false)
+}}
+className="border px-4 py-2 rounded-lg text-black font-semibold bg-white hover:bg-gray-100 transition"
+>
 My Progress
 </button>
 
@@ -210,7 +228,20 @@ If you do so, your subscription will be cancelled and no refund will be issued.
 
 <div className="flex justify-center gap-4">
 
-<button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+<button
+onClick={async () => {
+  if (!user) return
+
+  await fetch("/api/delete-user", {
+    method: "POST",
+    body: JSON.stringify({ userId: user.id })
+  })
+
+  await supabase.auth.signOut()
+  router.push("/")
+}}
+className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
+>
 Yes
 </button>
 
