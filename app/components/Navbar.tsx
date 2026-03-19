@@ -90,8 +90,8 @@ return (
 
 <div className={`fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center transition-all duration-300
 ${scrolled 
-? "bg-white shadow-lg border-b border-gray-200" 
-: "bg-white border-b border-gray-100"}
+? "bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm" 
+: "bg-white/60 backdrop-blur-xl border-b border-gray-100"}
 `}>
 
 {/* LEFT */}
@@ -115,13 +115,13 @@ onClick={()=>setMenuOpen(false)}
 className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
 >
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
-<span className="tracking-tight">Home</span>
+<span className="flex items-center gap-2 font-extrabold text-gray-900 hover:text-blue-600">Home</span>
 </Link>
 
 </div>
 
 {/* CENTER */}
-<h1 className="text-sm font-medium text-gray-700 tracking-wide">
+<h1 className="text-sm font-semibold text-gray-900 tracking-wide">
 IELTS CDI Platform
 </h1>
 
@@ -271,7 +271,7 @@ Delete Account
 Delete your account permanently?
 </h2>
 
-<p className="text-sm text-gray-700 mb-5">
+<p className="text-sm text-gray-900 mb-5">
 Your subscription will be cancelled. No refunds.
 </p>
 
