@@ -15,7 +15,6 @@ export default function ReadingPractice() {
     return "free"
   })
 
-  // 🔒 LIMITS
   const limits = {
     free: 2,
     basic: 10,
@@ -25,34 +24,32 @@ export default function ReadingPractice() {
 
   const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
 
-  // 🧠 NEW STRUCTURE
   const sets = [
     {
       name: "Set 1",
       packs: [
-        { name: "Test Set 1", range: [1, 10] },
-        { name: "Test Set 2", range: [11, 20] },
-        { name: "Test Set 3", range: [21, 30] }
+        { name: "Test Package 1", range: [1, 10] },
+        { name: "Test Package 2", range: [11, 20] },
+        { name: "Test Package 3", range: [21, 30] }
       ]
     },
     {
       name: "Set 2",
       packs: [
-        { name: "Test Set 4", range: [31, 40] },
-        { name: "Test Set 5", range: [41, 50] },
-        { name: "Test Set 6", range: [51, 60] }
+        { name: "Test Package 4", range: [31, 40] },
+        { name: "Test Package 5", range: [41, 50] },
+        { name: "Test Package 6", range: [51, 60] }
       ]
     },
     {
       name: "Set 3",
       packs: [
-        { name: "Test Set 7", range: [61, 70] },
-        { name: "Test Set 8", range: [71, 80] }
+        { name: "Test Package 7", range: [61, 70] },
+        { name: "Test Package 8", range: [71, 80] }
       ]
     }
   ]
 
-  // 🔐 subscription fetch
   useEffect(() => {
 
     const getSubscription = async () => {
@@ -78,7 +75,6 @@ export default function ReadingPractice() {
 
   }, [])
 
-  // 🎯 TEST CLICK
   const handleClick = (id: number) => {
     if (id <= currentLimit) {
       router.push(`/practice/reading/set/${id}`)
@@ -107,7 +103,6 @@ export default function ReadingPractice() {
 
             {set.packs.map((pack, j) => {
 
-              // 🔥 pack ichida kamida 1 ta locked test bo‘lsa → locked
               const isLocked = pack.range[1] > currentLimit
 
               return (
@@ -144,7 +139,7 @@ export default function ReadingPractice() {
                         if (isLocked) {
                           router.push("/pricing")
                         } else {
-                          handleClick(pack.range[0]) // first test ochiladi
+                          handleClick(pack.range[0])
                         }
                       }}
                       className={`px-6 py-2 rounded-lg text-white transition
@@ -153,7 +148,7 @@ export default function ReadingPractice() {
                         : "bg-gradient-to-r from-purple-500 to-red-500"
                       }`}
                     >
-                      {!isLocked ? "Start Set" : "Unlock"}
+                      {!isLocked ? "Open Package" : "Unlock"}
                     </button>
 
                   </div>

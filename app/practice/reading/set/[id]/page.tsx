@@ -9,11 +9,8 @@ export default function SetPage() {
 
   const setId = Number(params.id)
 
-  // 🔥 Har bir setda 10 ta test
-  const start = (setId - 1) * 10 + 1
-  const tests = Array.from({ length: 10 }, (_, i) => start + i)
-
-  const firstTest = tests[0]
+  // 🔥 FIX: har package ichida faqat 1–10
+  const tests = Array.from({ length: 10 }, (_, i) => i + 1)
 
   return (
 
@@ -43,28 +40,6 @@ export default function SetPage() {
 
       </div>
 
-      {/* 🔥 START BUTTON (MAIN FIX) */}
-      <div className="flex justify-center mb-10">
-
-        <button
-          onClick={() => router.push(`/practice/reading/test/${firstTest}`)}
-          className="
-            px-8 py-4
-            rounded-2xl
-            text-white font-bold text-lg
-
-            bg-gradient-to-r from-blue-600 to-purple-600
-
-            shadow-lg
-            hover:scale-105 hover:shadow-xl
-            transition-all duration-200
-          "
-        >
-          🚀 Start the Test
-        </button>
-
-      </div>
-
       {/* 📊 OPTIONAL PROGRESS */}
       <div className="mb-8">
 
@@ -81,44 +56,51 @@ export default function SetPage() {
       {/* 🧊 TEST GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-        {tests.map((testId) => (
+        {tests.map((testNumber) => {
 
-          <div
-            key={testId}
-            onClick={() => router.push(`/practice/reading/test/${testId}`)}
-            className="
-              relative
-              p-6
-              rounded-2xl
-              cursor-pointer
-              transition-all duration-300
+          // 🔥 GLOBAL mapping (bu muhim)
+          const realTestId = (setId - 1) * 10 + testNumber
 
-              bg-white/40
-              backdrop-blur-xl
-              border border-white/30
+          return (
 
-              shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+            <div
+              key={testNumber}
+              onClick={() => router.push(`/practice/reading/test/${realTestId}`)}
+              className="
+                relative
+                p-6
+                rounded-2xl
+                cursor-pointer
+                transition-all duration-300
 
-              hover:scale-[1.04]
-              hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)]
+                bg-white/40
+                backdrop-blur-xl
+                border border-white/30
 
-              active:scale-[0.96]
-            "
-          >
+                shadow-[0_8px_30px_rgba(0,0,0,0.12)]
 
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/0 pointer-events-none" />
+                hover:scale-[1.04]
+                hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)]
 
-            <h2 className="text-lg font-semibold text-gray-900 tracking-tight">
-              Test {testId}
-            </h2>
+                active:scale-[0.96]
+              "
+            >
 
-            <p className="text-sm text-gray-600 mt-1">
-              IELTS Reading Practice
-            </p>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/0 pointer-events-none" />
 
-          </div>
+              <h2 className="text-lg font-semibold text-gray-900 tracking-tight">
+                Test {testNumber}
+              </h2>
 
-        ))}
+              <p className="text-sm text-gray-600 mt-1">
+                IELTS Reading Practice
+              </p>
+
+            </div>
+
+          )
+
+        })}
 
       </div>
 
