@@ -13,6 +13,8 @@ export default function SetPage() {
   const start = (setId - 1) * 10 + 1
   const tests = Array.from({ length: 10 }, (_, i) => start + i)
 
+  const firstTest = tests[0]
+
   return (
 
     <div className="min-h-screen px-6 py-10 bg-gradient-to-br from-gray-100 via-blue-50 to-purple-100">
@@ -34,14 +36,36 @@ export default function SetPage() {
         </button>
 
         <h1 className="text-2xl font-bold text-gray-800 tracking-tight">
-          Set {setId}
+          Practice {setId}
         </h1>
 
-        <div /> {/* empty for balance */}
+        <div />
 
       </div>
 
-      {/* 📊 OPTIONAL PROGRESS (placeholder) */}
+      {/* 🔥 START BUTTON (MAIN FIX) */}
+      <div className="flex justify-center mb-10">
+
+        <button
+          onClick={() => router.push(`/practice/reading/test/${firstTest}`)}
+          className="
+            px-8 py-4
+            rounded-2xl
+            text-white font-bold text-lg
+
+            bg-gradient-to-r from-blue-600 to-purple-600
+
+            shadow-lg
+            hover:scale-105 hover:shadow-xl
+            transition-all duration-200
+          "
+        >
+          🚀 Start the Test
+        </button>
+
+      </div>
+
+      {/* 📊 OPTIONAL PROGRESS */}
       <div className="mb-8">
 
         <div className="text-sm text-gray-600 mb-2">
@@ -82,10 +106,8 @@ export default function SetPage() {
             "
           >
 
-            {/* 🔹 Glow effect */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/0 pointer-events-none" />
 
-            {/* 🔹 Content */}
             <h2 className="text-lg font-semibold text-gray-900 tracking-tight">
               Test {testId}
             </h2>
