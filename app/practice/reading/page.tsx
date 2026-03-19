@@ -81,7 +81,7 @@ export default function ReadingPractice() {
   // 🎯 TEST CLICK
   const handleClick = (id: number) => {
     if (id <= currentLimit) {
-      router.push(`/practice/reading/${id}`)
+      router.push(`/practice/reading/set/${id}`)
     } else {
       router.push("/pricing")
     }
