@@ -106,16 +106,31 @@ IELTS CDI Learning Platform
 
 <div className="flex items-center gap-3">
 
-<div className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
-✓ Signed In
-</div>
+  {/* 🔥 PRICING BUTTON */}
+  <button
+    onClick={() => router.push("/pricing")}
+    className="
+      px-4 py-2 
+      text-sm font-semibold text-white
+      bg-gradient-to-r from-purple-600 to-blue-600
+      rounded-lg shadow-md
+      hover:scale-105 hover:shadow-xl
+      transition-all duration-200
+    "
+  >
+    💎 Upgrade
+  </button>
 
-<button
-onClick={logout}
-className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
->
-Logout
-</button>
+  <div className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+    ✓ Signed In
+  </div>
+
+  <button
+    onClick={logout}
+    className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+  >
+    Logout
+  </button>
 
 </div>
 
