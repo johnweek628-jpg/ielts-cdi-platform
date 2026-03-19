@@ -8,7 +8,6 @@ export default function ReadingPractice() {
 
   const router = useRouter()
 
-  // ✅ FAqat shu joy o‘zgardi
   const [subscription, setSubscription] = useState<string | null>(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("plan") || "free"
@@ -16,27 +15,51 @@ export default function ReadingPractice() {
     return "free"
   })
 
+  // 🔒 LIMITS
   const limits = {
-  free: 2,
-  basic: 10,
-  premium: 25,
-  ultimate: 100
-}
+    free: 2,
+    basic: 10,
+    premium: 25,
+    ultimate: 100
+  }
 
-const maxTests = limits[(subscription as keyof typeof limits) || "free"]
+  const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
 
-const tests = Array.from({ length: 100 }, (_, i) => ({
-  id: i + 1,
-  title: `READING TEST ${i + 1}`
-}))
+  // 🧠 NEW STRUCTURE
+  const sets = [
+    {
+      name: "Set 1",
+      packs: [
+        { name: "Test Set 1", range: [1, 10] },
+        { name: "Test Set 2", range: [11, 20] },
+        { name: "Test Set 3", range: [21, 30] }
+      ]
+    },
+    {
+      name: "Set 2",
+      packs: [
+        { name: "Test Set 4", range: [31, 40] },
+        { name: "Test Set 5", range: [41, 50] },
+        { name: "Test Set 6", range: [51, 60] }
+      ]
+    },
+    {
+      name: "Set 3",
+      packs: [
+        { name: "Test Set 7", range: [61, 70] },
+        { name: "Test Set 8", range: [71, 80] }
+      ]
+    }
+  ]
 
-  useEffect(()=>{
+  // 🔐 subscription fetch
+  useEffect(() => {
 
     const getSubscription = async () => {
 
       const { data } = await supabase.auth.getUser()
 
-      if(!data.user) return
+      if (!data.user) return
 
       const { data: profile } = await supabase
         .from("profiles")
@@ -44,7 +67,7 @@ const tests = Array.from({ length: 100 }, (_, i) => ({
         .eq("email", data.user.email)
         .single()
 
-      if(profile){
+      if (profile) {
         setSubscription(profile.plan)
         localStorage.setItem("plan", profile.plan)
       }
@@ -52,24 +75,16 @@ const tests = Array.from({ length: 100 }, (_, i) => ({
     }
 
     getSubscription()
-    
 
-  },[])
+  }, [])
 
-  const handleClick = (id:number) => {
-
-    if(id <= 2){
+  // 🎯 TEST CLICK
+  const handleClick = (id: number) => {
+    if (id <= currentLimit) {
       router.push(`/practice/reading/${id}`)
-    }else{
-
-      if(subscription !== "free"){
-        router.push(`/practice/reading/${id}`)
-      }else{
-        router.push("/pricing")
-      }
-
+    } else {
+      router.push("/pricing")
     }
-
   }
 
   return (
@@ -80,66 +95,80 @@ const tests = Array.from({ length: 100 }, (_, i) => ({
         IELTS Reading Tests
       </h1>
 
-      <div className="grid grid-cols-3 gap-6">
+      {sets.map((set, i) => (
 
-        {tests.map(test => {
+        <div key={i} className="mb-12">
 
-          const limits = {
-  free: 2,
-  basic: 10,
-  premium: 25,
-  ultimate: 100
-}
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {set.name}
+          </h2>
 
-const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
+          <div className="grid grid-cols-3 gap-6">
 
-const isLocked = test.id > currentLimit
+            {set.packs.map((pack, j) => {
 
-          return (
+              // 🔥 pack ichida kamida 1 ta locked test bo‘lsa → locked
+              const isLocked = pack.range[1] > currentLimit
 
-            <div
-              key={test.id}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
-            >
+              return (
 
-              {isLocked && (
-                <span className="absolute top-3 right-3 text-xl">
-                  🔒
-                </span>
-              )}
-
-              <h2 className="text-xl font-semibold text-blue-900 mb-6">
-                {test.title}
-              </h2>
-
-              <div className="flex justify-center">
-
-                <button
-                  onClick={() => {
-                    if (isLocked) {
-                      router.push("/pricing")
-                    } else {
-                      handleClick(test.id)
-                    }
-                  }}
-                  className={`px-6 py-2 rounded-lg transition text-white
-                  ${!isLocked
-                    ? "bg-blue-600 hover:bg-blue-700"
-                    : "bg-gray-400 cursor-not-allowed"
-                  }`}
+                <div
+                  key={j}
+                  className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
                 >
-                  {!isLocked ? "Start Test" : "Premium"}
-                </button>
 
-              </div>
+                  {isLocked && (
+                    <span className="absolute top-3 right-3 text-xl">
+                      🔒
+                    </span>
+                  )}
 
-            </div>
+                  <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                    {pack.name}
+                  </h3>
 
-          )
+                  <p className="text-sm text-gray-500 mb-4">
+                    Tests {pack.range[0]} – {pack.range[1]}
+                  </p>
 
-        })}
+                  {isLocked && (
+                    <p className="text-sm text-gray-500 mb-2">
+                      🔒 Unlock with Pro
+                    </p>
+                  )}
 
-      </div>
+                  <div className="flex justify-center">
+
+                    <button
+                      onClick={() => {
+                        if (isLocked) {
+                          router.push("/pricing")
+                        } else {
+                          handleClick(pack.range[0]) // first test ochiladi
+                        }
+                      }}
+                      className={`px-6 py-2 rounded-lg text-white transition
+                      ${!isLocked
+                        ? "bg-blue-600 hover:bg-blue-700"
+                        : "bg-gradient-to-r from-purple-500 to-red-500"
+                      }`}
+                    >
+                      {!isLocked ? "Start Set" : "Unlock"}
+                    </button>
+
+                  </div>
+
+                </div>
+
+              )
+
+            })}
+
+          </div>
+
+        </div>
+
+      ))}
 
     </div>
 
