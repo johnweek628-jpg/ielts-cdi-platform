@@ -86,7 +86,7 @@ if (/^\/practice\/reading\/\d+$/.test(pathname)) {
 
 return (
 
-<div className={`fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center transition-all duration-300
+<div className={`fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center transition-all duration-300
 ${scrolled 
 ? "bg-white/80 backdrop-blur-lg shadow-md border-b border-gray-200" 
 : "bg-white/50 backdrop-blur-md border-b border-white/30"}
