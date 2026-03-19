@@ -6,8 +6,11 @@ export async function POST(req: Request) {
 
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // 🔥 secret key
+    process.env.SUPABASE_SERVICE_ROLE_KEY! 
   )
+  
+await supabaseAdmin.from("profiles").delete().eq("id", userId)
+  await supabaseAdmin.from("subscriptions").delete().eq("user_id", userId)
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId)
 

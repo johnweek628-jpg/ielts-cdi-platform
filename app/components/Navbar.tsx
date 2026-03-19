@@ -232,13 +232,25 @@ If you do so, your subscription will be cancelled and no refund will be issued.
 onClick={async () => {
   if (!user) return
 
-  await fetch("/api/delete-user", {
-    method: "POST",
-    body: JSON.stringify({ userId: user.id })
-  })
+  try {
+    await fetch("/api/delete-user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ userId: user.id })
+    })
 
-  await supabase.auth.signOut()
-  router.push("/")
+    setConfirm(false)
+    setMenuOpen(false)
+
+    await supabase.auth.signOut()
+    setUser(null)
+
+    router.push("/")
+  } catch (err) {
+    console.error(err)
+  }
 }}
 className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition"
 >
