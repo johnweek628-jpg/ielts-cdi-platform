@@ -88,10 +88,13 @@ if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
 
 return (
 
-<div className={`fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center transition-all duration-300
+<div className={`
+fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center 
+transition-all duration-300
+
 ${scrolled 
-? "bg-white/80 backdrop-blur-xl border-b border-gray-200 shadow-sm" 
-: "bg-white/60 backdrop-blur-xl border-b border-gray-100"}
+? "bg-white/90 backdrop-blur-2xl border-b border-gray-300 shadow-md" 
+: "bg-white/70 backdrop-blur-xl border-b border-gray-200"}
 `}>
 
 {/* LEFT */}
