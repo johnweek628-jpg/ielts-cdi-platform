@@ -16,15 +16,17 @@ const [loading,setLoading] = useState(true)
 
 const [menuOpen,setMenuOpen] = useState(false)
 const [confirm,setConfirm] = useState(false)
-
 const [scrolled,setScrolled] = useState(false)
 
-/* 🍏 NEW */
+/* 🔥 NEW SIDEBAR STATE */
+const [sidebarOpen,setSidebarOpen] = useState(true)
+
+/* 🍏 DARK MODE */
 const [darkMode,setDarkMode] = useState(true)
 
 const menuRef = useRef<any>(null)
 
-/* 🔥 DARK MODE APPLY */
+/* DARK MODE */
 useEffect(()=>{
 if(darkMode){
 document.documentElement.classList.add("dark")
@@ -33,73 +35,111 @@ document.documentElement.classList.remove("dark")
 }
 },[darkMode])
 
-/* 🔥 USER FETCH */
+/* USER */
 useEffect(()=>{
-
 const getUser = async () => {
 const { data } = await supabase.auth.getUser()
 setUser(data.user)
 setLoading(false)
 }
-
 getUser()
 
 const { data: listener } = supabase.auth.onAuthStateChange(
-(event,session)=>{
-setUser(session?.user ?? null)
-}
+(event,session)=>setUser(session?.user ?? null)
 )
 
 return () => {
 listener.subscription.unsubscribe()
 }
-
 },[])
 
-/* 🔥 SCROLL EFFECT */
+/* SCROLL */
 useEffect(()=>{
-
-const handleScroll = () => {
-setScrolled(window.scrollY > 10)
-}
-
+const handleScroll = () => setScrolled(window.scrollY > 10)
 window.addEventListener("scroll", handleScroll)
-
 return () => window.removeEventListener("scroll", handleScroll)
-
 },[])
 
-/* 🔥 CLICK OUTSIDE */
+/* CLICK OUTSIDE */
 useEffect(()=>{
-
 const handleClickOutside = (e:any) => {
 if(menuRef.current && !menuRef.current.contains(e.target)){
 setMenuOpen(false)
 }
 }
-
 document.addEventListener("mousedown", handleClickOutside)
-
-return () => {
-document.removeEventListener("mousedown", handleClickOutside)
-}
-
+return () => document.removeEventListener("mousedown", handleClickOutside)
 },[])
 
-/* 🔥 LOGOUT */
+/* LOGOUT */
 const logout = async () => {
 await supabase.auth.signOut()
 setUser(null)
 router.push("/")
 }
 
-/* 🔥 HIDE NAVBAR ONLY ON REAL TEST PAGE */
+/* HIDE NAVBAR */
 if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
-  return null
+return null
 }
 
 return (
+<>
 
+{/* 🍏 SIDEBAR */}
+<div className={`
+fixed top-16 left-0 h-full w-64 z-40
+bg-black/90 backdrop-blur-xl
+border-r border-white/10
+p-4
+transition-all duration-300
+${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+`}>
+
+<div className="flex flex-col gap-3">
+
+{[
+["Listening Tests","/listening"],
+["Reading Tests","/reading"],
+["Writing Tests","/writing"],
+["Speaking Tests","/speaking"],
+["AI Writing Correction","/ai"],
+["Results","/results"],
+["Telegram Channel","https://t.me/jasurbeks_ielts"],
+["Support","/support"]
+].map(([label,link])=>{
+
+const active = pathname === link
+
+return (
+<button
+key={label}
+onClick={()=> link.startsWith("http") ? window.open(link) : router.push(link)}
+className={`
+w-full text-left px-4 py-3 rounded-xl
+text-white font-medium
+
+bg-white/5 backdrop-blur-md
+border border-white/10
+
+transition-all duration-150
+
+hover:bg-white/10 hover:scale-[1.02]
+active:scale-95
+
+${active ? "bg-white/20 border-white/30 shadow-md" : ""}
+`}
+>
+{label}
+</button>
+)
+
+})}
+
+</div>
+</div>
+
+{/* 🔥 NAVBAR */}
 <div className={`
 fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center 
 transition-all duration-300
@@ -112,8 +152,9 @@ ${scrolled
 {/* LEFT */}
 <div className="flex items-center gap-3">
 
+{/* 🔥 SIDEBAR TOGGLE */}
 <button
-onClick={()=>setMenuOpen(!menuOpen)}
+onClick={()=>setSidebarOpen(!sidebarOpen)}
 className="
 p-2 rounded-xl
 bg-white/70 backdrop-blur-md
@@ -127,44 +168,29 @@ hover:scale-105
 <Menu size={22} className="text-gray-800" strokeWidth={2.2} />
 </button>
 
-<Link
-href="/"
-onClick={()=>setMenuOpen(false)}
-className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600 transition"
->
-<img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
-<span className="flex items-center gap-2 font-extrabold text-gray-900 hover:text-blue-600">Home</span>
+<Link href="/" className="flex items-center gap-2 font-extrabold text-black">
+<img src="/home.png" className="w-6 h-6" />
+<span>Home</span>
 </Link>
 
-{/* 🍏 IOS SWITCH */}
+{/* 🍏 SWITCH */}
 <div className="flex items-center gap-2 ml-2">
-
 <span className="text-xs text-gray-500">🌙</span>
-
 <button
 onClick={()=>setDarkMode(!darkMode)}
-className={`
-w-12 h-7 flex items-center rounded-full p-1
-transition-all duration-300
-
-${darkMode ? "bg-green-500" : "bg-gray-300"}
-`}
+className={`w-12 h-7 flex items-center rounded-full p-1 transition-all
+${darkMode ? "bg-green-500" : "bg-gray-300"}`}
 >
-<div className={`
-w-5 h-5 bg-white rounded-full shadow-md
-transform transition-all duration-300
-${darkMode ? "translate-x-5" : "translate-x-0"}
-`} />
+<div className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all
+${darkMode ? "translate-x-5" : ""}`} />
 </button>
-
 <span className="text-xs text-gray-500">☀️</span>
-
 </div>
 
 </div>
 
 {/* CENTER */}
-<h1 className="text-sm font-semibold text-gray-900 tracking-wide">
+<h1 className="text-sm font-semibold text-gray-900">
 IELTS CDI Platform
 </h1>
 
@@ -177,41 +203,18 @@ IELTS CDI Platform
 
 <button
 onClick={() => router.push("/pricing")}
-className="
-px-4 py-2 text-sm font-semibold text-white
-bg-gradient-to-r from-purple-600 to-blue-600
-rounded-xl
-shadow-sm
-border border-white/20
-backdrop-blur-md
-transition-all duration-150
-hover:scale-105 hover:shadow-lg
-active:scale-95 active:shadow-inner
-"
+className="px-4 py-2 text-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-sm border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95"
 >
 💎 Upgrade
 </button>
 
-<div className="
-flex items-center gap-2
-bg-gradient-to-r from-green-500 to-emerald-600
-text-white px-4 py-2 rounded-xl text-sm font-semibold
-shadow-sm border border-white/20 backdrop-blur-md
-">
+<div className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm">
 ✓ Signed In
 </div>
 
 <button
 onClick={logout}
-className="
-px-4 py-2 text-sm text-white
-bg-red-500
-rounded-xl
-shadow-sm border border-white/20 backdrop-blur-md
-transition-all duration-150
-hover:bg-red-600 hover:scale-105 hover:shadow-lg
-active:scale-95 active:shadow-inner
-"
+className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-600 active:scale-95"
 >
 Logout
 </button>
@@ -222,15 +225,7 @@ Logout
 
 <button
 onClick={()=>router.push("/auth/login")}
-className="
-px-5 py-2 text-sm font-bold text-white
-bg-gradient-to-r from-blue-600 to-purple-600
-rounded-xl
-shadow-sm border border-white/20 backdrop-blur-md
-transition-all duration-150
-hover:scale-105 hover:shadow-lg
-active:scale-95 active:shadow-inner
-"
+className="px-5 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl"
 >
 Sign In
 </button>
@@ -239,191 +234,8 @@ Sign In
 
 </div>
 
-{/* 🍏 DROPDOWN MENU */}
-{menuOpen && (
-<div ref={menuRef} className="
-absolute top-16 left-4 w-72
-bg-white/80 backdrop-blur-xl
-shadow-2xl rounded-2xl p-6 z-50
-border border-white/30
-">
-
-<div className="flex flex-col items-center">
-
-<div className="relative">
-<img
-src="/default-avatar.png"
-className="w-20 h-20 rounded-full object-cover border"
-/>
-
-<div className="
-absolute bottom-0 right-0
-bg-blue-600 text-white
-w-6 h-6 flex items-center justify-center
-rounded-full text-sm cursor-pointer
-">
-+
-</div>
 </div>
 
-<p className="font-bold text-black text-lg mt-2">Your Profile</p>
-
-</div>
-
-<div className="mt-6 flex flex-col gap-3">
-
-<button
-onClick={() => {
-  router.push("/auth/reset")
-  setMenuOpen(false)
-}}
-className="
-px-4 py-2 rounded-xl text-black font-semibold
-bg-white/80 backdrop-blur-md
-border border-gray-200 shadow-sm
-transition-all duration-150
-hover:bg-white hover:scale-[1.02] hover:shadow-md
-active:scale-95 active:shadow-inner
-"
->
-Reset Password
-</button>
-
-<button
-onClick={() => {
-  router.push("/dashboard")
-  setMenuOpen(false)
-}}
-className="
-px-4 py-2 rounded-xl text-black font-semibold
-bg-white/80 backdrop-blur-md
-border border-gray-200 shadow-sm
-transition-all duration-150
-hover:bg-white hover:scale-[1.02] hover:shadow-md
-active:scale-95 active:shadow-inner
-"
->
-Dashboard
-</button>
-
-<button
-onClick={() => {
-  router.push("/dashboard")
-  setMenuOpen(false)
-}}
-className="
-px-4 py-2 rounded-xl text-black font-semibold
-bg-white/80 backdrop-blur-md
-border border-gray-200 shadow-sm
-transition-all duration-150
-hover:bg-white hover:scale-[1.02] hover:shadow-md
-active:scale-95 active:shadow-inner
-"
->
-My Progress
-</button>
-
-<button
-onClick={()=>setConfirm(true)}
-className="
-text-red-600
-border border-red-400
-px-4 py-2 rounded-xl font-semibold
-bg-red-50 backdrop-blur-md
-shadow-sm
-transition-all duration-150
-hover:bg-red-100 hover:scale-[1.02]
-active:scale-95 active:shadow-inner
-"
->
-Delete Account
-</button>
-
-</div>
-
-</div>
-)}
-
-{/* 🔴 DELETE MODAL */}
-{confirm && (
-<div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-
-<div className="bg-white p-6 rounded-2xl w-[400px] text-center shadow-xl">
-
-<h2 className="text-lg font-bold text-black mb-3">
-Delete your account permanently?
-</h2>
-
-<p className="text-sm text-gray-900 mb-5">
-Your subscription will be cancelled. No refunds.
-</p>
-
-<div className="flex justify-center gap-4">
-
-<button
-onClick={async () => {
-  if (!user) return
-
-  try {
-    const res = await fetch("/api/delete-user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ userId: user.id })
-    })
-
-    const data = await res.json()
-
-    if (!data.success) {
-      alert("Failed to delete account")
-      return
-    }
-
-    setConfirm(false)
-    setMenuOpen(false)
-
-    await supabase.auth.signOut()
-    setUser(null)
-
-    router.push("/")
-  } catch (err) {
-    console.error(err)
-    alert("Something went wrong")
-  }
-}}
-className="
-bg-red-600 text-white px-4 py-2 rounded-xl
-shadow-sm border border-white/20 backdrop-blur-md
-transition-all duration-150
-hover:bg-red-700 hover:scale-105 hover:shadow-lg
-active:scale-95 active:shadow-inner
-"
->
-Yes
-</button>
-
-<button
-onClick={()=>setConfirm(false)}
-className="
-bg-green-500 text-white px-4 py-2 rounded-xl
-shadow-sm border border-white/20 backdrop-blur-md
-transition-all duration-150
-hover:bg-green-600 hover:scale-105 hover:shadow-lg
-active:scale-95 active:shadow-inner
-"
->
-Cancel
-</button>
-
-</div>
-
-</div>
-
-</div>
-)}
-
-</div>
-
+</>
 )
 }
