@@ -7,264 +7,280 @@ import { supabase } from "../lib/supabase"
 import { Menu } from "lucide-react"
 
 export default function Navbar() {
+  const pathname = usePathname()
+  const router = useRouter()
 
-const pathname = usePathname()
-const router = useRouter()
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-const [user,setUser] = useState<any>(null)
-const [loading,setLoading] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [confirm, setConfirm] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-const [menuOpen,setMenuOpen] = useState(false)
-const [confirm,setConfirm] = useState(false)
-const [scrolled,setScrolled] = useState(false)
+  /* 🔥 SIDEBAR STATE */
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
-/* 🔥 SIDEBAR STATE */
-const [sidebarOpen,setSidebarOpen] = useState(true)
+  /* 🍏 DARK MODE */
+  const [darkMode, setDarkMode] = useState(true)
 
-/* 🍏 DARK MODE */
-const [darkMode,setDarkMode] = useState(true)
+  const menuRef = useRef<any>(null)
 
-const menuRef = useRef<any>(null)
+  /* DARK MODE */
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }, [darkMode])
 
-/* DARK MODE */
-useEffect(()=>{
-if(darkMode){
-document.documentElement.classList.add("dark")
-}else{
-document.documentElement.classList.remove("dark")
-}
-},[darkMode])
+  /* USER */
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser()
+      setUser(data.user)
+      setLoading(false)
+    }
 
-/* USER */
-useEffect(()=>{
-const getUser = async () => {
-const { data } = await supabase.auth.getUser()
-setUser(data.user)
-setLoading(false)
-}
-getUser()
+    getUser()
 
-const { data: listener } = supabase.auth.onAuthStateChange(
-(event,session)=>setUser(session?.user ?? null)
-)
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => setUser(session?.user ?? null)
+    )
 
-return () => {
-listener.subscription.unsubscribe()
-}
-},[])
+    return () => {
+      listener.subscription.unsubscribe()
+    }
+  }, [])
 
-/* SCROLL */
-useEffect(()=>{
-const handleScroll = () => setScrolled(window.scrollY > 10)
-window.addEventListener("scroll", handleScroll)
-return () => window.removeEventListener("scroll", handleScroll)
-},[])
+  /* SCROLL */
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
-/* CLICK OUTSIDE */
-useEffect(()=>{
-const handleClickOutside = (e:any) => {
-if(menuRef.current && !menuRef.current.contains(e.target)){
-setMenuOpen(false)
-}
-}
-document.addEventListener("mousedown", handleClickOutside)
-return () => document.removeEventListener("mousedown", handleClickOutside)
-},[])
+  /* CLICK OUTSIDE */
+  useEffect(() => {
+    const handleClickOutside = (e: any) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
-/* LOGOUT */
-const logout = async () => {
-await supabase.auth.signOut()
-setUser(null)
-router.push("/")
-}
+  /* LOGOUT */
+  const logout = async () => {
+    await supabase.auth.signOut()
+    setUser(null)
+    router.push("/")
+  }
 
-/* ❌ HIDE NAVBAR IN TEST */
-if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
-return null
-}
+  /* ❌ HIDE NAVBAR IN TEST */
+  if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
+    return null
+  }
 
-/* ❌ HIDE SIDEBAR BUTTON ON HOME */
-const isHome = pathname === "/"
+  /* 🔥 MAIN DASHBOARDDA SIDEBAR YO‘Q */
+  const isHome = pathname === "/"
+  const shouldShowSidebar = !isHome
 
-return (
-<>
+  /* 🔥 ACTIVE CHECK */
+  const isActive = (link: string) => {
+    if (link.startsWith("http")) return false
+    if (link === "/practice/reading") {
+      return pathname === "/practice/reading" || pathname.startsWith("/practice/reading/")
+    }
+    return pathname === link || pathname.startsWith(link + "/")
+  }
 
-{/* 🍏 SIDEBAR (REAL COLLAPSE) */}
-<div className={`
-fixed top-16 left-0 h-full z-40
-bg-black/90 backdrop-blur-xl
-border-r border-white/10
-p-4
-transition-all duration-300 ease-in-out
-overflow-hidden
+  /* 🔥 BODY CONTENTNI SIDEBAR BILAN SYNC QILISH */
+  useEffect(() => {
+    if (!shouldShowSidebar) {
+      document.body.style.paddingLeft = "0px"
+      document.body.style.transition = "padding-left 300ms ease-in-out"
+      return
+    }
 
-${sidebarOpen ? "w-64" : "w-0"}
-`}>
+    document.body.style.paddingLeft = sidebarOpen ? "256px" : "0px"
+    document.body.style.transition = "padding-left 300ms ease-in-out"
 
-<div className={`
-flex flex-col gap-3 transition-opacity duration-200
-${sidebarOpen ? "opacity-100" : "opacity-0"}
-`}>
+    return () => {
+      document.body.style.paddingLeft = "0px"
+    }
+  }, [sidebarOpen, shouldShowSidebar])
 
-{[
-["Listening Tests","/listening"],
-["Reading Tests","/reading"],
-["Writing Tests","/writing"],
-["Speaking Tests","/speaking"],
-["AI Writing Correction","/ai"],
-["Results","/results"],
-["Telegram Channel","https://t.me/jasurbeks_ielts"],
-["Support","/support"]
-].map(([label,link])=>{
+  return (
+    <>
+      {/* 🍏 SIDEBAR */}
+      {shouldShowSidebar && (
+        <div
+          className={`
+            fixed top-16 left-0 h-[calc(100vh-4rem)] z-40
+            bg-black/90 backdrop-blur-xl
+            border-r border-white/10
+            p-4
+            transition-all duration-300 ease-in-out
+            overflow-hidden
+            ${sidebarOpen ? "w-64 opacity-100" : "w-0 opacity-0 p-0 border-r-0"}
+          `}
+        >
+          <div
+            className={`
+              flex flex-col gap-3 transition-opacity duration-200
+              ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+            `}
+          >
+            {[
+              ["Listening Tests", "/listening"],
+              ["Reading Tests", "/practice/reading"],
+              ["Writing Tests", "/writing"],
+              ["Speaking Tests", "/speaking"],
+              ["AI Writing Correction", "/ai"],
+              ["Results", "/results"],
+              ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
+              ["Support", "/support"]
+            ].map(([label, link]) => {
+              const active = isActive(link)
 
-const active = pathname === link
+              return (
+                <button
+                  key={label}
+                  onClick={() =>
+                    link.startsWith("http")
+                      ? window.open(link, "_blank")
+                      : router.push(link)
+                  }
+                  className={`
+                    w-full text-left px-4 py-3 rounded-xl
+                    text-white font-medium
+                    bg-white/5 backdrop-blur-md
+                    border border-white/10
+                    transition-all duration-150
+                    hover:bg-white/10 hover:scale-[1.02]
+                    active:scale-95
+                    ${active ? "bg-white/20 border-white/30 shadow-md" : ""}
+                  `}
+                >
+                  {label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
-return (
-<button
-key={label}
-onClick={()=> link.startsWith("http") ? window.open(link) : router.push(link)}
-className={`
-w-full text-left px-4 py-3 rounded-xl
-text-white font-medium
+      {/* 🔥 FLOATING MINI BUTTON */}
+      {shouldShowSidebar && !sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="
+            fixed top-24 left-2 z-50
+            p-2 rounded-xl
+            bg-white/90 backdrop-blur-md
+            border border-gray-200
+            shadow-lg
+            hover:scale-110 active:scale-95
+            transition-all
+          "
+        >
+          <Menu size={20} className="text-gray-800" />
+        </button>
+      )}
 
-bg-white/5 backdrop-blur-md
-border border-white/10
+      {/* 🔥 NAVBAR */}
+      <div
+        className={`
+          fixed top-0 h-16 z-50 px-6 flex justify-between items-center
+          transition-all duration-300
+          ${shouldShowSidebar && sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"}
+          ${scrolled
+            ? "bg-white/90 backdrop-blur-2xl border-b border-gray-300 shadow-md"
+            : "bg-white/70 backdrop-blur-xl border-b border-gray-200"}
+        `}
+      >
+        {/* LEFT */}
+        <div className="flex items-center gap-3">
+          {shouldShowSidebar && (
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="
+                p-2 rounded-xl
+                bg-white/70 backdrop-blur-md
+                border border-gray-200
+                shadow-sm
+                transition-all duration-150
+                active:scale-90 active:shadow-inner
+                hover:scale-105
+              "
+            >
+              <Menu size={22} className="text-gray-800" strokeWidth={2.2} />
+            </button>
+          )}
 
-transition-all duration-150
+          <Link href="/" className="flex items-center gap-2 font-extrabold text-black">
+            <img src="/home.png" className="w-6 h-6" />
+            <span>Home</span>
+          </Link>
 
-hover:bg-white/10 hover:scale-[1.02]
-active:scale-95
+          {/* 🍏 SWITCH */}
+          <div className="flex items-center gap-2 ml-2">
+            <span className="text-xs text-gray-500">🌙</span>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`w-12 h-7 flex items-center rounded-full p-1 transition-all ${
+                darkMode ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              <div
+                className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all ${
+                  darkMode ? "translate-x-5" : ""
+                }`}
+              />
+            </button>
+            <span className="text-xs text-gray-500">☀️</span>
+          </div>
+        </div>
 
-${active ? "bg-white/20 border-white/30 shadow-md" : ""}
-`}
->
-{label}
-</button>
-)
+        {/* CENTER */}
+        <h1 className="text-sm font-semibold text-gray-900">
+          IELTS CDI Platform
+        </h1>
 
-})}
+        {/* RIGHT */}
+        <div>
+          {loading ? null : user ? (
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push("/pricing")}
+                className="px-4 py-2 text-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-sm border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95"
+              >
+                💎 Upgrade
+              </button>
 
-</div>
-</div>
+              <div className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm">
+                ✓ Signed In
+              </div>
 
-{/* 🔥 FLOATING MINI BUTTON */}
-{!sidebarOpen && !isHome && (
-<button
-onClick={()=>setSidebarOpen(true)}
-className="
-fixed top-24 left-2 z-50
-p-2 rounded-xl
-bg-white/90 backdrop-blur-md
-border border-gray-200
-shadow-lg
-hover:scale-110 active:scale-95
-transition-all
-"
->
-<Menu size={20} className="text-gray-800" />
-</button>
-)}
-
-{/* 🔥 NAVBAR (SHIFT WITH SIDEBAR) */}
-<div className={`
-fixed top-0 h-16 z-50 px-6 flex justify-between items-center 
-transition-all duration-300
-
-${sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"}
-
-${scrolled 
-? "bg-white/90 backdrop-blur-2xl border-b border-gray-300 shadow-md" 
-: "bg-white/70 backdrop-blur-xl border-b border-gray-200"}
-`}>
-
-{/* LEFT */}
-<div className="flex items-center gap-3">
-
-{!isHome && (
-<button
-onClick={()=>setSidebarOpen(!sidebarOpen)}
-className="
-p-2 rounded-xl
-bg-white/70 backdrop-blur-md
-border border-gray-200
-shadow-sm
-transition-all duration-150
-active:scale-90 active:shadow-inner
-hover:scale-105
-"
->
-<Menu size={22} className="text-gray-800" strokeWidth={2.2} />
-</button>
-)}
-
-<Link href="/" className="flex items-center gap-2 font-extrabold text-black">
-<img src="/home.png" className="w-6 h-6" />
-<span>Home</span>
-</Link>
-
-{/* 🍏 SWITCH */}
-<div className="flex items-center gap-2 ml-2">
-<span className="text-xs text-gray-500">🌙</span>
-<button
-onClick={()=>setDarkMode(!darkMode)}
-className={`w-12 h-7 flex items-center rounded-full p-1 transition-all
-${darkMode ? "bg-green-500" : "bg-gray-300"}`}
->
-<div className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all
-${darkMode ? "translate-x-5" : ""}`} />
-</button>
-<span className="text-xs text-gray-500">☀️</span>
-</div>
-
-</div>
-
-{/* CENTER */}
-<h1 className="text-sm font-semibold text-gray-900">
-IELTS CDI Platform
-</h1>
-
-{/* RIGHT */}
-<div>
-
-{loading ? null : user ? (
-
-<div className="flex items-center gap-3">
-
-<button
-onClick={() => router.push("/pricing")}
-className="px-4 py-2 text-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-sm border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95"
->
-💎 Upgrade
-</button>
-
-<div className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm">
-✓ Signed In
-</div>
-
-<button
-onClick={logout}
-className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-600 active:scale-95"
->
-Logout
-</button>
-
-</div>
-
-) : (
-
-<button
-onClick={()=>router.push("/auth/login")}
-className="px-5 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl"
->
-Sign In
-</button>
-
-)}
-
-</div>
-
-</div>
-
-</>
-)
+              <button
+                onClick={logout}
+                className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-600 active:scale-95"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => router.push("/auth/login")}
+              className="px-5 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl"
+            >
+              Sign In
+            </button>
+          )}
+        </div>
+      </div>
+    </>
+  )
 }
