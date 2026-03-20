@@ -18,7 +18,7 @@ const [menuOpen,setMenuOpen] = useState(false)
 const [confirm,setConfirm] = useState(false)
 const [scrolled,setScrolled] = useState(false)
 
-/* 🔥 NEW SIDEBAR STATE */
+/* 🔥 SIDEBAR STATE */
 const [sidebarOpen,setSidebarOpen] = useState(true)
 
 /* 🍏 DARK MODE */
@@ -78,10 +78,13 @@ setUser(null)
 router.push("/")
 }
 
-/* HIDE NAVBAR */
+/* ❌ HIDE NAVBAR IN TEST */
 if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
 return null
 }
+
+/* ❌ HIDE SIDEBAR BUTTON ON HOME */
+const isHome = pathname === "/"
 
 return (
 <>
@@ -92,7 +95,8 @@ fixed top-16 left-0 h-full w-64 z-40
 bg-black/90 backdrop-blur-xl
 border-r border-white/10
 p-4
-transition-all duration-300
+transition-all duration-300 ease-in-out
+
 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
 `}>
 
@@ -139,6 +143,24 @@ ${active ? "bg-white/20 border-white/30 shadow-md" : ""}
 </div>
 </div>
 
+{/* 🔥 FLOATING MINI BUTTON (WHEN CLOSED) */}
+{!sidebarOpen && !isHome && (
+<button
+onClick={()=>setSidebarOpen(true)}
+className="
+fixed top-24 left-3 z-50
+p-2 rounded-xl
+bg-white/80 backdrop-blur-md
+border border-gray-200
+shadow-lg
+hover:scale-110 active:scale-95
+transition-all
+"
+>
+<Menu size={20} className="text-gray-800" />
+</button>
+)}
+
 {/* 🔥 NAVBAR */}
 <div className={`
 fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center 
@@ -152,7 +174,8 @@ ${scrolled
 {/* LEFT */}
 <div className="flex items-center gap-3">
 
-{/* 🔥 SIDEBAR TOGGLE */}
+{/* 🔥 SIDEBAR TOGGLE (HIDDEN ON HOME) */}
+{!isHome && (
 <button
 onClick={()=>setSidebarOpen(!sidebarOpen)}
 className="
@@ -167,6 +190,7 @@ hover:scale-105
 >
 <Menu size={22} className="text-gray-800" strokeWidth={2.2} />
 </button>
+)}
 
 <Link href="/" className="flex items-center gap-2 font-extrabold text-black">
 <img src="/home.png" className="w-6 h-6" />
