@@ -104,12 +104,15 @@ ${scrolled
 onClick={()=>setMenuOpen(!menuOpen)}
 className="
 p-2 rounded-xl
-bg-white/40 backdrop-blur-md
-border border-white/30
-hover:scale-105 transition
+bg-white/70 backdrop-blur-md
+border border-gray-200
+shadow-sm
+transition-all duration-150
+active:scale-90 active:shadow-inner
+hover:scale-105
 "
 >
-<Menu size={20} />
+<Menu size={22} className="text-gray-800" strokeWidth={2.2} />
 </button>
 
 <Link
@@ -135,38 +138,46 @@ IELTS CDI Platform
 
 <div className="flex items-center gap-3">
 
-  <button
-    onClick={() => router.push("/pricing")}
-    className="
-      px-4 py-2 text-sm font-semibold text-white
-      bg-gradient-to-r from-purple-600 to-blue-600
-      rounded-xl
-      shadow-md
-      hover:scale-105 hover:shadow-xl
-      transition-all duration-200
-    "
-  >
-    💎 Upgrade
-  </button>
+<button
+onClick={() => router.push("/pricing")}
+className="
+px-4 py-2 text-sm font-semibold text-white
+bg-gradient-to-r from-purple-600 to-blue-600
+rounded-xl
+shadow-sm
+border border-white/20
+backdrop-blur-md
+transition-all duration-150
+hover:scale-105 hover:shadow-lg
+active:scale-95 active:shadow-inner
+"
+>
+💎 Upgrade
+</button>
 
-  <div className="
-    flex items-center gap-2
-    bg-gradient-to-r from-green-500 to-emerald-600
-    text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md
-  ">
-    ✓ Signed In
-  </div>
+<div className="
+flex items-center gap-2
+bg-gradient-to-r from-green-500 to-emerald-600
+text-white px-4 py-2 rounded-xl text-sm font-semibold
+shadow-sm border border-white/20 backdrop-blur-md
+">
+✓ Signed In
+</div>
 
-  <button
-    onClick={logout}
-    className="
-      px-4 py-2 text-sm
-      bg-red-500 text-white rounded-xl
-      hover:bg-red-600 transition
-    "
-  >
-    Logout
-  </button>
+<button
+onClick={logout}
+className="
+px-4 py-2 text-sm text-white
+bg-red-500
+rounded-xl
+shadow-sm border border-white/20 backdrop-blur-md
+transition-all duration-150
+hover:bg-red-600 hover:scale-105 hover:shadow-lg
+active:scale-95 active:shadow-inner
+"
+>
+Logout
+</button>
 
 </div>
 
@@ -175,11 +186,13 @@ IELTS CDI Platform
 <button
 onClick={()=>router.push("/auth/login")}
 className="
-  px-5 py-2 text-sm font-bold text-white
-  bg-gradient-to-r from-blue-600 to-purple-600
-  rounded-xl shadow-md
-  hover:scale-105 hover:shadow-xl
-  transition-all duration-200
+px-5 py-2 text-sm font-bold text-white
+bg-gradient-to-r from-blue-600 to-purple-600
+rounded-xl
+shadow-sm border border-white/20 backdrop-blur-md
+transition-all duration-150
+hover:scale-105 hover:shadow-lg
+active:scale-95 active:shadow-inner
 "
 >
 Sign In
@@ -227,7 +240,14 @@ onClick={() => {
   router.push("/auth/reset")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="
+px-4 py-2 rounded-xl text-black font-semibold
+bg-white/80 backdrop-blur-md
+border border-gray-200 shadow-sm
+transition-all duration-150
+hover:bg-white hover:scale-[1.02] hover:shadow-md
+active:scale-95 active:shadow-inner
+"
 >
 Reset Password
 </button>
@@ -237,7 +257,14 @@ onClick={() => {
   router.push("/dashboard")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="
+px-4 py-2 rounded-xl text-black font-semibold
+bg-white/80 backdrop-blur-md
+border border-gray-200 shadow-sm
+transition-all duration-150
+hover:bg-white hover:scale-[1.02] hover:shadow-md
+active:scale-95 active:shadow-inner
+"
 >
 Dashboard
 </button>
@@ -247,14 +274,30 @@ onClick={() => {
   router.push("/dashboard")
   setMenuOpen(false)
 }}
-className="border px-4 py-2 rounded-xl text-black font-semibold bg-white hover:bg-gray-100 transition"
+className="
+px-4 py-2 rounded-xl text-black font-semibold
+bg-white/80 backdrop-blur-md
+border border-gray-200 shadow-sm
+transition-all duration-150
+hover:bg-white hover:scale-[1.02] hover:shadow-md
+active:scale-95 active:shadow-inner
+"
 >
 My Progress
 </button>
 
 <button
 onClick={()=>setConfirm(true)}
-className="text-red-600 border border-red-500 px-4 py-2 rounded-xl font-semibold hover:bg-red-50 transition"
+className="
+text-red-600
+border border-red-400
+px-4 py-2 rounded-xl font-semibold
+bg-red-50 backdrop-blur-md
+shadow-sm
+transition-all duration-150
+hover:bg-red-100 hover:scale-[1.02]
+active:scale-95 active:shadow-inner
+"
 >
 Delete Account
 </button>
@@ -312,14 +355,26 @@ onClick={async () => {
     alert("Something went wrong")
   }
 }}
-className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition"
+className="
+bg-red-600 text-white px-4 py-2 rounded-xl
+shadow-sm border border-white/20 backdrop-blur-md
+transition-all duration-150
+hover:bg-red-700 hover:scale-105 hover:shadow-lg
+active:scale-95 active:shadow-inner
+"
 >
 Yes
 </button>
 
 <button
 onClick={()=>setConfirm(false)}
-className="bg-green-500 text-white px-4 py-2 rounded-xl hover:bg-green-600 transition"
+className="
+bg-green-500 text-white px-4 py-2 rounded-xl
+shadow-sm border border-white/20 backdrop-blur-md
+transition-all duration-150
+hover:bg-green-600 hover:scale-105 hover:shadow-lg
+active:scale-95 active:shadow-inner
+"
 >
 Cancel
 </button>
