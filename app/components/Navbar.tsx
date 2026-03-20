@@ -19,7 +19,19 @@ const [confirm,setConfirm] = useState(false)
 
 const [scrolled,setScrolled] = useState(false)
 
+/* 🍏 NEW */
+const [darkMode,setDarkMode] = useState(true)
+
 const menuRef = useRef<any>(null)
+
+/* 🔥 DARK MODE APPLY */
+useEffect(()=>{
+if(darkMode){
+document.documentElement.classList.add("dark")
+}else{
+document.documentElement.classList.remove("dark")
+}
+},[darkMode])
 
 /* 🔥 USER FETCH */
 useEffect(()=>{
@@ -123,6 +135,31 @@ className="flex items-center gap-2 font-extrabold text-black hover:text-blue-600
 <img src="/home.png" alt="Home" className="w-6 h-6 object-contain" />
 <span className="flex items-center gap-2 font-extrabold text-gray-900 hover:text-blue-600">Home</span>
 </Link>
+
+{/* 🍏 IOS SWITCH */}
+<div className="flex items-center gap-2 ml-2">
+
+<span className="text-xs text-gray-500">🌙</span>
+
+<button
+onClick={()=>setDarkMode(!darkMode)}
+className={`
+w-12 h-7 flex items-center rounded-full p-1
+transition-all duration-300
+
+${darkMode ? "bg-green-500" : "bg-gray-300"}
+`}
+>
+<div className={`
+w-5 h-5 bg-white rounded-full shadow-md
+transform transition-all duration-300
+${darkMode ? "translate-x-5" : "translate-x-0"}
+`} />
+</button>
+
+<span className="text-xs text-gray-500">☀️</span>
+
+</div>
 
 </div>
 
