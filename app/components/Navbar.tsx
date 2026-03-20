@@ -89,18 +89,22 @@ const isHome = pathname === "/"
 return (
 <>
 
-{/* 🍏 SIDEBAR */}
+{/* 🍏 SIDEBAR (REAL COLLAPSE) */}
 <div className={`
-fixed top-16 left-0 h-full w-64 z-40
+fixed top-16 left-0 h-full z-40
 bg-black/90 backdrop-blur-xl
 border-r border-white/10
 p-4
 transition-all duration-300 ease-in-out
+overflow-hidden
 
-${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+${sidebarOpen ? "w-64" : "w-0"}
 `}>
 
-<div className="flex flex-col gap-3">
+<div className={`
+flex flex-col gap-3 transition-opacity duration-200
+${sidebarOpen ? "opacity-100" : "opacity-0"}
+`}>
 
 {[
 ["Listening Tests","/listening"],
@@ -143,14 +147,14 @@ ${active ? "bg-white/20 border-white/30 shadow-md" : ""}
 </div>
 </div>
 
-{/* 🔥 FLOATING MINI BUTTON (WHEN CLOSED) */}
+{/* 🔥 FLOATING MINI BUTTON */}
 {!sidebarOpen && !isHome && (
 <button
 onClick={()=>setSidebarOpen(true)}
 className="
-fixed top-24 left-3 z-50
+fixed top-24 left-2 z-50
 p-2 rounded-xl
-bg-white/80 backdrop-blur-md
+bg-white/90 backdrop-blur-md
 border border-gray-200
 shadow-lg
 hover:scale-110 active:scale-95
@@ -161,10 +165,12 @@ transition-all
 </button>
 )}
 
-{/* 🔥 NAVBAR */}
+{/* 🔥 NAVBAR (SHIFT WITH SIDEBAR) */}
 <div className={`
-fixed top-0 left-0 w-full h-16 z-50 px-6 flex justify-between items-center 
+fixed top-0 h-16 z-50 px-6 flex justify-between items-center 
 transition-all duration-300
+
+${sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"}
 
 ${scrolled 
 ? "bg-white/90 backdrop-blur-2xl border-b border-gray-300 shadow-md" 
@@ -174,7 +180,6 @@ ${scrolled
 {/* LEFT */}
 <div className="flex items-center gap-3">
 
-{/* 🔥 SIDEBAR TOGGLE (HIDDEN ON HOME) */}
 {!isHome && (
 <button
 onClick={()=>setSidebarOpen(!sidebarOpen)}
