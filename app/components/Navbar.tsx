@@ -17,15 +17,11 @@ export default function Navbar() {
   const [confirm, setConfirm] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  /* 🔥 SIDEBAR STATE */
   const [sidebarOpen, setSidebarOpen] = useState(true)
-
-  /* 🍏 DARK MODE */
   const [darkMode, setDarkMode] = useState(true)
 
   const menuRef = useRef<any>(null)
 
-  /* DARK MODE */
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark")
@@ -34,7 +30,6 @@ export default function Navbar() {
     }
   }, [darkMode])
 
-  /* USER */
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser()
@@ -53,14 +48,12 @@ export default function Navbar() {
     }
   }, [])
 
-  /* SCROLL */
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  /* CLICK OUTSIDE */
   useEffect(() => {
     const handleClickOutside = (e: any) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -71,23 +64,19 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  /* LOGOUT */
   const logout = async () => {
     await supabase.auth.signOut()
     setUser(null)
     router.push("/")
   }
 
-  /* ❌ HIDE NAVBAR IN TEST */
   if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
     return null
   }
 
-  /* 🔥 MAIN DASHBOARDDA SIDEBAR YO‘Q */
   const isHome = pathname === "/"
   const shouldShowSidebar = !isHome
 
-  /* 🔥 ACTIVE CHECK */
   const isActive = (link: string) => {
     if (link.startsWith("http")) return false
     if (link === "/practice/reading") {
@@ -96,16 +85,13 @@ export default function Navbar() {
     return pathname === link || pathname.startsWith(link + "/")
   }
 
-  /* 🔥 BODY CONTENTNI SIDEBAR BILAN SYNC QILISH */
   useEffect(() => {
     if (!shouldShowSidebar) {
       document.body.style.paddingLeft = "0px"
-      document.body.style.transition = "padding-left 300ms ease-in-out"
       return
     }
 
     document.body.style.paddingLeft = sidebarOpen ? "256px" : "0px"
-    document.body.style.transition = "padding-left 300ms ease-in-out"
 
     return () => {
       document.body.style.paddingLeft = "0px"
@@ -119,20 +105,14 @@ export default function Navbar() {
         <div
           className={`
             fixed top-16 left-0 h-[calc(100vh-4rem)] z-40
-            bg-black/90 backdrop-blur-xl
+            bg-black/80 backdrop-blur-2xl
             border-r border-white/10
-            p-4
-            transition-all duration-300 ease-in-out
-            overflow-hidden
-            ${sidebarOpen ? "w-64 opacity-100" : "w-0 opacity-0 p-0 border-r-0"}
+            p-4 transition-all duration-300
+            ${sidebarOpen ? "w-64" : "w-0 p-0 border-none"}
           `}
         >
-          <div
-            className={`
-              flex flex-col gap-3 transition-opacity duration-200
-              ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
-            `}
-          >
+          <div className={`${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"} flex flex-col gap-3`}>
+
             {[
               ["Listening Tests", "/listening"],
               ["Reading Tests", "/practice/reading"],
@@ -143,6 +123,7 @@ export default function Navbar() {
               ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
               ["Support", "/support"]
             ].map(([label, link]) => {
+
               const active = isActive(link)
 
               return (
@@ -154,14 +135,8 @@ export default function Navbar() {
                       : router.push(link)
                   }
                   className={`
-                    w-full text-left px-4 py-3 rounded-xl
-                    text-white font-medium
-                    bg-white/5 backdrop-blur-md
-                    border border-white/10
-                    transition-all duration-150
-                    hover:bg-white/10 hover:scale-[1.02]
-                    active:scale-95
-                    ${active ? "bg-white/20 border-white/30 shadow-md" : ""}
+                    ios-btn w-full text-left text-white
+                    ${active ? "bg-white/20 border-white/30" : ""}
                   `}
                 >
                   {label}
@@ -172,21 +147,13 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* 🔥 FLOATING MINI BUTTON */}
+      {/* 🔥 MINI OPEN BUTTON */}
       {shouldShowSidebar && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
-          className="
-            fixed top-24 left-2 z-50
-            p-2 rounded-xl
-            bg-white/90 backdrop-blur-md
-            border border-gray-200
-            shadow-lg
-            hover:scale-110 active:scale-95
-            transition-all
-          "
+          className="ios-btn fixed top-24 left-2 z-50 p-2"
         >
-          <Menu size={20} className="text-gray-800" />
+          <Menu size={20} />
         </button>
       )}
 
@@ -194,58 +161,58 @@ export default function Navbar() {
       <div
         className={`
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
-          transition-all duration-300
-          ${shouldShowSidebar && sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"}
+          ${shouldShowSidebar && sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "w-full"}
           ${scrolled
-            ? "bg-white/90 backdrop-blur-2xl border-b border-gray-300 shadow-md"
+            ? "bg-white/90 backdrop-blur-2xl border-b border-gray-300"
             : "bg-white/70 backdrop-blur-xl border-b border-gray-200"}
         `}
       >
+
         {/* LEFT */}
         <div className="flex items-center gap-3">
+
           {shouldShowSidebar && (
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="
-                p-2 rounded-xl
-                bg-white/70 backdrop-blur-md
-                border border-gray-200
-                shadow-sm
-                transition-all duration-150
-                active:scale-90 active:shadow-inner
-                hover:scale-105
-              "
+              className="ios-btn p-2"
             >
-              <Menu size={22} className="text-gray-800" strokeWidth={2.2} />
+              <Menu size={22} />
             </button>
           )}
 
-          <Link href="/" className="flex items-center gap-2 font-extrabold text-black">
+          <Link href="/" className="flex items-center gap-2 font-semibold text-black">
             <img src="/home.png" className="w-6 h-6" />
             <span>Home</span>
           </Link>
 
           {/* 🍏 SWITCH */}
           <div className="flex items-center gap-2 ml-2">
-            <span className="text-xs text-gray-500">🌙</span>
+            <span className="text-xs">🌙</span>
+
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className={`w-12 h-7 flex items-center rounded-full p-1 transition-all ${
-                darkMode ? "bg-green-500" : "bg-gray-300"
-              }`}
+              className={`
+                w-12 h-7 flex items-center rounded-full p-1
+                backdrop-blur-xl border border-white/20
+                ${darkMode ? "bg-green-500/80" : "bg-white/20"}
+              `}
             >
               <div
-                className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all ${
-                  darkMode ? "translate-x-5" : ""
-                }`}
+                className={`
+                  w-5 h-5 bg-white rounded-full
+                  transition-all
+                  ${darkMode ? "translate-x-5" : ""}
+                `}
               />
             </button>
-            <span className="text-xs text-gray-500">☀️</span>
+
+            <span className="text-xs">☀️</span>
           </div>
+
         </div>
 
         {/* CENTER */}
-        <h1 className="text-sm font-semibold text-gray-900">
+        <h1 className="text-sm font-medium text-gray-900">
           IELTS CDI Platform
         </h1>
 
@@ -253,33 +220,36 @@ export default function Navbar() {
         <div>
           {loading ? null : user ? (
             <div className="flex items-center gap-3">
+
               <button
                 onClick={() => router.push("/pricing")}
-                className="px-4 py-2 text-sm text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-sm border border-white/20 backdrop-blur-md hover:scale-105 active:scale-95"
+                className="ios-btn text-white bg-gradient-to-r from-purple-500/80 to-blue-500/80"
               >
                 💎 Upgrade
               </button>
 
-              <div className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm">
+              <div className="ios-btn text-green-300 border-green-400/30 bg-green-500/10">
                 ✓ Signed In
               </div>
 
               <button
                 onClick={logout}
-                className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-600 active:scale-95"
+                className="ios-btn text-red-300 border-red-400/30 bg-red-500/10"
               >
                 Logout
               </button>
+
             </div>
           ) : (
             <button
               onClick={() => router.push("/auth/login")}
-              className="px-5 py-2 text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl"
+              className="ios-btn text-white bg-gradient-to-r from-blue-500/80 to-purple-500/80"
             >
               Sign In
             </button>
           )}
         </div>
+
       </div>
     </>
   )
