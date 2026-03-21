@@ -14,7 +14,6 @@ export default function Navbar() {
   const [loading, setLoading] = useState(true)
 
   const [menuOpen, setMenuOpen] = useState(false)
-  const [confirm, setConfirm] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
   /* 🔥 SIDEBAR STATE */
@@ -25,14 +24,18 @@ export default function Navbar() {
 
   const menuRef = useRef<any>(null)
 
-  /* DARK MODE */
+  /* ✅ LOAD SAVED THEME */
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
+    const saved = localStorage.getItem("theme")
+
+    if (saved === "light") {
+      setDarkMode(false)
       document.documentElement.classList.remove("dark")
+    } else {
+      setDarkMode(true)
+      document.documentElement.classList.add("dark")
     }
-  }, [darkMode])
+  }, [])
 
   /* USER */
   useEffect(() => {
@@ -78,8 +81,8 @@ export default function Navbar() {
     router.push("/")
   }
 
-  /* ❌ HIDE NAVBAR IN TEST */
-  if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
+  /* ✅ FIXED NAVBAR HIDE */
+  if (pathname.startsWith("/practice/reading/test/")) {
     return null
   }
 
@@ -96,7 +99,7 @@ export default function Navbar() {
     return pathname === link || pathname.startsWith(link + "/")
   }
 
-  /* 🔥 BODY CONTENTNI SIDEBAR BILAN SYNC QILISH */
+  /* 🔥 BODY SYNC */
   useEffect(() => {
     if (!shouldShowSidebar) {
       document.body.style.paddingLeft = "0px"
@@ -138,7 +141,7 @@ export default function Navbar() {
               ["Reading Tests", "/practice/reading"],
               ["Writing Tests", "/writing"],
               ["Speaking Tests", "/speaking"],
-              ["AI Writing Correction", "/ai"],
+              ["AI Writing Correction", "/ai-writing"], // ✅ FIXED
               ["Results", "/results"],
               ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
               ["Support", "/support"]
@@ -172,7 +175,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* 🔥 FLOATING MINI BUTTON */}
+      {/* 🔥 FLOATING BUTTON */}
       {shouldShowSidebar && !sidebarOpen && (
         <button
           onClick={() => setSidebarOpen(true)}
@@ -225,11 +228,22 @@ export default function Navbar() {
             <span>Home</span>
           </Link>
 
-          {/* 🍏 SWITCH */}
+          {/* 🌗 TOGGLE FIXED */}
           <div className="flex items-center gap-2 ml-2">
             <span className="text-xs text-gray-500">🌙</span>
             <button
-              onClick={() => setDarkMode(!darkMode)}
+              onClick={() => {
+                const newMode = !darkMode
+                setDarkMode(newMode)
+
+                if (newMode) {
+                  document.documentElement.classList.add("dark")
+                  localStorage.setItem("theme", "dark")
+                } else {
+                  document.documentElement.classList.remove("dark")
+                  localStorage.setItem("theme", "light")
+                }
+              }}
               className={`w-12 h-7 flex items-center rounded-full p-1 transition-all ${
                 darkMode ? "bg-green-500" : "bg-gray-300"
               }`}
