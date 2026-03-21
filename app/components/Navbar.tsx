@@ -163,8 +163,8 @@ export default function Navbar() {
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
           ${shouldShowSidebar && sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "w-full"}
           ${scrolled
-            ? "bg-white/90 backdrop-blur-2xl border-b border-gray-300"
-            : "bg-white/70 backdrop-blur-xl border-b border-gray-200"}
+  ? "bg-[#EAF3FF]/80 backdrop-blur-2xl border-b border-blue-200"
+  : "bg-[#EAF3FF]/60 backdrop-blur-xl border-b border-blue-100"}
         `}
       >
 
@@ -219,7 +219,10 @@ export default function Navbar() {
         {/* RIGHT */}
         <div>
           {loading ? null : user ? (
-            <div className="flex items-center gap-3">
+            <div className="ios-btn
+  text-blue-700
+  bg-blue-500/20
+  border-blue-300/40">
 
               <button
                 onClick={() => router.push("/pricing")}
@@ -228,13 +231,19 @@ export default function Navbar() {
                 💎 Upgrade
               </button>
 
-              <div className="ios-btn text-green-300 border-green-400/30 bg-green-500/10">
+              <div className="  ios-btn
+  text-green-700
+  bg-green-500/15
+  border-green-300/40">
                 ✓ Signed In
               </div>
 
               <button
                 onClick={logout}
-                className="ios-btn text-red-300 border-red-400/30 bg-red-500/10"
+                className=" ios-btn
+  text-red-600
+  bg-red-500/15
+  border-red-300/40"
               >
                 Logout
               </button>
@@ -243,7 +252,10 @@ export default function Navbar() {
           ) : (
             <button
               onClick={() => router.push("/auth/login")}
-              className="ios-btn text-white bg-gradient-to-r from-blue-500/80 to-purple-500/80"
+              className="ios-btn
+  text-blue-700
+  bg-blue-500/20
+  border-blue-300/40"
             >
               Sign In
             </button>
