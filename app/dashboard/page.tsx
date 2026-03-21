@@ -110,63 +110,6 @@ return (
 <div className="flex min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
 
 
-{/* SIDEBAR */}
-
-<div className="w-64 bg-black border-r border-gray-800 p-6 flex flex-col">
-
-<button className="text-left mb-4 text-gray-300 hover:text-white">
-Listening Tests
-</button>
-
-<button
-onClick={()=>router.push("/practice/reading")}
-className="text-left mb-4 text-gray-300 hover:text-white"
->
-Reading Tests
-</button>
-
-<button className="text-left mb-4 text-gray-300 hover:text-white">
-Writing Tests
-</button>
-
-<button className="text-left mb-4 text-gray-300 hover:text-white">
-Speaking Tests
-</button>
-
-<button
-onClick={()=>router.push("/ai-writing")}
-className="text-left mb-4 text-gray-300 hover:text-white"
->
-AI Writing Correction
-</button>
-
-<button
-className="text-left mb-4 text-gray-300 hover:text-white"
->
-Results
-</button>
-
-{/* NEW BUTTONS */}
-
-<a
-href="https://t.me/jasurbeks_ielts"
-target="_blank"
-className="text-left mb-4 text-gray-300 hover:text-white"
->
-Join us on Telegram channel
-</a>
-
-<button
-onClick={()=>router.push("/support")}
-className="text-left mb-4 text-gray-300 hover:text-white"
->
-Support
-</button>
-
-</div>
-
-
-
 {/* MAIN SECTION */}
 
 <div className="flex-1">
