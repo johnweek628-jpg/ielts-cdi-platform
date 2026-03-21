@@ -69,14 +69,18 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  useEffect(() => {
+  if (pathname === "/dashboard") {
+    setSidebarOpen(true)
+  } else {
+    setSidebarOpen(false)
+  }
+}, [pathname])
+
   const logout = async () => {
     await supabase.auth.signOut()
     setUser(null)
     router.push("/")
-  }
-
-  if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
-    return null
   }
 
   const isHome = pathname === "/"
