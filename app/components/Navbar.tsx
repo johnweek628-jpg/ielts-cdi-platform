@@ -19,12 +19,12 @@ export default function Navbar() {
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   useEffect(() => {
-  if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
-    setSidebarOpen(false)
-  }
-}, [pathname])
-  const [darkMode, setDarkMode] = useState(true)
+    if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
+      setSidebarOpen(false)
+    }
+  }, [pathname])
 
+  const [darkMode, setDarkMode] = useState(true)
   const menuRef = useRef<any>(null)
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function Navbar() {
 
   const isHome = pathname === "/"
   const testMatch = pathname.match(/\/practice\/reading\/test\/(\d+)/)
-const testNumber = testMatch ? testMatch[1] : null
+  const testNumber = testMatch ? testMatch[1] : null
   const shouldShowSidebar = !isHome
 
   const isActive = (link: string) => {
@@ -92,21 +92,6 @@ const testNumber = testMatch ? testMatch[1] : null
     return pathname === link || pathname.startsWith(link + "/")
   }
 
- useEffect(() => {
-  const isTest = /^\/practice\/reading\/test\/\d+$/.test(pathname)
-
-  if (!shouldShowSidebar || isTest) {
-    document.body.style.paddingLeft = "0px"
-    return
-  }
-
-  document.body.style.paddingLeft = sidebarOpen ? "256px" : "0px"
-
-  return () => {
-    document.body.style.paddingLeft = "0px"
-  }
-}, [sidebarOpen, shouldShowSidebar, pathname])
-
   return (
     <>
       {/* 🍏 SIDEBAR */}
@@ -116,11 +101,12 @@ const testNumber = testMatch ? testMatch[1] : null
             fixed top-16 left-0 h-[calc(100vh-4rem)] z-40
             bg-black/80 backdrop-blur-2xl
             border-r border-white/10
-            p-4 transition-all duration-300
-            ${sidebarOpen ? "w-64" : "w-0 p-0 border-none"}
+            w-64 p-4
+            transition-transform duration-300
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           `}
         >
-          <div className={`${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"} flex flex-col gap-3`}>
+          <div className="flex flex-col gap-3">
 
             {[
               ["Listening Tests", "/listening"],
@@ -156,16 +142,17 @@ const testNumber = testMatch ? testMatch[1] : null
         </div>
       )}
 
-
-
       {/* 🔥 NAVBAR */}
       <div
         className={`
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
-          ${shouldShowSidebar && sidebarOpen ? "left-64 w-[calc(100%-16rem)]" : "w-full"}
+          transition-all duration-300
+          ${shouldShowSidebar && sidebarOpen 
+            ? "left-64 w-[calc(100%-16rem)]" 
+            : "left-0 w-full"}
           ${scrolled
-  ? "bg-[#EAF3FF]/80 backdrop-blur-2xl border-b border-blue-200"
-  : "bg-[#EAF3FF]/60 backdrop-blur-xl border-b border-blue-100"}
+            ? "bg-[#EAF3FF]/80 backdrop-blur-2xl border-b border-blue-200"
+            : "bg-[#EAF3FF]/60 backdrop-blur-xl border-b border-blue-100"}
         `}
       >
 
@@ -186,7 +173,6 @@ const testNumber = testMatch ? testMatch[1] : null
             <span>Home</span>
           </Link>
 
-          {/* 🍏 SWITCH */}
           <div className="flex items-center gap-2 ml-2">
             <span className="text-xs">🌙</span>
 
@@ -214,50 +200,51 @@ const testNumber = testMatch ? testMatch[1] : null
 
         {/* CENTER */}
         <h1 className="text-sm font-medium text-gray-900">
-  {testNumber ? `Reading Test ${testNumber}` : "IELTS CDI Platform"}
-</h1>
+          {testNumber ? `Reading Test ${testNumber}` : "IELTS CDI Platform"}
+        </h1>
 
         {/* RIGHT */}
         {testNumber && (
-  <button
-    onClick={() => router.push("/practice/reading")}
-    className="ios-btn text-gray-700 bg-white/40 border-gray-300/40"
-  >
-    ← Back
-  </button>
-)}
+          <button
+            onClick={() => router.push("/practice/reading")}
+            className="ios-btn text-gray-700 bg-white/40 border-gray-300/40"
+          >
+            ← Back
+          </button>
+        )}
+
         <div>
-  {loading ? null : user ? (
-    <div className="flex items-center gap-3 flex-nowrap">
+          {loading ? null : user ? (
+            <div className="flex items-center gap-3 flex-nowrap">
 
-      <button
-        onClick={() => router.push("/pricing")}
-        className="ios-btn shrink-0 text-blue-700 bg-blue-500/20 border-blue-300/40"
-      >
-        💎 Upgrade
-      </button>
+              <button
+                onClick={() => router.push("/pricing")}
+                className="ios-btn shrink-0 text-blue-700 bg-blue-500/20 border-blue-300/40"
+              >
+                💎 Upgrade
+              </button>
 
-      <div className="ios-btn shrink-0 text-green-700 bg-green-500/15 border-green-300/40">
-        ✓ Signed In
-      </div>
+              <div className="ios-btn shrink-0 text-green-700 bg-green-500/15 border-green-300/40">
+                ✓ Signed In
+              </div>
 
-      <button
-        onClick={logout}
-        className="ios-btn shrink-0 text-red-600 bg-red-500/15 border-red-300/40"
-      >
-        Logout
-      </button>
+              <button
+                onClick={logout}
+                className="ios-btn shrink-0 text-red-600 bg-red-500/15 border-red-300/40"
+              >
+                Logout
+              </button>
 
-    </div>
-  ) : (
-    <button
-      onClick={() => router.push("/auth/login")}
-      className="ios-btn text-blue-700 bg-blue-500/20 border-blue-300/40"
-    >
-      Sign In
-    </button>
-  )}
-</div>
+            </div>
+          ) : (
+            <button
+              onClick={() => router.push("/auth/login")}
+              className="ios-btn text-blue-700 bg-blue-500/20 border-blue-300/40"
+            >
+              Sign In
+            </button>
+          )}
+        </div>
 
       </div>
     </>
