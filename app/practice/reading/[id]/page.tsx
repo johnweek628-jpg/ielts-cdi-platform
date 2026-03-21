@@ -148,21 +148,6 @@ export default function ReadingTest() {
 
     <div className="w-screen h-screen flex flex-col bg-black overflow-hidden">
 
-      <div className="flex items-center justify-between px-6 py-3 border-b border-gray-700 text-white">
-
-        <h1 className="text-sm font-semibold">
-          IELTS Reading Test {testId}
-        </h1>
-
-        <button
-          onClick={() => router.push("/practice/reading")}
-          className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-xs"
-        >
-          Back to Tests
-        </button>
-
-      </div>
-
       <iframe
         src={`/tests/reading-test-${testId}.html`}
         className="w-full h-full border-0"

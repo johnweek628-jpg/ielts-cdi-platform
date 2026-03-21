@@ -18,6 +18,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  useEffect(() => {
+  if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
+    setSidebarOpen(false)
+  }
+}, [pathname])
   const [darkMode, setDarkMode] = useState(true)
 
   const menuRef = useRef<any>(null)
@@ -75,6 +80,8 @@ export default function Navbar() {
   }
 
   const isHome = pathname === "/"
+  const testMatch = pathname.match(/\/practice\/reading\/test\/(\d+)/)
+const testNumber = testMatch ? testMatch[1] : null
   const shouldShowSidebar = !isHome
 
   const isActive = (link: string) => {
@@ -85,18 +92,20 @@ export default function Navbar() {
     return pathname === link || pathname.startsWith(link + "/")
   }
 
-  useEffect(() => {
-    if (!shouldShowSidebar) {
-      document.body.style.paddingLeft = "0px"
-      return
-    }
+ useEffect(() => {
+  const isTest = /^\/practice\/reading\/test\/\d+$/.test(pathname)
 
-    document.body.style.paddingLeft = sidebarOpen ? "256px" : "0px"
+  if (!shouldShowSidebar || isTest) {
+    document.body.style.paddingLeft = "0px"
+    return
+  }
 
-    return () => {
-      document.body.style.paddingLeft = "0px"
-    }
-  }, [sidebarOpen, shouldShowSidebar])
+  document.body.style.paddingLeft = sidebarOpen ? "256px" : "0px"
+
+  return () => {
+    document.body.style.paddingLeft = "0px"
+  }
+}, [sidebarOpen, shouldShowSidebar, pathname])
 
   return (
     <>
@@ -118,7 +127,7 @@ export default function Navbar() {
               ["Reading Tests", "/practice/reading"],
               ["Writing Tests", "/writing"],
               ["Speaking Tests", "/speaking"],
-              ["AI Writing Correction", "/ai"],
+              ["AI Writing Correction", "/ai-writing"],
               ["Results", "/results"],
               ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
               ["Support", "/support"]
@@ -147,15 +156,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* 🔥 MINI OPEN BUTTON */}
-      {shouldShowSidebar && !sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="ios-btn fixed top-24 left-2 z-50 p-2"
-        >
-          <Menu size={20} />
-        </button>
-      )}
+
 
       {/* 🔥 NAVBAR */}
       <div
@@ -213,10 +214,18 @@ export default function Navbar() {
 
         {/* CENTER */}
         <h1 className="text-sm font-medium text-gray-900">
-          IELTS CDI Platform
-        </h1>
+  {testNumber ? `Reading Test ${testNumber}` : "IELTS CDI Platform"}
+</h1>
 
         {/* RIGHT */}
+        {testNumber && (
+  <button
+    onClick={() => router.push("/practice/reading")}
+    className="ios-btn text-gray-700 bg-white/40 border-gray-300/40"
+  >
+    ← Back
+  </button>
+)}
         <div>
   {loading ? null : user ? (
     <div className="flex items-center gap-3 flex-nowrap">
