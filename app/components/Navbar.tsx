@@ -22,13 +22,11 @@ export default function Navbar() {
   /* 🍏 DARK MODE */
   const [darkMode, setDarkMode] = useState(true)
 
-  /* 🔥 TEST PAGE DETECT (ALL TESTS) */
-  const isTestPage = pathname.includes("/practice/")
-
-  /* 🔥 TEST NUMBER */
+  /* ❗ LOGICGA TEGMADIM */
+  const isTestPage = pathname.startsWith("/practice/reading/test/")
   const testNumber = pathname.match(/\d+/)?.[0]
 
-  /* ✅ AUTO CLOSE SIDEBAR */
+  /* AUTO CLOSE (same logic) */
   useEffect(() => {
     if (isTestPage) {
       setSidebarOpen(false)
@@ -75,24 +73,24 @@ export default function Navbar() {
   }, [])
 
   const isHome = pathname === "/"
-  const shouldShowSidebar = !isHome && !isTestPage
+  const shouldShowSidebar = !isHome
 
-  /* BODY SHIFT */
+  /* BODY SHIFT (same logic) */
   useEffect(() => {
     if (!shouldShowSidebar) return
 
     document.body.style.paddingLeft =
-      sidebarOpen ? "256px" : "0px"
+      sidebarOpen && !isTestPage ? "256px" : "0px"
 
     return () => {
       document.body.style.paddingLeft = "0px"
     }
-  }, [sidebarOpen, shouldShowSidebar])
+  }, [sidebarOpen, shouldShowSidebar, isTestPage])
 
   return (
     <>
       {/* SIDEBAR */}
-      {shouldShowSidebar && (
+      {shouldShowSidebar && !isTestPage && (
         <div className={`fixed top-16 left-0 h-[calc(100vh-4rem)] z-40 bg-black/90 backdrop-blur-xl border-r border-white/10 p-4 transition-all duration-300 ${sidebarOpen ? "w-64" : "w-0 overflow-hidden"}`}>
           <div className="flex flex-col gap-3">
 
@@ -114,7 +112,7 @@ export default function Navbar() {
                     ? window.open(link, "_blank")
                     : router.push(link)
                 }
-                className="w-full text-left px-4 py-3 rounded-xl text-white bg-white/5 hover:bg-white/10"
+                className="w-full text-left px-4 py-3 rounded-xl text-white bg-white/5 hover:bg-white/10 transition"
               >
                 {label}
               </button>
@@ -126,7 +124,7 @@ export default function Navbar() {
       )}
 
       {/* NAVBAR */}
-      <div className={`fixed top-0 h-16 z-50 px-6 flex justify-between items-center ${sidebarOpen && shouldShowSidebar ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"} bg-white dark:bg-black border-b`}>
+      <div className={`fixed top-0 h-16 z-50 px-6 flex justify-between items-center ${sidebarOpen && !isTestPage ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"} bg-white dark:bg-black border-b`}>
 
         {/* LEFT */}
         <div className="flex items-center gap-3">
@@ -170,7 +168,7 @@ export default function Navbar() {
         {/* RIGHT */}
         <div className="flex items-center gap-3">
 
-          {/* iOS STYLE BACK BUTTON */}
+          {/* iOS STYLE BACK */}
           {isTestPage && (
             <button
               onClick={() => router.push("/practice/reading")}
