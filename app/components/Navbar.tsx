@@ -22,8 +22,8 @@ export default function Navbar() {
   /* 🍏 DARK MODE */
   const [darkMode, setDarkMode] = useState(true)
 
-  /* 🔥 TEST PAGE DETECT */
-  const isTestPage = pathname.startsWith("/practice/reading/test/")
+  /* 🔥 TEST PAGE DETECT (ALL TESTS) */
+  const isTestPage = pathname.includes("/practice/")
 
   /* 🔥 TEST NUMBER */
   const testNumber = pathname.match(/\d+/)?.[0]
@@ -75,24 +75,24 @@ export default function Navbar() {
   }, [])
 
   const isHome = pathname === "/"
-  const shouldShowSidebar = !isHome
+  const shouldShowSidebar = !isHome && !isTestPage
 
   /* BODY SHIFT */
   useEffect(() => {
     if (!shouldShowSidebar) return
 
     document.body.style.paddingLeft =
-      sidebarOpen && !isTestPage ? "256px" : "0px"
+      sidebarOpen ? "256px" : "0px"
 
     return () => {
       document.body.style.paddingLeft = "0px"
     }
-  }, [sidebarOpen, shouldShowSidebar, isTestPage])
+  }, [sidebarOpen, shouldShowSidebar])
 
   return (
     <>
       {/* SIDEBAR */}
-      {shouldShowSidebar && !isTestPage && (
+      {shouldShowSidebar && (
         <div className={`fixed top-16 left-0 h-[calc(100vh-4rem)] z-40 bg-black/90 backdrop-blur-xl border-r border-white/10 p-4 transition-all duration-300 ${sidebarOpen ? "w-64" : "w-0 overflow-hidden"}`}>
           <div className="flex flex-col gap-3">
 
@@ -126,12 +126,12 @@ export default function Navbar() {
       )}
 
       {/* NAVBAR */}
-      <div className={`fixed top-0 h-16 z-50 px-6 flex justify-between items-center ${sidebarOpen && !isTestPage ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"} bg-white dark:bg-black border-b`}>
+      <div className={`fixed top-0 h-16 z-50 px-6 flex justify-between items-center ${sidebarOpen && shouldShowSidebar ? "left-64 w-[calc(100%-16rem)]" : "left-0 w-full"} bg-white dark:bg-black border-b`}>
 
         {/* LEFT */}
         <div className="flex items-center gap-3">
 
-          {/* ONLY ONE HAMBURGER */}
+          {/* SINGLE HAMBURGER */}
           {shouldShowSidebar && (
             <button onClick={() => setSidebarOpen(!sidebarOpen)}>
               <Menu size={22} />
@@ -142,7 +142,7 @@ export default function Navbar() {
             <span>Home</span>
           </Link>
 
-          {/* TEST NUMBER */}
+          {/* TEST NUMBER (TOP BAR) */}
           {isTestPage && (
             <span className="ml-2 text-sm font-semibold text-blue-500">
               Test {testNumber}
@@ -170,11 +170,11 @@ export default function Navbar() {
         {/* RIGHT */}
         <div className="flex items-center gap-3">
 
-          {/* BACK BUTTON */}
+          {/* iOS STYLE BACK BUTTON */}
           {isTestPage && (
             <button
               onClick={() => router.push("/practice/reading")}
-              className="px-4 py-2 rounded-xl bg-gray-200 dark:bg-gray-700"
+              className="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-sm"
             >
               ← Back
             </button>
