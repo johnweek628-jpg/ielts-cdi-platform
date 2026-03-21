@@ -218,49 +218,37 @@ export default function Navbar() {
 
         {/* RIGHT */}
         <div>
-          {loading ? null : user ? (
-            <div className="ios-btn
-  text-blue-700
-  bg-blue-500/20
-  border-blue-300/40">
+  {loading ? null : user ? (
+    <div className="flex items-center gap-3 flex-nowrap">
 
-              <button
-                onClick={() => router.push("/pricing")}
-                className="ios-btn text-white bg-gradient-to-r from-purple-500/80 to-blue-500/80"
-              >
-                💎 Upgrade
-              </button>
+      <button
+        onClick={() => router.push("/pricing")}
+        className="ios-btn shrink-0 text-blue-700 bg-blue-500/20 border-blue-300/40"
+      >
+        💎 Upgrade
+      </button>
 
-              <div className="  ios-btn
-  text-green-700
-  bg-green-500/15
-  border-green-300/40">
-                ✓ Signed In
-              </div>
+      <div className="ios-btn shrink-0 text-green-700 bg-green-500/15 border-green-300/40">
+        ✓ Signed In
+      </div>
 
-              <button
-                onClick={logout}
-                className=" ios-btn
-  text-red-600
-  bg-red-500/15
-  border-red-300/40"
-              >
-                Logout
-              </button>
+      <button
+        onClick={logout}
+        className="ios-btn shrink-0 text-red-600 bg-red-500/15 border-red-300/40"
+      >
+        Logout
+      </button>
 
-            </div>
-          ) : (
-            <button
-              onClick={() => router.push("/auth/login")}
-              className="ios-btn
-  text-blue-700
-  bg-blue-500/20
-  border-blue-300/40"
-            >
-              Sign In
-            </button>
-          )}
-        </div>
+    </div>
+  ) : (
+    <button
+      onClick={() => router.push("/auth/login")}
+      className="ios-btn text-blue-700 bg-blue-500/20 border-blue-300/40"
+    >
+      Sign In
+    </button>
+  )}
+</div>
 
       </div>
     </>
