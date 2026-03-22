@@ -5,11 +5,12 @@ import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
 import { supabase } from "../lib/supabase"
 import { Menu } from "lucide-react"
+
 type Props = {
-  toggle: () => void
+  toggleSidebar: () => void
 }
 
-export default function Navbar({ toggle }: Props) {
+export default function Navbar({ toggleSidebar }: Props) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -177,7 +178,7 @@ export default function Navbar({ toggle }: Props) {
 
           {shouldShowSidebar && (
             <button
-              onClick={toggle}
+              onClick={toggleSidebar}
               className="ios-btn p-2"
             >
               <Menu size={22} />

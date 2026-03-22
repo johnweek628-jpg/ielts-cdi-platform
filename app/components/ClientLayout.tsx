@@ -1,40 +1,28 @@
-import "./styles/ios.css"
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
-import ClientLayout from "../components/ClientLayout"
+'use client'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-})
+import { useState } from "react"
+import Navbar from "./Navbar"
+import Sidebar from "./Sidebar"
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-})
+export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
-export const metadata: Metadata = {
-  title: "IELTS CDI Platform",
-  description: "IELTS Mock Test Platform",
-}
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 text-gray-800`}
+    <>
+      <Navbar toggleSidebar={() => setSidebarOpen(prev => !prev)} />
+
+      <div
+        className={`pt-16 h-[calc(100vh-64px)] grid transition-all duration-300 
+        ${sidebarOpen 
+          ? "grid-cols-[260px_1fr]" 
+          : "grid-cols-[80px_1fr]"}`}
       >
+        <Sidebar sidebarOpen={sidebarOpen} />
 
-        <ClientLayout>
+        <main className="overflow-auto">
           {children}
-        </ClientLayout>
-
-      </body>
-    </html>
+        </main>
+      </div>
+    </>
   )
 }
