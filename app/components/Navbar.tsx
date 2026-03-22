@@ -74,14 +74,22 @@ export default function Navbar({ toggleSidebar }: Props) {
 
   // OUTSIDE CLICK CLOSE
   useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+  const handleClickOutside = (e: any) => {
+    if (!menuRef.current) return
+
+    if (
+      menuRef.current.contains(e.target)
+    ) return
+
+    setMenuOpen(false)
+  }
+
+  document.addEventListener("mousedown", handleClickOutside)
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside)
+  }
+}, [])
 
   const logout = async () => {
     await supabase.auth.signOut()
@@ -107,15 +115,20 @@ export default function Navbar({ toggleSidebar }: Props) {
       {/* ✅ DROPDOWN MENU */}
       {menuOpen && (
         <div
-          ref={menuRef}
-          className="
-            fixed top-16 left-0 w-full z-40
-            bg-black/90 backdrop-blur-2xl
-            border-b border-white/10
-            px-6 py-4
-            animate-slideDown
-          "
-        >
+  ref={menuRef}
+  className={`
+    fixed top-16 left-0 w-full z-40
+    backdrop-blur-2xl border-b border-white/10
+    px-6 py-4
+    bg-black/90
+
+    transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
+
+    ${menuOpen
+      ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+      : "opacity-0 -translate-y-3 scale-95 pointer-events-none"}
+  `}
+>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
             {[
@@ -172,7 +185,10 @@ export default function Navbar({ toggleSidebar }: Props) {
 
           {shouldShowSidebar && (
             <button
-              onClick={() => setMenuOpen(prev => !prev)}
+             onClick={(e) => {
+  e.stopPropagation()
+  setMenuOpen(prev => !prev)
+}}
               className="ios-btn p-2"
             >
               <Menu size={22} />
