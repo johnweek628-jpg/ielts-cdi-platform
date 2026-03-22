@@ -13,9 +13,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
       <div
         className={`pt-16 h-[calc(100vh-64px)] grid transition-all duration-300 
-        ${sidebarOpen 
-          ? "grid-cols-[260px_1fr]" 
-          : "grid-cols-[80px_1fr]"}`}
+       
       >
         <Sidebar sidebarOpen={sidebarOpen} />
 
