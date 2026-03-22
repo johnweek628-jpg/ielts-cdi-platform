@@ -62,7 +62,6 @@ return (
 Choose your plan
 </h1>
 
-{/* 🔘 TOGGLE BUTTONS */}
 <div className="flex justify-center gap-4 mb-12 flex-wrap">
 
 {[
@@ -144,13 +143,17 @@ Start Free
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
 </ul>
 
-<a href="#" className="block bg-black !text-white font-bold px-6 py-3 rounded-lg mb-4 text-center">
-Payment of Non-Uzbek people
-</a>
-
-<a href="#" className="block bg-blue-600 !text-white font-bold px-6 py-3 rounded-lg text-center">
-Payment of Uzbek people
-</a>
+<button
+onClick={() => router.push("/payment/choose-version")}
+className="w-full px-6 py-3 rounded-xl font-bold text-white 
+bg-gradient-to-r from-gray-900 via-black to-gray-800
+shadow-md backdrop-blur-md
+transition-all duration-300 
+hover:scale-[1.03] hover:shadow-xl 
+active:scale-[0.98]"
+>
+Get now
+</button>
 
 </div>
 
@@ -189,13 +192,17 @@ Most Popular
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
 </ul>
 
-<a href="#" className="block bg-black !text-white font-bold px-6 py-3 rounded-lg mb-4 text-center">
-Payment of Non-Uzbek people
-</a>
-
-<a href="#" className="block bg-blue-600 !text-white font-bold px-6 py-3 rounded-lg text-center">
-Payment of Uzbek people
-</a>
+<button
+onClick={() => router.push("/payment/choose-version")}
+className="w-full px-6 py-3 rounded-xl font-bold text-white 
+bg-gradient-to-r from-gray-900 via-black to-gray-800
+shadow-md backdrop-blur-md
+transition-all duration-300 
+hover:scale-[1.03] hover:shadow-xl 
+active:scale-[0.98]"
+>
+Get now
+</button>
 
 </div>
 
@@ -230,13 +237,17 @@ Payment of Uzbek people
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Writing Corrections</li>
 </ul>
 
-<a href="#" className="block bg-black text-white font-bold px-6 py-3 rounded-lg mb-4 text-center">
-Payment of Non-Uzbek people
-</a>
-
-<a href="#" className="block bg-blue-600 text-white font-bold px-6 py-3 rounded-lg text-center">
-Payment of Uzbek people
-</a>
+<button
+onClick={() => router.push("/payment/choose-version")}
+className="w-full px-6 py-3 rounded-xl font-bold text-white 
+bg-gradient-to-r from-gray-900 via-black to-gray-800
+shadow-md backdrop-blur-md
+transition-all duration-300 
+hover:scale-[1.03] hover:shadow-xl 
+active:scale-[0.98]"
+>
+Get now
+</button>
 
 </div>
 
