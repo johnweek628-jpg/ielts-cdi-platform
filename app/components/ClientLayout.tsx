@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Navbar from "./Navbar"
-import Sidebar from "./Sidebar"
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -15,9 +14,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
       {/* LAYOUT */}
       <div className="flex">
-
-        {/* SIDEBAR */}
-        <Sidebar sidebarOpen={sidebarOpen} />
 
         {/* MAIN */}
         <main
