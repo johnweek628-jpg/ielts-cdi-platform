@@ -32,7 +32,7 @@ Cancel anytime • Secure payment • Instant access • No hidden fees
 
 <button
 onClick={() => {
-    window.location.href = `mailto:johnweek628@gmail.com?subject=Payoneer Payment Request&body=Hello, I would like to get a plan by paying via Payoneer`
+    window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=Subscription Request&body=Hello, I would like to get a plan by paying via Payoneer`
   }}
 className="w-full px-6 py-4 rounded-xl font-bold text-white 
 bg-gradient-to-r from-black/90 via-gray-900/90 to-black/80
