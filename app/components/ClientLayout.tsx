@@ -9,9 +9,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <div className="min-h-screen w-full">
 
-      {/* NAVBAR */}
-      <Navbar toggleSidebar={() => setSidebarOpen(prev => !prev)} />
-
       {/* LAYOUT */}
       <div className="flex">
 
