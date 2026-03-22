@@ -5,26 +5,45 @@ import Link from "next/link"
 import { useEffect, useState, useRef } from "react"
 import { supabase } from "../lib/supabase"
 import { Menu } from "lucide-react"
+type Props = {
+  toggle: () => void
+}
 
-export default function Navbar() {
+export default function Navbar({ toggle }: Props) {
   const pathname = usePathname()
   const router = useRouter()
 
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  useEffect(() => {
+  const saved = localStorage.getItem("theme")
+
+  if (saved === "dark") {
+    setDarkMode(true)
+    document.documentElement.classList.add("dark")
+  } else {
+    setDarkMode(false)
+    document.documentElement.classList.remove("dark")
+  }
+}, [])
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  const [sidebarOpen, setSidebarOpen] = useState(true)
-  useEffect(() => {
-    if (/^\/practice\/reading\/test\/\d+$/.test(pathname)) {
-      setSidebarOpen(false)
-    }
-  }, [pathname])
 
   const [darkMode, setDarkMode] = useState(true)
+  useEffect(() => {
+  const saved = localStorage.getItem("theme")
+
+  if (saved === "dark") {
+    setDarkMode(true)
+    document.documentElement.classList.add("dark")
+  } else {
+    setDarkMode(false)
+    document.documentElement.classList.remove("dark")
+  }
+}, [])
   const menuRef = useRef<any>(null)
 
   useEffect(() => {
@@ -69,13 +88,6 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  useEffect(() => {
-  if (pathname === "/dashboard") {
-    setSidebarOpen(true)
-  } else {
-    setSidebarOpen(false)
-  }
-}, [pathname])
 
   const logout = async () => {
     await supabase.auth.signOut()
@@ -107,7 +119,7 @@ export default function Navbar() {
             border-r border-white/10
             w-64 p-4
             transition-transform duration-300
-            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            translate-x-0}
           `}
         >
           <div className="flex flex-col gap-3">
@@ -151,7 +163,7 @@ export default function Navbar() {
         className={`
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
           transition-all duration-300
-          ${shouldShowSidebar && sidebarOpen 
+          ${shouldShowSidebar 
             ? "left-64 w-[calc(100%-16rem)]" 
             : "left-0 w-full"}
           ${scrolled
@@ -165,7 +177,7 @@ export default function Navbar() {
 
           {shouldShowSidebar && (
             <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={toggle}
               className="ios-btn p-2"
             >
               <Menu size={22} />
@@ -181,7 +193,18 @@ export default function Navbar() {
             <span className="text-xs">🌙</span>
 
             <button
-              onClick={() => setDarkMode(!darkMode)}
+             onClick={() => {
+  const newMode = !darkMode
+  setDarkMode(newMode)
+
+  if (newMode) {
+    document.documentElement.classList.add("dark")
+    localStorage.setItem("theme", "dark")
+  } else {
+    document.documentElement.classList.remove("dark")
+    localStorage.setItem("theme", "light")
+  }
+}}
               className={`
                 w-12 h-7 flex items-center rounded-full p-1
                 backdrop-blur-xl border border-white/20

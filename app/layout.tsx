@@ -1,8 +1,12 @@
+'use client'
+
 import "./styles/ios.css"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import Navbar from "./components/Navbar"
+import Sidebar from "./components/Sidebar"
+import { useState } from "react"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,16 +28,34 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 text-gray-800`}
       >
-        <Navbar />
-        <div className="pt-16">
-        {children}
+        <div className={`app-layout ${sidebarOpen ? "open" : "closed"}`}>
+
+          {/* SIDEBAR */}
+          <Sidebar />
+
+          {/* MAIN */}
+          <div className="main-area">
+
+            {/* NAVBAR */}
+            <Navbar toggle={() => setSidebarOpen(prev => !prev)} />
+
+            {/* CONTENT */}
+            <main className="content">
+              {children}
+            </main>
+
+          </div>
+
         </div>
       </body>
+      
     </html>
   )
 }

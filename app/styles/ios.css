@@ -33,3 +33,40 @@ button {
   white-space: nowrap;
 }
 
+.app-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.app-layout.closed {
+  grid-template-columns: 0px 1fr;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Main */
+.main-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Navbar */
+.navbar {
+  height: 64px;
+  flex-shrink: 0;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
