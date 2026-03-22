@@ -1,31 +1,35 @@
 'use client'
 
-import { usePathname } from "next/navigation"
+import { useState } from "react"
 import Navbar from "./Navbar"
+import Sidebar from "./Sidebar"
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-
-  const hideNavbar = pathname.includes("/practice")
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
-    <div className="min-h-screen w-full bg-gray-100">
+    <div className="min-h-screen w-full">
 
-      {!hideNavbar && <Navbar />}
+      {/* NAVBAR */}
+      <Navbar toggleSidebar={() => setSidebarOpen(prev => !prev)} />
 
-      <main
-        className={
-          "w-full will-change-transform " +
-          "transition-[padding] duration-300 ease-out " +
-          "overflow-y-auto overflow-x-hidden " +
-          (!hideNavbar
-            ? "pt-16 min-h-[calc(100vh-64px)]"
-            : "min-h-screen")
-        }
-      >
-        {children}
-      </main>
+      {/* LAYOUT */}
+      <div className="flex">
 
+        {/* SIDEBAR */}
+        <Sidebar sidebarOpen={sidebarOpen} />
+
+        {/* MAIN */}
+        <main
+          className={`
+            transition-all duration-300 ease-in-out w-full pt-16
+            ${sidebarOpen ? "ml-64" : "ml-0"}
+          `}
+        >
+          {children}
+        </main>
+
+      </div>
     </div>
   )
 }

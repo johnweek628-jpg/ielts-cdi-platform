@@ -16,37 +16,28 @@ export default function Navbar({ toggleSidebar }: Props) {
 
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  useEffect(() => {
-  const saved = localStorage.getItem("theme")
-
-  if (saved === "dark") {
-    setDarkMode(true)
-    document.documentElement.classList.add("dark")
-  } else {
-    setDarkMode(false)
-    document.documentElement.classList.remove("dark")
-  }
-}, [])
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-
-
   const [darkMode, setDarkMode] = useState(true)
-  useEffect(() => {
-  const saved = localStorage.getItem("theme")
 
-  if (saved === "dark") {
-    setDarkMode(true)
-    document.documentElement.classList.add("dark")
-  } else {
-    setDarkMode(false)
-    document.documentElement.classList.remove("dark")
-  }
-}, [])
   const menuRef = useRef<any>(null)
 
+  // THEME LOAD
+  useEffect(() => {
+    const saved = localStorage.getItem("theme")
+
+    if (saved === "dark") {
+      setDarkMode(true)
+      document.documentElement.classList.add("dark")
+    } else {
+      setDarkMode(false)
+      document.documentElement.classList.remove("dark")
+    }
+  }, [])
+
+  // APPLY THEME
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark")
@@ -55,6 +46,7 @@ export default function Navbar({ toggleSidebar }: Props) {
     }
   }, [darkMode])
 
+  // USER
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase.auth.getUser()
@@ -73,12 +65,14 @@ export default function Navbar({ toggleSidebar }: Props) {
     }
   }, [])
 
+  // SCROLL
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // OUTSIDE CLICK CLOSE
   useEffect(() => {
     const handleClickOutside = (e: any) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -88,7 +82,6 @@ export default function Navbar({ toggleSidebar }: Props) {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
-
 
   const logout = async () => {
     await supabase.auth.signOut()
@@ -111,19 +104,19 @@ export default function Navbar({ toggleSidebar }: Props) {
 
   return (
     <>
-      {/* 🍏 SIDEBAR */}
-      {shouldShowSidebar && (
+      {/* ✅ DROPDOWN MENU */}
+      {menuOpen && (
         <div
-          className={`
-            fixed top-16 left-0 h-[calc(100vh-4rem)] z-40
-            bg-black/80 backdrop-blur-2xl
-            border-r border-white/10
-            w-64 p-4
-            transition-transform duration-300
-            translate-x-0}
-          `}
+          ref={menuRef}
+          className="
+            fixed top-16 left-0 w-full z-40
+            bg-black/90 backdrop-blur-2xl
+            border-b border-white/10
+            px-6 py-4
+            animate-slideDown
+          "
         >
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
             {[
               ["Listening Tests", "/listening"],
@@ -141,13 +134,15 @@ export default function Navbar({ toggleSidebar }: Props) {
               return (
                 <button
                   key={label}
-                  onClick={() =>
+                  onClick={() => {
+                    setMenuOpen(false)
+
                     link.startsWith("http")
                       ? window.open(link, "_blank")
                       : router.push(link)
-                  }
+                  }}
                   className={`
-                    ios-btn w-full text-left text-white
+                    ios-btn text-left text-white w-full
                     ${active ? "bg-white/20 border-white/30" : ""}
                   `}
                 >
@@ -155,6 +150,7 @@ export default function Navbar({ toggleSidebar }: Props) {
                 </button>
               )
             })}
+
           </div>
         </div>
       )}
@@ -164,9 +160,7 @@ export default function Navbar({ toggleSidebar }: Props) {
         className={`
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
           transition-all duration-300
-          ${shouldShowSidebar 
-            ? "left-64 w-[calc(100%-16rem)]" 
-            : "left-0 w-full"}
+          left-0 w-full
           ${scrolled
             ? "bg-[#EAF3FF]/80 backdrop-blur-2xl border-b border-blue-200"
             : "bg-[#EAF3FF]/60 backdrop-blur-xl border-b border-blue-100"}
@@ -178,7 +172,7 @@ export default function Navbar({ toggleSidebar }: Props) {
 
           {shouldShowSidebar && (
             <button
-              onClick={toggleSidebar}
+              onClick={() => setMenuOpen(prev => !prev)}
               className="ios-btn p-2"
             >
               <Menu size={22} />
@@ -194,18 +188,18 @@ export default function Navbar({ toggleSidebar }: Props) {
             <span className="text-xs">🌙</span>
 
             <button
-             onClick={() => {
-  const newMode = !darkMode
-  setDarkMode(newMode)
+              onClick={() => {
+                const newMode = !darkMode
+                setDarkMode(newMode)
 
-  if (newMode) {
-    document.documentElement.classList.add("dark")
-    localStorage.setItem("theme", "dark")
-  } else {
-    document.documentElement.classList.remove("dark")
-    localStorage.setItem("theme", "light")
-  }
-}}
+                if (newMode) {
+                  document.documentElement.classList.add("dark")
+                  localStorage.setItem("theme", "dark")
+                } else {
+                  document.documentElement.classList.remove("dark")
+                  localStorage.setItem("theme", "light")
+                }
+              }}
               className={`
                 w-12 h-7 flex items-center rounded-full p-1
                 backdrop-blur-xl border border-white/20
