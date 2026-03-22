@@ -7,7 +7,7 @@ import { supabase } from "../lib/supabase"
 import { Menu } from "lucide-react"
 
 type Props = {
-  toggleSidebar: () => void
+  toggleSidebar?: () => void
 }
 
 export default function Navbar({ toggleSidebar }: Props) {
