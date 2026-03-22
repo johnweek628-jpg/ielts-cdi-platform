@@ -23,6 +23,10 @@ export default function Navbar({ toggleSidebar }: Props) {
   const [darkMode, setDarkMode] = useState(true)
 
   const menuRef = useRef<any>(null)
+  const buttonRef = useRef<HTMLButtonElement | null>(null)
+
+  // 🔥 ORIGIN POSITION
+  const [origin, setOrigin] = useState({ x: 40, y: 40 })
 
   // THEME LOAD
   useEffect(() => {
@@ -72,24 +76,22 @@ export default function Navbar({ toggleSidebar }: Props) {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // OUTSIDE CLICK CLOSE
+  // OUTSIDE CLICK
   useEffect(() => {
-  const handleClickOutside = (e: any) => {
-    if (!menuRef.current) return
+    const handleClickOutside = (e: any) => {
+      if (!menuRef.current) return
 
-    if (
-      menuRef.current.contains(e.target)
-    ) return
+      const isInsideMenu = menuRef.current.contains(e.target)
+      const isMenuButton = (e.target as HTMLElement).closest(".menu-btn")
 
-    setMenuOpen(false)
-  }
+      if (isInsideMenu || isMenuButton) return
 
-  document.addEventListener("mousedown", handleClickOutside)
+      setMenuOpen(false)
+    }
 
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside)
-  }
-}, [])
+    document.addEventListener("click", handleClickOutside)
+    return () => document.removeEventListener("click", handleClickOutside)
+  }, [])
 
   const logout = async () => {
     await supabase.auth.signOut()
@@ -112,23 +114,28 @@ export default function Navbar({ toggleSidebar }: Props) {
 
   return (
     <>
-      {/* ✅ DROPDOWN MENU */}
-      {menuOpen && (
-        <div
-  ref={menuRef}
-  className={`
-    fixed top-16 left-0 w-full z-40
-    backdrop-blur-2xl border-b border-white/10
-    px-6 py-4
-    bg-black/90
+      {/* BACKDROP */}
+      <div
+        className={`
+          fixed inset-0 z-30
+          transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+          ${menuOpen ? "opacity-100 backdrop-blur-xl bg-black/40" : "opacity-0 pointer-events-none"}
+        `}
+      />
 
-    transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]
-
-    ${menuOpen
-      ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-      : "opacity-0 -translate-y-3 scale-95 pointer-events-none"}
-  `}
->
+      {/* MENU */}
+      <div
+        ref={menuRef}
+        style={{ transformOrigin: `${origin.x}px ${origin.y}px` }}
+        className={`
+          fixed top-16 left-0 w-full z-40 px-6 py-6
+          transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+          ${menuOpen
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-75 -translate-y-10 pointer-events-none"}
+        `}
+      >
+        <div className="rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/10 p-5 shadow-2xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
             {[
@@ -149,7 +156,6 @@ export default function Navbar({ toggleSidebar }: Props) {
                   key={label}
                   onClick={() => {
                     setMenuOpen(false)
-
                     link.startsWith("http")
                       ? window.open(link, "_blank")
                       : router.push(link)
@@ -166,9 +172,9 @@ export default function Navbar({ toggleSidebar }: Props) {
 
           </div>
         </div>
-      )}
+      </div>
 
-      {/* 🔥 NAVBAR */}
+      {/* NAVBAR */}
       <div
         className={`
           fixed top-0 h-16 z-50 px-6 flex justify-between items-center
@@ -185,11 +191,22 @@ export default function Navbar({ toggleSidebar }: Props) {
 
           {shouldShowSidebar && (
             <button
-             onClick={(e) => {
-  e.stopPropagation()
-  setMenuOpen(prev => !prev)
-}}
-              className="ios-btn p-2"
+              ref={buttonRef}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+
+                const rect = buttonRef.current?.getBoundingClientRect()
+                if (rect) {
+                  setOrigin({
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                  })
+                }
+
+                setMenuOpen(prev => !prev)
+              }}
+              className="ios-btn p-2 menu-btn"
             >
               <Menu size={22} />
             </button>

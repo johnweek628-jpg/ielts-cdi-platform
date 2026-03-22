@@ -231,6 +231,24 @@ Start Speaking
 
 </div>
 
+{/* LISTENING */}
+
+<div className="bg-gray-900 p-8 rounded-2xl shadow-xl hover:scale-105 hover:shadow-orange-500/30 transition duration-300">
+
+  <h3 className="text-xl font-semibold mb-4">
+    Listening Practice
+  </h3>
+
+  <p className="text-gray-400 mb-6">
+    Improve your listening skills with real CDI tests.
+  </p>
+
+  <button className="w-full bg-orange-500 hover:bg-orange-600 py-3 rounded-lg font-medium transition transform hover:scale-105">
+    Start Listening
+  </button>
+
+</div>
+
 </div>
 
 </div>
