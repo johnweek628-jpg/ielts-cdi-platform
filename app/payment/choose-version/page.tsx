@@ -31,7 +31,9 @@ Cancel anytime • Secure payment • Instant access • No hidden fees
 <div className="flex flex-col gap-4">
 
 <button
-onClick={() => router.push("/payment/payoneer")}
+onClick={() => {
+    window.location.href = `mailto:johnweek628@gmail.com?subject=Payoneer Payment Request&body=Hello, I would like to get a plan by paying via Payoneer`
+  }}
 className="w-full px-6 py-4 rounded-xl font-bold text-white 
 bg-gradient-to-r from-black/90 via-gray-900/90 to-black/80
 backdrop-blur-xl border border-white/10
@@ -40,7 +42,7 @@ transition-all duration-300
 hover:scale-[1.04] hover:shadow-2xl hover:shadow-black/30
 active:scale-[0.97]"
 >
-Payoneer
+Pay By Payoneer
 </button>
 
 <button
@@ -62,7 +64,10 @@ Payme
 <div className="mt-8 space-y-3">
 
 <button
-onClick={() => window.location.href = `mailto:${email}?subject=Subscription Request&body=${encodeURIComponent(message)}`}
+onClick={() => window.open(
+`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=Subscription Request&body=${encodeURIComponent(message)}`,
+"_blank"
+)}
 className="w-full text-sm text-black underline hover:opacity-70"
 >
 Or send an e-mail
