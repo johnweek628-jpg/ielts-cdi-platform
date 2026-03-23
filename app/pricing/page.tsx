@@ -226,7 +226,7 @@ Choose your plan
 
 <button
 onClick={() => router.push("/dashboard")}
-className={iosBtn}
+className={iosBtnGold}
 >
 <span className="relative z-10 tracking-wide">Start Free</span>
 </button>
@@ -276,8 +276,17 @@ className={iosBtnGold}
   </div>
 )}
 
-<div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm px-4 py-1 rounded-full">
-Most Popular
+<div className="absolute top-0 right-0 overflow-hidden w-32 h-32 pointer-events-none">
+  <div className="
+    absolute top-[22px] right-[-40px]
+    rotate-45
+    bg-emerald-500 text-white
+    text-xs font-bold tracking-wide
+    px-10 py-1
+    shadow-[0_0_20px_rgba(16,185,129,0.5)]
+  ">
+    Most Popular
+  </div>
 </div>
 
 <h2 className="text-2xl font-bold mb-3 text-black">Premium</h2>
@@ -313,7 +322,7 @@ className={iosBtnGold}
 </div>
 
 {/* ULTIMATE */}
-<div className="bg-gradient-to-br from-black via-gray-900 to-black p-8 rounded-2xl shadow-xl text-center text-white relative">
+<div className="bg-bg-gradient-to-br from-purple-900 via-fuchsia-800 to-pink-700 border border-white/10 p-8 rounded-2xl shadow-xl text-center text-white relative">
 
 {ultimate.save && (
   <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
