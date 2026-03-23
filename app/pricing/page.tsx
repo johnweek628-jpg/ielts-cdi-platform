@@ -125,39 +125,39 @@ backdrop-blur-2xl
 transition-all duration-300
 border
 `
-const iosBtnGreen = `
+const iosBtnGold = `
 relative isolate overflow-hidden
 w-full px-6 py-3 rounded-[24px]
-font-semibold text-emerald-900 tracking-wide
+font-semibold text-yellow-900 tracking-wide
 
-bg-emerald-400/30
+bg-yellow-400/30
 backdrop-blur-[30px]
 
-border border-emerald-300/50
+border border-yellow-300/50
 
-shadow-[0_10px_30px_rgba(16,185,129,0.25),
+shadow-[0_10px_30px_rgba(202,138,4,0.25),
 inset_0_1px_0_rgba(255,255,255,0.6),
 inset_0_-1px_0_rgba(0,0,0,0.1)]
 
 before:content-['']
 before:absolute before:inset-[1px]
 before:rounded-[22px]
-before:bg-[linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.2)_50%,rgba(0,0,0,0.08)_100%)]
+before:bg-[linear-gradient(180deg,rgba(255,255,255,0.7)_0%,rgba(255,255,255,0.2)_50%,rgba(0,0,0,0.08)_100%)]
 
 after:content-['']
 after:absolute after:left-[10%] after:right-[10%] after:top-[5%] after:h-[45%]
 after:rounded-full
-after:bg-[linear-gradient(180deg,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0.2)_100%)]
+after:bg-[linear-gradient(180deg,rgba(255,255,255,0.95)_0%,rgba(255,255,255,0.25)_100%)]
 after:blur-md after:opacity-90
 
 transition-all duration-300
 
-hover:scale-[1.03]
-hover:bg-emerald-400/40
-hover:shadow-[0_14px_40px_rgba(16,185,129,0.35)]
+hover:scale-[1.04]
+hover:bg-yellow-400/40
+hover:shadow-[0_14px_40px_rgba(202,138,4,0.35)]
 
-active:scale-[0.96]
-active:shadow-[inset_0_4px_12px_rgba(0,0,0,0.2)]
+active:scale-[0.95]
+active:shadow-[inset_0_4px_12px_rgba(0,0,0,0.25)]
 `
 
 return (
@@ -260,7 +260,7 @@ className={iosBtn}
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtnGreen}
+className={iosBtnGold}
 >
 <span className="relative z-10 tracking-wide">Get now</span>
 </button>
@@ -305,7 +305,7 @@ Most Popular
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtnGreen}
+className={iosBtnGold}
 >
 <span className="relative z-10 tracking-wide">Get now</span>
 </button>
@@ -344,7 +344,7 @@ className={iosBtnGreen}
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtnGreen}
+className={iosBtnGold}
 >
 <span className="relative z-10 tracking-wide">Get now</span>
 </button>
