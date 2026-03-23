@@ -276,9 +276,9 @@ className={iosBtnGold}
   </div>
 )}
 
-<div className="absolute top-0 right-0 overflow-hidden w-32 h-32 pointer-events-none">
+<div className="absolute top-0 left-0 overflow-hidden w-32 h-32 pointer-events-none">
   <div className="
-    absolute top-[22px] right-[-40px]
+    absolute top-[22px] left-[-40px]
     rotate-45
     bg-emerald-500 text-white
     text-xs font-bold tracking-wide
