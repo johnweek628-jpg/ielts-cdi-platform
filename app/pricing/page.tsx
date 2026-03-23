@@ -53,14 +53,71 @@ const basic = pricing[plan].basic
 const premium = pricing[plan].premium
 const ultimate = pricing[plan].ultimate
 
-// 🔥 iOS BUTTON STYLE
+// ✅ REAL iOS-LIKE GLASS CTA FOR LIGHT CARDS
 const iosBtn = `
-w-full px-6 py-3 rounded-2xl font-semibold text-white
-bg-white/10 backdrop-blur-xl border border-white/20
-shadow-[0_8px_30px_rgba(0,0,0,0.2)]
+relative isolate overflow-hidden
+w-full px-6 py-3 rounded-[24px]
+font-semibold text-black
+bg-white/55
+backdrop-blur-2xl
+border border-white/70
+shadow-[0_10px_30px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(255,255,255,0.18)]
+before:content-['']
+before:absolute before:inset-[1px]
+before:rounded-[22px]
+before:bg-[linear-gradient(180deg,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.18)_45%,rgba(255,255,255,0.08)_100%)]
+before:pointer-events-none
+after:content-['']
+after:absolute after:left-[10%] after:right-[10%] after:top-[6%] after:h-[42%]
+after:rounded-full
+after:bg-[linear-gradient(180deg,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.18)_100%)]
+after:blur-md after:opacity-80
+after:pointer-events-none
 transition-all duration-300
-hover:bg-white/20 hover:scale-[1.04]
-active:scale-[0.97]
+hover:scale-[1.02]
+hover:bg-white/65
+hover:shadow-[0_14px_40px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(255,255,255,0.18)]
+active:scale-[0.985]
+active:shadow-[0_6px_18px_rgba(0,0,0,0.14),inset_0_2px_6px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]
+`
+
+// ✅ REAL iOS-LIKE GLASS CTA FOR DARK CARD
+const iosBtnDark = `
+relative isolate overflow-hidden
+w-full px-6 py-3 rounded-[24px]
+font-semibold text-white
+bg-white/16
+backdrop-blur-2xl
+border border-white/25
+shadow-[0_10px_30px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.28),inset_0_-1px_0_rgba(255,255,255,0.06)]
+before:content-['']
+before:absolute before:inset-[1px]
+before:rounded-[22px]
+before:bg-[linear-gradient(180deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.08)_45%,rgba(255,255,255,0.03)_100%)]
+before:pointer-events-none
+after:content-['']
+after:absolute after:left-[12%] after:right-[12%] after:top-[7%] after:h-[38%]
+after:rounded-full
+after:bg-[linear-gradient(180deg,rgba(255,255,255,0.36)_0%,rgba(255,255,255,0.06)_100%)]
+after:blur-md after:opacity-90
+after:pointer-events-none
+transition-all duration-300
+hover:scale-[1.02]
+hover:bg-white/20
+hover:border-white/30
+hover:shadow-[0_14px_40px_rgba(0,0,0,0.34),inset_0_1px_0_rgba(255,255,255,0.32),inset_0_-1px_0_rgba(255,255,255,0.08)]
+active:scale-[0.985]
+active:shadow-[0_6px_18px_rgba(0,0,0,0.3),inset_0_2px_8px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.18)]
+`
+
+// ✅ iOS SEGMENTED CONTROL TABS
+const iosTabBase = `
+relative isolate overflow-hidden
+min-w-[150px] px-8 py-3 rounded-full
+font-semibold text-[15px]
+backdrop-blur-2xl
+transition-all duration-300
+border
 `
 
 return (
@@ -82,12 +139,31 @@ Choose your plan
   <button
     key={btn.key}
     onClick={() => setPlan(btn.key)}
-    className={`px-6 py-2 rounded-full font-semibold transition 
-    ${plan === btn.key 
-      ? "bg-black text-white scale-105 shadow-lg" 
-      : "bg-white text-black border hover:bg-gray-200"}`}
+    className={`${iosTabBase}
+    ${plan === btn.key
+      ? `
+        text-white bg-black
+        border-black
+        shadow-[0_10px_25px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.12)]
+        scale-[1.03]
+      `
+      : `
+        text-black
+        bg-white/55
+        border-white/80
+        shadow-[0_8px_20px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(255,255,255,0.2)]
+        hover:bg-white/72
+        hover:scale-[1.015]
+      `
+    }`}
   >
-    {btn.label}
+    <span className="relative z-10">{btn.label}</span>
+    {plan !== btn.key && (
+      <>
+        <span className="pointer-events-none absolute inset-[1px] rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.15)_100%)]" />
+        <span className="pointer-events-none absolute left-[12%] right-[12%] top-[8%] h-[40%] rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.15)_100%)] blur-md opacity-80" />
+      </>
+    )}
   </button>
 ))}
 
@@ -96,7 +172,6 @@ Choose your plan
 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 max-w-7xl mx-auto">
 
 {/* STARTER */}
-
 <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Starter</h2>
@@ -113,15 +188,14 @@ Choose your plan
 
 <button
 onClick={() => router.push("/dashboard")}
-className="bg-black text-white px-6 py-3 rounded-2xl font-semibold w-full hover:scale-105 transition"
+className={iosBtn}
 >
-Start Free
+<span className="relative z-10">Start Free</span>
 </button>
 
 </div>
 
 {/* BASIC */}
-
 <div className="bg-white p-8 rounded-2xl shadow-lg text-center relative">
 
 {basic.save && (
@@ -133,12 +207,12 @@ Start Free
 <h2 className="text-2xl font-bold mb-3 text-black">Basic</h2>
 
 <p className="text-4xl font-extrabold text-black">
-{basic.price} 
+{basic.price}
 {basic.old && <span className="text-sm line-through text-gray-400 ml-2">{basic.old}</span>}
 </p>
 
 <p className="text-blue-700 font-bold mt-2">
-{basic.som} 
+{basic.som}
 {basic.oldSom && <span className="line-through text-gray-400 text-sm ml-2">{basic.oldSom}</span>}
 </p>
 
@@ -156,13 +230,12 @@ Start Free
 onClick={() => router.push("/payment/choose-version")}
 className={iosBtn}
 >
-Get now
+<span className="relative z-10">Get now</span>
 </button>
 
 </div>
 
 {/* PREMIUM */}
-
 <div className="bg-white p-10 rounded-2xl border-2 border-blue-600 shadow-xl text-center scale-105 relative">
 
 {premium.save && (
@@ -178,12 +251,12 @@ Most Popular
 <h2 className="text-2xl font-bold mb-3 text-black">Premium</h2>
 
 <p className="text-4xl font-extrabold text-black">
-{premium.price} 
+{premium.price}
 {premium.old && <span className="text-sm line-through text-gray-400 ml-2">{premium.old}</span>}
 </p>
 
 <p className="text-blue-700 font-bold mt-2">
-{premium.som} 
+{premium.som}
 {premium.oldSom && <span className="line-through text-gray-400 text-sm ml-2">{premium.oldSom}</span>}
 </p>
 
@@ -202,13 +275,12 @@ Most Popular
 onClick={() => router.push("/payment/choose-version")}
 className={iosBtn}
 >
-Get now
+<span className="relative z-10">Get now</span>
 </button>
 
 </div>
 
 {/* ULTIMATE */}
-
 <div className="bg-gradient-to-br from-black via-gray-900 to-black p-8 rounded-2xl shadow-xl text-center text-white relative">
 
 {ultimate.save && (
@@ -220,12 +292,12 @@ Get now
 <h2 className="text-2xl font-bold mb-3">Ultimate</h2>
 
 <p className="text-4xl font-extrabold">
-{ultimate.price} 
+{ultimate.price}
 {ultimate.old && <span className="text-sm line-through text-gray-400 ml-2">{ultimate.old}</span>}
 </p>
 
 <p className="text-blue-300 font-bold mt-2">
-{ultimate.som} 
+{ultimate.som}
 {ultimate.oldSom && <span className="line-through text-gray-400 text-sm ml-2">{ultimate.oldSom}</span>}
 </p>
 
@@ -242,9 +314,9 @@ Get now
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtn}
+className={iosBtnDark}
 >
-Get now
+<span className="relative z-10">Get now</span>
 </button>
 
 </div>
