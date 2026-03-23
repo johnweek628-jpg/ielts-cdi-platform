@@ -1,175 +1,110 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { supabase } from "./lib/supabase"
 import { useRouter } from "next/navigation"
 
-export default function HomePage() {
+export default function LandingPage() {
 
-  const router = useRouter()
-  const [loggedIn,setLoggedIn] = useState(false)
+const router = useRouter()
 
-  useEffect(()=>{
+return (
 
-    const getUser = async () => {
+<main className="relative overflow-hidden bg-white">
 
-      const { data } = await supabase.auth.getUser()
+{/* 🔴 RED GLOW */}
+<div className="absolute top-[-150px] left-[-150px] w-[600px] h-[600px] bg-red-500 opacity-20 blur-[120px] animate-pulse"></div>
 
-      if(data.user){
-        setLoggedIn(true)
-      } else {
-        setLoggedIn(false)
-      }
+{/* ================= HERO ================= */}
 
-    }
+<section className="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
 
-    getUser()
+<div>
 
-  },[])
+<h1 className="text-5xl font-extrabold leading-tight text-gray-900">
+Boost your IELTS score <br />
+<span className="text-red-500">faster than ever</span>
+</h1>
 
-  const featureBtn =
-    "bg-white text-blue-600 hover:text-blue-700 hover:-translate-y-[2px] hover:shadow-xl transition-all duration-200 p-4 rounded-xl shadow text-sm font-semibold flex items-center justify-center gap-2"
+<p className="mt-6 text-lg text-gray-600">
+Practice with real exam simulations, AI feedback, and smart progress tracking.
+</p>
 
-  const handleClick = async () => {
+<div className="mt-8 flex gap-4">
 
-const { data } = await supabase.auth.getUser()
+<button
+onClick={() => router.push("/home")}
+className="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition"
+>
+Get Started →
+</button>
 
-if(!data.user){
-alert("Please sign up first.")
-router.push("/auth/login")
-return
-}
-
-router.push("/dashboard")
-
-}
-
-  return (
-
-    <main className="flex min-h-screen bg-gray-100">
-
-      {/* SIDEBAR */}
-
-      <aside className="w-64 bg-white border-r flex flex-col justify-between">
-
-        <div className="p-6">
-
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-2xl">🎓</span>
-            <h1 className="text-lg font-semibold text-gray-800">
-              IELTS CDI
-            </h1>
-          </div>
-  {/* 🔥 PROFILE BLOCK */}
-
-<div className="flex flex-col items-center mt-6">
-
-  <img
-    src="student.png"
-    alt="profile"
-    className="w-20 h-20 rounded-full object-cover border mb-3 shadow"
-  />
-
-  <p className="text-sm font-semibold text-gray-800 text-center">
-    Jasurbek Abdullayev
-  </p>
-
-  <p className="text-xs text-gray-500 text-center mt-1 leading-relaxed px-2">
-    The creator of this website is an IELTS instructor helping students achieve Band 7+ through structured practice and real exam strategies.
-  </p>
+<button
+className="border px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
+>
+See how it works
+</button>
 
 </div>
 
-        </div>
+<p className="mt-4 text-sm text-gray-400">
+✔ No credit card required &nbsp;&nbsp; ✔ Start in 30 seconds
+</p>
 
-      </aside>
+</div>
 
-      {/* MAIN */}
+{/* RIGHT */}
+<div className="rounded-2xl shadow-2xl overflow-hidden border">
 
-      <div className="flex-1 flex flex-col">
+<img
+src="/reading-preview.png"
+alt="IELTS Interface"
+/>
 
-        {/* HERO */}
+</div>
 
-        <div className="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 text-center">
+</section>
 
-          <h2 className="text-lg font-semibold">
-            Welcome to Niners Arena!
-          </h2>
+{/* ================= SOCIAL PROOF ================= */}
 
-          {!loggedIn && (
+<section className="bg-gray-50 py-16 border-t">
 
-            <p className="mt-3 text-sm">
-              To use our website, please sign up first
-            </p>
+<div className="max-w-5xl mx-auto px-6 text-center">
 
-          )}
+<p className="text-gray-500 text-sm uppercase tracking-wide">
+Trusted by students worldwide
+</p>
 
-        </div>
+<h2 className="text-3xl font-bold mt-4 text-gray-900">
+7,200+ students improving their IELTS scores
+</h2>
 
-        {/* CONTENT */}
+<div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10">
 
-        <div className="flex-1 flex flex-col items-center justify-center p-10">
+<div>
+<p className="text-2xl font-bold text-red-500">7,200+</p>
+<p className="text-gray-500 text-sm">Students</p>
+</div>
 
-          <h3 className="text-lg font-semibold mb-10 text-gray-700">
-            The most popular features
-          </h3>
+<div>
+<p className="text-2xl font-bold text-red-500">250+</p>
+<p className="text-gray-500 text-sm">Tests</p>
+</div>
 
-          <div className="grid grid-cols-3 gap-6 max-w-3xl w-full">
+<div>
+<p className="text-2xl font-bold text-red-500">95%</p>
+<p className="text-gray-500 text-sm">Success</p>
+</div>
 
-            <button onClick={handleClick} className={featureBtn}>
-              📖 Learn Vocabulary
-            </button>
+<div>
+<p className="text-2xl font-bold text-red-500">24/7</p>
+<p className="text-gray-500 text-sm">AI Feedback</p>
+</div>
 
-            <button onClick={handleClick} className={featureBtn}>
-              🎧 Listening Practice
-            </button>
+</div>
 
-            <button onClick={handleClick} className={featureBtn}>
-              📚 Reading Practice
-            </button>
+</div>
 
-            <button onClick={handleClick} className={featureBtn}>
-              ✍️ Writing Practice
-            </button>
+</section>
 
-            <button onClick={handleClick} className={featureBtn}>
-              ⭐ Band 9.0 Samples
-            </button>
-
-            <button onClick={handleClick} className={featureBtn}>
-              📝 Take a Full Mock
-            </button>
-
-            <button onClick={handleClick} className={featureBtn}>
-              📦 My Special Prep Materials
-            </button>
-
-            <button
-              onClick={handleClick}
-              className={`${featureBtn} col-span-3`}
-            >
-              🎤 Speaking Practice
-            </button>
-
-          </div>
-
-        </div>
-
-        {/* FOOTER */}
-
-        <footer className="text-center text-sm text-gray-500 pb-10 px-6">
-
-          <p>© 2025 IELTS CDI Platform</p>
-
-          <p className="mt-2 max-w-3xl mx-auto text-xs leading-relaxed">
-            This is an independent English language practice platform.
-          </p>
-
-        </footer>
-
-      </div>
-
-    </main>
-
-  )
+</main>
+)
 }
