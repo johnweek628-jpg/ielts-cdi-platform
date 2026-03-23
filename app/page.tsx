@@ -80,17 +80,17 @@ Trusted by students worldwide
 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10">
 
 <div>
-<p className="text-2xl font-bold text-red-500">7,200+</p>
+<p className="text-2xl font-bold text-red-500">6,500+</p>
 <p className="text-gray-500 text-sm">Students</p>
 </div>
 
 <div>
-<p className="text-2xl font-bold text-red-500">250+</p>
-<p className="text-gray-500 text-sm">Tests</p>
+<p className="text-2xl font-bold text-red-500">235+</p>
+<p className="text-gray-500 text-sm">Reading passages</p>
 </div>
 
 <div>
-<p className="text-2xl font-bold text-red-500">95%</p>
+<p className="text-2xl font-bold text-red-500">94%</p>
 <p className="text-gray-500 text-sm">Success</p>
 </div>
 
@@ -102,6 +102,84 @@ Trusted by students worldwide
 </div>
 
 </div>
+
+<section className="py-20">
+  <div className="max-w-5xl mx-auto px-6 text-center">
+
+    <h2 className="text-3xl font-bold text-gray-900">
+      Why you’re stuck at Band 6.0 😓
+    </h2>
+
+    <p className="text-gray-500 mt-4">
+      It’s not your fault — most students practice the wrong way.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-8 mt-12">
+
+      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
+        <h3 className="font-semibold text-lg">No Feedback</h3>
+        <p className="text-gray-500 mt-2 text-sm">
+          You practice every day, but no one tells you what you're doing wrong.
+        </p>
+      </div>
+
+      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
+        <h3 className="font-semibold text-lg">No Strategy</h3>
+        <p className="text-gray-500 mt-2 text-sm">
+          You don’t know how to approach tasks like a high-band student.
+        </p>
+      </div>
+
+      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
+        <h3 className="font-semibold text-lg">No Progress</h3>
+        <p className="text-gray-500 mt-2 text-sm">
+          You can’t clearly see what’s improving and what’s holding you back.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section className="bg-black text-white py-20">
+  <div className="max-w-5xl mx-auto px-6 text-center">
+
+    <h2 className="text-3xl font-bold">
+      We built a system that fixes this 🚀
+    </h2>
+
+    <p className="text-gray-400 mt-4">
+      Everything you need to improve your IELTS score — in one smart system.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-10 mt-12">
+
+      <div>
+        <h3 className="text-xl font-semibold">Real Exam Practice</h3>
+        <p className="text-gray-400 text-sm mt-2">
+          Experience real IELTS-style tests, not random exercises.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold">AI Feedback</h3>
+        <p className="text-gray-400 text-sm mt-2">
+          Get instant evaluation on writing and speaking tasks.
+        </p>
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold">Smart Tracking</h3>
+        <p className="text-gray-400 text-sm mt-2">
+          Track your progress and focus on your weak areas.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 </section>
 
