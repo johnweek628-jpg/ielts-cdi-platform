@@ -125,6 +125,40 @@ backdrop-blur-2xl
 transition-all duration-300
 border
 `
+const iosBtnGreen = `
+relative isolate overflow-hidden
+w-full px-6 py-3 rounded-[24px]
+font-semibold text-white tracking-wide
+
+bg-emerald-500/90
+backdrop-blur-[30px]
+
+border border-emerald-400/40
+
+shadow-[0_10px_30px_rgba(16,185,129,0.35),
+inset_0_1px_0_rgba(255,255,255,0.25),
+inset_0_-1px_0_rgba(0,0,0,0.2)]
+
+before:content-['']
+before:absolute before:inset-[1px]
+before:rounded-[22px]
+before:bg-[linear-gradient(180deg,rgba(255,255,255,0.35)_0%,rgba(255,255,255,0.08)_50%,rgba(0,0,0,0.15)_100%)]
+
+after:content-['']
+after:absolute after:left-[12%] after:right-[12%] after:top-[6%] after:h-[40%]
+after:rounded-full
+after:bg-[linear-gradient(180deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.1)_100%)]
+after:blur-md after:opacity-80
+
+transition-all duration-300
+
+hover:scale-[1.04]
+hover:bg-emerald-400/90
+hover:shadow-[0_14px_40px_rgba(16,185,129,0.45)]
+
+active:scale-[0.95]
+active:shadow-[inset_0_5px_14px_rgba(0,0,0,0.3)]
+`
 
 return (
 
@@ -226,7 +260,7 @@ className={iosBtn}
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtn}
+className={iosBtnGreen}
 >
 <span className="relative z-10">Get now</span>
 </button>
@@ -271,7 +305,7 @@ Most Popular
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtn}
+className={iosBtnGreen}
 >
 <span className="relative z-10">Get now</span>
 </button>
@@ -310,7 +344,7 @@ className={iosBtn}
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className={iosBtnDark}
+className={iosBtnGreen}
 >
 <span className="relative z-10">Get now</span>
 </button>
