@@ -322,7 +322,7 @@ className={iosBtnGold}
 </div>
 
 {/* ULTIMATE */}
-<div className="bg-bg-gradient-to-br from-purple-900 via-fuchsia-800 to-pink-700 border border-white/10 p-8 rounded-2xl shadow-xl text-center text-white relative">
+<div className="bg-gradient-to-br from-purple-900 via-fuchsia-800 to-pink-700 border border-white/10 p-8 rounded-2xl shadow-xl text-center text-white relative">
 
 {ultimate.save && (
   <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
