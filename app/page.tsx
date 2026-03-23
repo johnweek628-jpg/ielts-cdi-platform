@@ -102,6 +102,7 @@ Trusted by students worldwide
 </div>
 
 </div>
+</section>
 
 <section className="py-20">
   <div className="max-w-5xl mx-auto px-6 text-center">
@@ -180,6 +181,92 @@ Trusted by students worldwide
 
   </div>
 </section>
+
+<section className="py-24 bg-gray-50">
+
+  <div className="max-w-6xl mx-auto px-6 text-center">
+
+    <h2 className="text-3xl font-bold text-gray-900">
+      Experience the real IELTS environment
+    </h2>
+
+    <p className="text-gray-500 mt-4">
+      From instructions to real test interface — just like the actual exam.
+    </p>
+
+    <div className="grid md:grid-cols-3 gap-10 mt-16">
+
+      {/* STEP 1 */}
+      <div className="group">
+        <div className="overflow-hidden rounded-2xl shadow-xl border">
+          <img
+            src="/instructions.png"
+            className="group-hover:scale-110 transition duration-500"
+          />
+        </div>
+        <p className="mt-4 font-semibold">
+          Step 1: Understand the test
+        </p>
+      </div>
+
+      {/* STEP 2 */}
+      <div className="group">
+        <div className="overflow-hidden rounded-2xl shadow-xl border">
+          <img
+            src="/reading-test.png"
+            className="group-hover:scale-110 transition duration-500"
+          />
+        </div>
+        <p className="mt-4 font-semibold">
+          Step 2: Take the real test
+        </p>
+      </div>
+
+      {/* STEP 3 */}
+      <div className="group">
+        <div className="overflow-hidden rounded-2xl shadow-xl border">
+          <img
+            src="/dashboard.png"
+            className="group-hover:scale-110 transition duration-500"
+          />
+        </div>
+        <p className="mt-4 font-semibold">
+          Step 3: Track your progress
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section className="py-20 bg-white">
+
+  <div className="max-w-4xl mx-auto px-6 text-center">
+
+    <h2 className="text-3xl font-bold text-gray-900">
+      See it in action 🎥
+    </h2>
+
+    <p className="text-gray-500 mt-4">
+      Watch how the real test interface works
+    </p>
+
+    <div className="mt-10 rounded-2xl overflow-hidden shadow-2xl border">
+
+      <video
+        src="/reading-demo.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="w-full"
+      />
+
+    </div>
+
+  </div>
 
 </section>
 
