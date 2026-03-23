@@ -24,7 +24,6 @@ type PricingType = {
 export default function Pricing() {
 
 const router = useRouter()
-
 const [plan, setPlan] = useState<PlanType>("monthly")
 
 const pricing: PricingType = {
@@ -53,6 +52,16 @@ const pricing: PricingType = {
 const basic = pricing[plan].basic
 const premium = pricing[plan].premium
 const ultimate = pricing[plan].ultimate
+
+// 🔥 iOS BUTTON STYLE
+const iosBtn = `
+w-full px-6 py-3 rounded-2xl font-semibold text-white
+bg-white/10 backdrop-blur-xl border border-white/20
+shadow-[0_8px_30px_rgba(0,0,0,0.2)]
+transition-all duration-300
+hover:bg-white/20 hover:scale-[1.04]
+active:scale-[0.97]
+`
 
 return (
 
@@ -91,7 +100,6 @@ Choose your plan
 <div className="bg-white p-8 rounded-2xl shadow-lg text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Starter</h2>
-
 <p className="text-4xl font-extrabold mb-6 text-black">$0</p>
 
 <p className="font-bold text-black mb-4">What you can have:</p>
@@ -105,7 +113,7 @@ Choose your plan
 
 <button
 onClick={() => router.push("/dashboard")}
-className="bg-black text-white px-6 py-3 rounded-lg font-semibold w-full transition transform hover:scale-105 hover:bg-gray-800"
+className="bg-black text-white px-6 py-3 rounded-2xl font-semibold w-full hover:scale-105 transition"
 >
 Start Free
 </button>
@@ -141,16 +149,12 @@ Start Free
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>10 Reading Tests</li>
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>3 Speaking Mock Tests</li>
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>3 Writing Corrections</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>Weekly Articles</li>
 </ul>
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className="w-full px-6 py-3 rounded-xl font-bold text-white 
-bg-gradient-to-r from-gray-900 via-black to-gray-800
-shadow-md backdrop-blur-md
-transition-all duration-300 
-hover:scale-[1.03] hover:shadow-xl 
-active:scale-[0.98]"
+className={iosBtn}
 >
 Get now
 </button>
@@ -190,16 +194,13 @@ Most Popular
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>30 Reading Tests</li>
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>6 Speaking Mock Tests</li>
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>6 Writing Corrections</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>Weekly Articles</li>
+<li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>Weakness Analysis</li>
 </ul>
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className="w-full px-6 py-3 rounded-xl font-bold text-white 
-bg-gradient-to-r from-gray-900 via-black to-gray-800
-shadow-md backdrop-blur-md
-transition-all duration-300 
-hover:scale-[1.03] hover:shadow-xl 
-active:scale-[0.98]"
+className={iosBtn}
 >
 Get now
 </button>
@@ -235,16 +236,13 @@ Get now
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Reading Tests</li>
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Speaking Mock Tests</li>
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Writing Corrections</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Weekly Articles</li>
+<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Weakness Analysis</li>
 </ul>
 
 <button
 onClick={() => router.push("/payment/choose-version")}
-className="w-full px-6 py-3 rounded-xl font-bold text-white 
-bg-gradient-to-r from-gray-900 via-black to-gray-800
-shadow-md backdrop-blur-md
-transition-all duration-300 
-hover:scale-[1.03] hover:shadow-xl 
-active:scale-[0.98]"
+className={iosBtn}
 >
 Get now
 </button>
