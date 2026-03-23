@@ -53,15 +53,21 @@ const basic = pricing[plan].basic
 const premium = pricing[plan].premium
 const ultimate = pricing[plan].ultimate
 
-// ✅ REAL iOS-LIKE GLASS CTA FOR LIGHT CARDS
+// ✅ FIXED iOS GLASS BUTTON (LIGHT CARDS)
 const iosBtn = `
 relative isolate overflow-hidden
 w-full px-6 py-3 rounded-[24px]
 font-semibold text-black
-bg-white/55
-backdrop-blur-2xl
-border border-white/70
-shadow-[0_10px_30px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(255,255,255,0.18)]
+
+bg-white/60
+backdrop-blur-[30px]
+
+border border-white/60
+
+shadow-[0_8px_25px_rgba(0,0,0,0.12),
+inset_0_1px_0_rgba(255,255,255,0.9),
+inset_0_-1px_0_rgba(255,255,255,0.2)]
+
 before:content-['']
 before:absolute before:inset-[1px]
 before:rounded-[22px]
@@ -74,6 +80,7 @@ after:bg-[linear-gradient(180deg,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.18
 after:blur-md after:opacity-80
 after:pointer-events-none
 transition-all duration-300
+
 hover:scale-[1.02]
 hover:bg-white/65
 hover:shadow-[0_14px_40px_rgba(0,0,0,0.16),inset_0_1px_0_rgba(255,255,255,1),inset_0_-1px_0_rgba(255,255,255,0.18)]
@@ -81,7 +88,7 @@ active:scale-[0.985]
 active:shadow-[0_6px_18px_rgba(0,0,0,0.14),inset_0_2px_6px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]
 `
 
-// ✅ REAL iOS-LIKE GLASS CTA FOR DARK CARD
+// ✅ DARK BUTTON (UNCHANGED - already perfect)
 const iosBtnDark = `
 relative isolate overflow-hidden
 w-full px-6 py-3 rounded-[24px]
@@ -110,7 +117,6 @@ active:scale-[0.985]
 active:shadow-[0_6px_18px_rgba(0,0,0,0.3),inset_0_2px_8px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.18)]
 `
 
-// ✅ iOS SEGMENTED CONTROL TABS
 const iosTabBase = `
 relative isolate overflow-hidden
 min-w-[150px] px-8 py-3 rounded-full
@@ -144,15 +150,15 @@ Choose your plan
       ? `
         text-white bg-black
         border-black
-        shadow-[0_10px_25px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.12)]
+        shadow-[0_10px_25px_rgba(0,0,0,0.22)]
         scale-[1.03]
       `
       : `
         text-black
-        bg-white/55
-        border-white/80
-        shadow-[0_8px_20px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_-1px_0_rgba(255,255,255,0.2)]
-        hover:bg-white/72
+        bg-white/60 backdrop-blur-[30px]
+        border-white/70
+        shadow-[0_8px_20px_rgba(0,0,0,0.08)]
+        hover:bg-white/80
         hover:scale-[1.015]
       `
     }`}
@@ -172,12 +178,10 @@ Choose your plan
 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 max-w-7xl mx-auto">
 
 {/* STARTER */}
-<div className="bg-white p-8 rounded-2xl shadow-lg text-center">
+<div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-lg text-center">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Starter</h2>
 <p className="text-4xl font-extrabold mb-6 text-black">$0</p>
-
-<p className="font-bold text-black mb-4">What you can have:</p>
 
 <ul className="text-left space-y-3 mb-8">
 <li className="flex gap-3 font-bold text-black"><span className="text-emerald-500">✓</span>2 Listening Tests</li>
@@ -196,13 +200,7 @@ className={iosBtn}
 </div>
 
 {/* BASIC */}
-<div className="bg-white p-8 rounded-2xl shadow-lg text-center relative">
-
-{basic.save && (
-  <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full">
-    Save {basic.save}
-  </div>
-)}
+<div className="bg-white/80 backdrop-blur-xl p-8 rounded-2xl shadow-lg text-center relative">
 
 <h2 className="text-2xl font-bold mb-3 text-black">Basic</h2>
 
@@ -308,8 +306,6 @@ className={iosBtn}
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Reading Tests</li>
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Speaking Mock Tests</li>
 <li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Unlimited Writing Corrections</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Weekly Articles</li>
-<li className="flex gap-3 font-bold"><span className="text-emerald-400">✓</span>Weakness Analysis</li>
 </ul>
 
 <button
