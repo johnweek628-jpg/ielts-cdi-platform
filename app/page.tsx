@@ -29,11 +29,19 @@ Boost your IELTS score <br />
 Practice with real exam simulations, AI feedback, and smart progress tracking.
 </p>
 
-<div className="mt-8 flex gap-4">
+<div className="relative z-20 mt-8 flex gap-4">
 
 <button
 onClick={() => router.push("/auth/register")}
-className="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition"
+className="inline-flex items-center justify-center
+               bg-red-500 text-white
+               px-8 py-4
+               rounded-2xl
+               font-semibold text-lg
+               hover:bg-red-600
+               active:scale-[0.98]
+               transition duration-200
+               cursor-pointer"
 >
 Get Started →
 </button>
@@ -43,10 +51,15 @@ onClick={() => {
     const section = document.getElementById("demo")
     section?.scrollIntoView({ behavior: "smooth" })
   }}
-className="px-6 py-3 rounded-xl border border-red-500 text-red-500 
-             font-semibold transition-all duration-300 
-             hover:bg-red-500 hover:text-white hover:shadow-lg"
->
+className="inline-flex items-center justify-center
+               px-8 py-4
+               rounded-2xl
+               border border-red-500 text-red-500
+               font-semibold text-lg
+               hover:bg-red-500 hover:text-white
+               transition duration-200
+               cursor-pointer"
+  >
 See how it works
 </button>
 
