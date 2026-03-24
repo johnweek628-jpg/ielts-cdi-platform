@@ -195,7 +195,7 @@ Trusted by students worldwide
       From instructions to real test interface — just like the actual exam.
     </p>
 
-    <div className="flex flex-col gap-20 mt-20">
+    <div className="flex flex-col gap-24 mt-24">
 
       {/* STEP 1 */}
 <motion.div
@@ -207,11 +207,11 @@ Trusted by students worldwide
 >
 
   <div className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white
-                  transform transition duration-700 group-hover:scale-[1.02]">
+                  transform transition duration-700 group-hover:scale-[1.01]">
 
     <img
       src="/instructions.png"
-      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+      className="w-[88%] md:w-[75%] mx-auto h-auto object-cover transition duration-700 group-hover:scale-105"
     />
 
   </div>
@@ -236,7 +236,7 @@ Trusted by students worldwide
 
     <img
       src="/reading-test.png"
-      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+      className="w-[88%] md:w-[75%] mx-auto h-auto object-cover transition duration-700 group-hover:scale-105"
     />
 
   </div>
@@ -261,7 +261,7 @@ Trusted by students worldwide
 
     <img
       src="/dashboard.png"
-      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+      className="w-[88%] md:w-[75%] mx-auto h-auto object-cover transition duration-700 group-hover:scale-105"
     />
 
   </div>
@@ -280,7 +280,7 @@ Trusted by students worldwide
 
 <section className="py-20 bg-white">
 
-  <div className="max-w-4xl mx-auto px-6 text-center">
+  <div className="max-w-6xl mx-auto px-6 text-center">
 
     <h2 className="text-4xl md:text-5xl font-semibold text-black tracking-tight">
       See it in action!
@@ -290,7 +290,7 @@ Trusted by students worldwide
       Watch how the real inspera-like interface works
     </p>
 
-   <div className="mt-14 rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-gray-200">
+   <div className="mt-16 rounded-3xl overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.18)] border border-gray-200">
 
       <video
   src="/reading-demo.mp4"
@@ -298,7 +298,7 @@ Trusted by students worldwide
   muted
   loop
   playsInline
-  className="w-full h-auto object-cover scale-[1.01]"
+  className="w-full h-[520px] md:h-[620px] object-cover"
 />
 
     </div>
