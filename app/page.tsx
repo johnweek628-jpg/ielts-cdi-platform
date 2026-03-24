@@ -39,7 +39,9 @@ Get Started →
 </button>
 
 <button
-className="border px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition"
+className="px-6 py-3 rounded-xl border border-red-500 text-red-500 
+             font-semibold transition-all duration-300 
+             hover:bg-red-500 hover:text-white hover:shadow-lg"
 >
 See how it works
 </button>
@@ -118,23 +120,41 @@ Trusted by students worldwide
 
     <div className="grid md:grid-cols-3 gap-8 mt-12">
 
-      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
-        <h3 className="font-semibold text-lg">No Feedback</h3>
-        <p className="text-gray-500 mt-2 text-sm">
+      <div className="p-6 border border-gray-200 rounded-2xl bg-white
+                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
+                transition duration-300">
+        <h3 className="font-semibold text-lg 
+                 bg-gradient-to-r from-orange-500 to-red-500 
+                 bg-clip-text text-transparent">No Feedback</h3>
+        <p className="text-gray-600 mt-3 text-sm leading-relaxed">
           You practice every day, but no one tells you what you're doing wrong.
         </p>
       </div>
+<div className="p-6 border border-gray-200 rounded-2xl 
+                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
+                transition duration-300 bg-white">
 
-      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
-        <h3 className="font-semibold text-lg">No Strategy</h3>
-        <p className="text-gray-500 mt-2 text-sm">
-          You don’t know how to approach tasks like a high-band student.
-        </p>
-      </div>
+  <h3 className="font-semibold text-lg 
+                 bg-gradient-to-r from-orange-500 to-red-500 
+                 bg-clip-text text-transparent">
+    No Strategy
+  </h3>
 
-      <div className="p-6 border rounded-2xl hover:shadow-xl transition">
-        <h3 className="font-semibold text-lg">No Progress</h3>
-        <p className="text-gray-500 mt-2 text-sm">
+  <p className="text-gray-600 mt-3 text-sm leading-relaxed">
+    You don’t know how to approach tasks like a high-band student.
+  </p>
+
+</div>
+
+      <div className="p-6 border border-gray-200 rounded-2xl bg-white
+                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
+                transition duration-300">
+        <h3 className="font-semibold text-lg 
+                 bg-gradient-to-r from-orange-500 to-red-500 
+                 bg-clip-text text-transparent">
+          No Progress
+        </h3>
+        <p className="text-gray-600 mt-3 text-sm leading-relaxed">
           You can’t clearly see what’s improving and what’s holding you back.
         </p>
       </div>
@@ -207,7 +227,7 @@ Trusted by students worldwide
 >
 
   <div className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white
-                  transform transition duration-700 group-hover:scale-[1.01]">
+                  transform transition duration-700 group-hover:scale-[1.02]">
 
     <img
       src="/instructions.png"
@@ -298,7 +318,7 @@ Trusted by students worldwide
   muted
   loop
   playsInline
-  className="w-full h-[520px] md:h-[620px] object-cover"
+  className="w-full h-[520px] md:h-[620px] object-contain bg-black"
 />
 
     </div>
