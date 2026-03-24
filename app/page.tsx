@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { motion } from "framer-motion"
 
 export default function LandingPage() {
 
@@ -194,46 +195,82 @@ Trusted by students worldwide
       From instructions to real test interface — just like the actual exam.
     </p>
 
-    <div className="grid md:grid-cols-3 gap-10 mt-16">
+    <div className="flex flex-col gap-20 mt-20">
 
       {/* STEP 1 */}
-      <div className="group">
-        <div className="overflow-hidden rounded-2xl shadow-xl border">
-          <img
-            src="/instructions.png"
-            className="group-hover:scale-110 transition duration-500"
-          />
-        </div>
-        <p className="mt-4 font-semibold">
-          Step 1: Understand the test
-        </p>
-      </div>
+<motion.div
+  initial={{ opacity: 0, y: 80 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="group transition-all duration-700 ease-out"
+>
+
+  <div className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white
+                  transform transition duration-700 group-hover:scale-[1.02]">
+
+    <img
+      src="/instructions.png"
+      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+    />
+
+  </div>
+
+  <p className="mt-6 text-xl italic font-medium text-black tracking-tight">
+    Step 1: Understand the test
+  </p>
+
+</motion.div>
 
       {/* STEP 2 */}
-      <div className="group">
-        <div className="overflow-hidden rounded-2xl shadow-xl border">
-          <img
-            src="/reading-test.png"
-            className="group-hover:scale-110 transition duration-500"
-          />
-        </div>
-        <p className="mt-4 font-semibold">
-          Step 2: Take the real test
-        </p>
-      </div>
+<motion.div
+  initial={{ opacity: 0, y: 80 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="group transition-all duration-700 ease-out"
+>
+
+  <div className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white
+                  transform transition duration-700 group-hover:scale-[1.02]">
+
+    <img
+      src="/reading-test.png"
+      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+    />
+
+  </div>
+
+  <p className="mt-6 text-xl italic font-medium text-black tracking-tight">
+    Step 2: Take the real test
+  </p>
+
+</motion.div>
 
       {/* STEP 3 */}
-      <div className="group">
-        <div className="overflow-hidden rounded-2xl shadow-xl border">
-          <img
-            src="/dashboard.png"
-            className="group-hover:scale-110 transition duration-500"
-          />
-        </div>
-        <p className="mt-4 font-semibold">
-          Step 3: Track your progress
-        </p>
-      </div>
+     <motion.div
+  initial={{ opacity: 0, y: 80 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="group transition-all duration-700 ease-out"
+>
+
+  <div className="overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-white
+                  transform transition duration-700 group-hover:scale-[1.02]">
+
+    <img
+      src="/dashboard.png"
+      className="w-full h-auto object-cover transition duration-700 group-hover:scale-105"
+    />
+
+  </div>
+
+  <p className="mt-6 text-xl italic font-medium text-black tracking-tight">
+    Step 3: Own your dashboard
+  </p>
+
+</motion.div>
 
     </div>
 
@@ -245,24 +282,24 @@ Trusted by students worldwide
 
   <div className="max-w-4xl mx-auto px-6 text-center">
 
-    <h2 className="text-3xl font-bold text-gray-900">
-      See it in action 🎥
+    <h2 className="text-4xl md:text-5xl font-semibold text-black tracking-tight">
+      See it in action!
     </h2>
 
-    <p className="text-gray-500 mt-4">
-      Watch how the real test interface works
+    <p className="text-gray-500 mt-4 text-lg italic">
+      Watch how the real inspera-like interface works
     </p>
 
-    <div className="mt-10 rounded-2xl overflow-hidden shadow-2xl border">
+   <div className="mt-14 rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-gray-200">
 
       <video
-        src="/reading-demo.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full"
-      />
+  src="/reading-demo.mp4"
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="w-full h-auto object-cover scale-[1.01]"
+/>
 
     </div>
 
