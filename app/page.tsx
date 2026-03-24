@@ -32,7 +32,7 @@ Practice with real exam simulations, AI feedback, and smart progress tracking.
 <div className="mt-8 flex gap-4">
 
 <button
-onClick={() => router.push("/home")}
+onClick={() => router.push("/auth/register")}
 className="bg-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-red-600 transition"
 >
 Get Started →
@@ -81,7 +81,7 @@ Trusted by students worldwide
 </p>
 
 <h2 className="text-3xl font-bold mt-4 text-gray-900">
-7,200+ students improving their IELTS scores
+6,500+ students improving their IELTS scores
 </h2>
 
 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10">
@@ -207,7 +207,7 @@ Trusted by students worldwide
   </div>
 </section>
 
-<section className="py-24 bg-gray-50">
+<section id="demo" className="py-24 bg-gray-50">
 
   <div className="max-w-6xl mx-auto px-6 text-center">
 

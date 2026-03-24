@@ -112,3 +112,7 @@ button {
 .ios-btn:active {
   transform: scale(0.92);
 }
+
+html {
+  scroll-behavior: smooth;
+}
