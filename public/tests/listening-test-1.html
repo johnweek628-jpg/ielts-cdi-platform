@@ -244,9 +244,6 @@
         <button class="ghost-btn review-part-btn" data-part="2">Play Part 2</button>
         <button class="ghost-btn review-part-btn" data-part="3">Play Part 3</button>
         <button class="ghost-btn review-part-btn" data-part="4">Play Part 4</button>
-      </div>
-      <p class="small">Answers are checked against the provided answer key.</p>
-    </div>
     <div id="reviewGrid" class="review-grid"></div>
   </div>
 </section>
@@ -257,7 +254,7 @@
 <audio id="audio4" preload="auto" src="https://uvcnkaolhovqnofzngtx.supabase.co/storage/v1/object/sign/audio/Part-4.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV80YWVkNjE4Ni0zNmFhLTQxNWEtYmY5YS1lYzAzOGViNDIyOGQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdWRpby9QYXJ0LTQubXAzIiwiaWF0IjoxNzc0NTQzNDI5LCJleHAiOjI0MDUyNjM0Mjl9.umDFVZ8IpKLoaVDXTni_qoFFx4__qcJou7tTlupE9LY"> 
 
 <script>  
-document.addEventListener("DOMContentLoaded", () => {
+
 const answerKey = {"1": "KEYWORTH", "2": "FAN", "3": "SHOWER", "4": "COLOR", "5": "GATE", "6": "LOCK", "7": "STORM", "8": "PLASTIC", "9": "8TH MAY", "10": "AG4176", "11": "A", "12": "B", "13": "A", "14": "B", "15": "F", "16": "A", "17": "B", "18": "H", "19": "G", "20": "I", "21": "C", "22": "B", "23": "A", "24": "C", "25": "C", "26": "B", "27": "D", "28": "E", "29": "B", "30": "C", "31": "HEALTH", "32": "SALARY", "33": "FOREST", "34": "OCTOBER", "35": "KING", "36": "BEER", "37": "DESERTS", "38": "CONCENTRATED", "39": "SHIPPING", "40": "TRANSPORT"};
 const questionMeta = {"1": {"part": 1, "type": "text"}, "2": {"part": 1, "type": "text"}, "3": {"part": 1, "type": "text"}, "4": {"part": 1, "type": "text"}, "5": {"part": 1, "type": "text"}, "6": {"part": 1, "type": "text"}, "7": {"part": 1, "type": "text"}, "8": {"part": 1, "type": "text"}, "9": {"part": 1, "type": "text"}, "10": {"part": 1, "type": "text"}, "11": {"part": 2, "type": "choice"}, "12": {"part": 2, "type": "choice"}, "13": {"part": 2, "type": "choice"}, "14": {"part": 2, "type": "choice"}, "15": {"part": 2, "type": "choice"}, "16": {"part": 2, "type": "choice"}, "17": {"part": 2, "type": "choice"}, "18": {"part": 2, "type": "choice"}, "19": {"part": 2, "type": "choice"}, "20": {"part": 2, "type": "choice"}, "21": {"part": 3, "type": "choice"}, "22": {"part": 3, "type": "choice"}, "23": {"part": 3, "type": "choice"}, "24": {"part": 3, "type": "choice"}, "25": {"part": 3, "type": "choice"}, "26": {"part": 3, "type": "choice"}, "27": {"part": 3, "type": "choice"}, "28": {"part": 3, "type": "choice"}, "29": {"part": 3, "type": "choice"}, "30": {"part": 3, "type": "choice"}, "31": {"part": 4, "type": "text"}, "32": {"part": 4, "type": "text"}, "33": {"part": 4, "type": "text"}, "34": {"part": 4, "type": "text"}, "35": {"part": 4, "type": "text"}, "36": {"part": 4, "type": "text"}, "37": {"part": 4, "type": "text"}, "38": {"part": 4, "type": "text"}, "39": {"part": 4, "type": "text"}, "40": {"part": 4, "type": "text"}};
 const parts = {1:{title:'Part 1',start:1,end:10,audio:document.getElementById('audio1')},2:{title:'Part 2',start:11,end:20,audio:document.getElementById('audio2')},3:{title:'Part 3',start:21,end:30,audio:document.getElementById('audio3')},4:{title:'Part 4',start:31,end:40,audio:document.getElementById('audio4')}};
@@ -265,7 +262,7 @@ const state = {started:false,currentPart:1,currentQuestion:1,timeLeft:2400,timer
 const main = document.getElementById('main');
 const timerEl = document.getElementById('timer');
 const audioStatus = document.getElementById('audioStatus');
-})
+
 
 </script>
 
