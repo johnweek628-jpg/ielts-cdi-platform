@@ -103,7 +103,7 @@ export default function ReadingPractice() {
 
             {set.packs.map((pack, j) => {
 
-              const isLocked = pack.range[1] > currentLimit
+              const isLocked = pack.range[0] > currentLimit
 
               return (
 
