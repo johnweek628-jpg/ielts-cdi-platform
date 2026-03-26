@@ -8,11 +8,11 @@ export default function SetPage() {
   const router = useRouter()
 
   const setId = Number(params.id)
-  console.log("SET ID:", setId)
+
 
   const start = setId // bu aslida 1, 11, 21 bo‘ladi
 
-const tests = Array.from({ length: 10 }, (_, i) => start + i)
+const tests = Array.from({ length: 10 }, (_, i) => i + 1)
 
   return (
 
