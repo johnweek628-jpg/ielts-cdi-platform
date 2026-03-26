@@ -60,13 +60,13 @@ const tests = Array.from({ length: 10 }, (_, i) => start + i)
         {tests.map((testNumber) => {
 
           // 🔥 GLOBAL mapping (bu muhim)
-          const realTestId = (setId - 1) * 10 + testNumber
+          const testId = setId + (testNumber - 1)
 
           return (
 
             <div
               key={testNumber}
-              onClick={() => router.push(`/practice/reading/${realTestId}`)}
+              onClick={() => router.push(`/practice/reading/${testId}`)}
               className="
                 relative
                 p-6
