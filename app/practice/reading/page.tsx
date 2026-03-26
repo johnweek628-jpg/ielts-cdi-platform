@@ -61,11 +61,20 @@ export default function ReadingPractice() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("plan")
-        .eq("email", data.user.email)
+        .eq("id", data.user.id)
         .single()
 
       if (profile) {
-        setSubscription(profile.plan)
+        const rawPlan = profile?.plan
+
+const validPlan =
+  rawPlan === "basic" ||
+  rawPlan === "premium" ||
+  rawPlan === "ultimate"
+    ? rawPlan
+    : "free"
+
+setSubscription(validPlan)
         localStorage.setItem("plan", profile.plan)
       }
 
