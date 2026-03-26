@@ -61,7 +61,7 @@ export default function ReadingPractice() {
       const { data: profile } = await supabase
         .from("profiles")
         .select("plan")
-        .eq("id", data.user.id)
+        .eq("email", data.user.email)
         .single()
 
       if (profile) {
