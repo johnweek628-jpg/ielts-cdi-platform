@@ -24,31 +24,31 @@ export default function ReadingPractice() {
 
   const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
 
-  const sets = [
-    {
-      name: "Set 1",
-      packs: [
-        { name: "Test Package 1", range: [1, 10] },
-        { name: "Test Package 2", range: [11, 20] },
-        { name: "Test Package 3", range: [21, 30] }
-      ]
-    },
-    {
-      name: "Set 2",
-      packs: [
-        { name: "Test Package 4", range: [31, 40] },
-        { name: "Test Package 5", range: [41, 50] },
-        { name: "Test Package 6", range: [51, 60] }
-      ]
-    },
-    {
-      name: "Set 3",
-      packs: [
-        { name: "Test Package 7", range: [61, 70] },
-        { name: "Test Package 8", range: [71, 80] }
-      ]
+const generateSets = () => {
+  const sets = []
+  let testNumber = 1
+
+  for (let s = 1; s <= 10; s++) { // nechta set bo‘lishini xohlasang oshir
+    const packs = []
+
+    for (let p = 1; p <= 3; p++) {
+      packs.push({
+        name: `Test Package ${((s - 1) * 3) + p}`,
+        range: [testNumber, testNumber + 9]
+      })
+      testNumber += 10
     }
-  ]
+
+    sets.push({
+      name: `Set ${s}`,
+      packs
+    })
+  }
+
+  return sets
+}
+
+const sets = generateSets()   
 
   useEffect(() => {
 
