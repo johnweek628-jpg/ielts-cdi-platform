@@ -9,8 +9,9 @@ export default function SetPage() {
 
   const setId = Number(params.id)
 
-  // 🔥 FIX: har package ichida faqat 1–10
-  const tests = Array.from({ length: 10 }, (_, i) => i + 1)
+  const start = setId // bu aslida 1, 11, 21 bo‘ladi
+
+const tests = Array.from({ length: 10 }, (_, i) => start + i)
 
   return (
 
@@ -20,7 +21,7 @@ export default function SetPage() {
       <div className="flex items-center justify-between mb-10">
 
         <button
-          onClick={() => router.push('/practice/reading')}
+          onClick={() => router.push('/practice/reading/${testId}')}
           className="
             px-4 py-2 rounded-xl
             bg-white/40 backdrop-blur-xl

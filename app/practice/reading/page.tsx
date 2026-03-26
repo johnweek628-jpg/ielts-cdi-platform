@@ -166,7 +166,7 @@ const isLocked = !isUnlocked
                         if (isLocked) {
                           router.push("/pricing")
                         } else {
-                          handleClick(pack.range[0])
+                          router.push(`/practice/reading/set/${pack.range[0]}`)
                         }
                       }}
                       className={`px-6 py-2 rounded-lg text-white transition
