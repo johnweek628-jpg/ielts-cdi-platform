@@ -29,9 +29,9 @@ export default function ReadingTest() {
       }
 
       const limits = {
-        free: 2,
+        free: 0,
         basic: 10,
-        premium: 25,
+        premium: 30,
         ultimate: 100
       }
 
@@ -66,10 +66,6 @@ export default function ReadingTest() {
           ? rawPlan
           : "free"
 
-      if(testId > limits[plan]){
-        router.replace("/pricing")
-        return
-      }
 
       // ✅ ACCESS OK
       setAllowed(true)
