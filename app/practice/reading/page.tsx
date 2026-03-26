@@ -15,8 +15,6 @@ export default function ReadingPractice() {
     return "free"
   })
 
-  const [loading, setLoading] = useState(true)
-
   const limits = {
     free: 0,
     basic: 10,
@@ -85,14 +83,7 @@ export default function ReadingPractice() {
     }
   }
 
-if (loading) {
-  return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      Loading...
-    </div>
-  )
-}
-
+  
   return (
 
     <div className="min-h-screen bg-gray-100 p-10">
