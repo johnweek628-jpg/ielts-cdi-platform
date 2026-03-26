@@ -139,10 +139,10 @@ export default function Navbar({ toggleSidebar }: Props) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
             {[
-              ["Listening Tests", "/listening"],
+              ["Listening Tests", "/practice/listening"],
               ["Reading Tests", "/practice/reading"],
-              ["Writing Tests", "/writing"],
-              ["Speaking Tests", "/speaking"],
+              ["Writing Tests", "/practice/writing"],
+              ["Speaking Tests", "/practice/speaking"],
               ["AI Writing Correction", "/ai-writing"],
               ["Results", "/results"],
               ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
