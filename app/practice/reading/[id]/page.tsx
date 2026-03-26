@@ -35,10 +35,34 @@ export default function ReadingTest() {
         ultimate: 100
       }
 
-      if(testId > limits[localPlan as keyof typeof limits]){
-        router.replace("/pricing")
-        return
-      }
+      const getPackageAccess = (testId: number, plan: string) => {
+  const normalized = plan.toLowerCase()
+
+  // map test → package
+  const packageNumber = Math.ceil(testId / 10)
+
+  if (normalized === "free") return false
+
+  if (normalized === "basic") {
+    return packageNumber === 1
+  }
+
+  if (normalized === "premium") {
+    return packageNumber === 1 || packageNumber === 2
+  }
+
+  if (normalized === "ultimate") {
+    return true
+  }
+
+  return false
+}
+
+// 🚀 ishlatish
+if (!getPackageAccess(testId, localPlan)) {
+  router.replace("/pricing")
+  return
+}
 
       const { data } = await supabase.auth.getSession()
 

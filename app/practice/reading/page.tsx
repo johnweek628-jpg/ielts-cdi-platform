@@ -104,7 +104,33 @@ export default function ReadingPractice() {
 
             {set.packs.map((pack, j) => {
 
-              const isLocked = pack.range[0] > currentLimit
+              const isUnlocked = (() => {
+  const plan = (subscription || "free").toLowerCase()
+
+  // free → hammasi lock
+  if (plan === "free") return false
+
+  // basic → faqat Set 1, Package 1
+  if (plan === "basic") {
+    return set.name === "Set 1" && pack.name === "Test Package 1"
+  }
+
+  // premium → Set 1, Package 1 & 2
+  if (plan === "premium") {
+    return (
+      set.name === "Set 1" &&
+      (pack.name === "Test Package 1" ||
+       pack.name === "Test Package 2")
+    )
+  }
+
+  // ultimate → hammasi ochiq
+  if (plan === "ultimate") return true
+
+  return false
+})()
+
+const isLocked = !isUnlocked
 
               return (
 
