@@ -15,6 +15,8 @@ export default function ReadingPractice() {
     return "free"
   })
 
+  const [loading, setLoading] = useState(true)
+
   const limits = {
     free: 0,
     basic: 10,
@@ -82,6 +84,14 @@ export default function ReadingPractice() {
       router.push("/pricing")
     }
   }
+
+if (loading) {
+  return (
+    <div className="w-screen h-screen flex items-center justify-center">
+      Loading...
+    </div>
+  )
+}
 
   return (
 
