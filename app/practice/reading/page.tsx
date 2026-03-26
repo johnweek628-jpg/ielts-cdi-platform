@@ -16,9 +16,9 @@ export default function ReadingPractice() {
   })
 
   const limits = {
-    free: 2,
+    free: 0,
     basic: 10,
-    premium: 25,
+    premium: 30,
     ultimate: 100
   }
 
@@ -65,16 +65,7 @@ export default function ReadingPractice() {
         .single()
 
       if (profile) {
-        const rawPlan = profile?.plan
-
-const validPlan =
-  rawPlan === "basic" ||
-  rawPlan === "premium" ||
-  rawPlan === "ultimate"
-    ? rawPlan
-    : "free"
-
-setSubscription(validPlan)
+        setSubscription(profile.plan)
         localStorage.setItem("plan", profile.plan)
       }
 
