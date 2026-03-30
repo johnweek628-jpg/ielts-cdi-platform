@@ -15,53 +15,36 @@ export default function ListeningPractice() {
     return "free"
   })
 
-  const limits = {
-    free: 0,
-    basic: 10,
-    premium: 30,
-    ultimate: 100
-  }
+  const [packageProgress, setPackageProgress] = useState<Record<number, number>>({})
 
-  const currentLimit = limits[(subscription as keyof typeof limits) || "free"]
-
-const generateSets = () => {
-  const sets = []
-  let testNumber = 1
-
-  for (let s = 1; s <= 10; s++) { // nechta set bo‘lishini xohlasang oshir
-    const packs = []
-
-    for (let p = 1; p <= 3; p++) {
-      packs.push({
-        name: `Test Package ${((s - 1) * 3) + p}`,
-        range: [testNumber, testNumber + 9]
-      })
-      testNumber += 10
+  const generateSets = () => {
+    const sets = []
+    let testNumber = 1
+    for (let s = 1; s <= 10; s++) {
+      const packs = []
+      for (let p = 1; p <= 3; p++) {
+        packs.push({
+          name: `Package ${((s - 1) * 3) + p}`,
+          range: [testNumber, testNumber + 9] as [number, number]
+        })
+        testNumber += 10
+      }
+      sets.push({ name: `Set ${s}`, packs })
     }
-
-    sets.push({
-      name: `Set ${s}`,
-      packs
-    })
+    return sets
   }
 
-  return sets
-}
-
-const sets = generateSets()   
+  const sets = generateSets()
 
   useEffect(() => {
-
-    const getSubscription = async () => {
-
-      const { data } = await supabase.auth.getUser()
-
-      if (!data.user) return
+    const init = async () => {
+      const { data: authData } = await supabase.auth.getUser()
+      if (!authData.user) return
 
       const { data: profile } = await supabase
         .from("profiles")
         .select("plan")
-        .eq("email", data.user.email)
+        .eq("email", authData.user.email)
         .single()
 
       if (profile) {
@@ -69,130 +52,115 @@ const sets = generateSets()
         localStorage.setItem("plan", profile.plan)
       }
 
+      const { data: results } = await supabase
+        .from("test_results")
+        .select("test_id")
+        .eq("user_id", authData.user.id)
+        .eq("test_type", "listening")
+
+      if (results) {
+        const progress: Record<number, number> = {}
+        results.forEach(({ test_id }) => {
+          const packageStart = Math.floor((test_id - 1) / 10) * 10 + 1
+          progress[packageStart] = (progress[packageStart] || 0) + 1
+        })
+        setPackageProgress(progress)
+      }
     }
 
-    getSubscription()
-
+    init()
   }, [])
 
-  const handleClick = (id: number) => {
-    if (id <= currentLimit) {
-      router.push(`/practice/listening/set/${id}`)
-    } else {
-      router.push("/pricing")
-    }
+  const isUnlocked = (plan: string, setName: string, packName: string) => {
+    const p = plan.toLowerCase()
+    if (p === "free") return false
+    if (p === "basic") return setName === "Set 1" && packName === "Package 1"
+    if (p === "premium") return setName === "Set 1" && (packName === "Package 1" || packName === "Package 2")
+    if (p === "ultimate") return true
+    return false
   }
 
-  
   return (
+    <div className="min-h-screen bg-gray-100 p-8">
 
-    <div className="min-h-screen bg-gray-100 p-10">
-
-      <h1 className="text-3xl font-bold text-gray-900 mb-10">
-        IELTS Listening Tests
-      </h1>
+      <div className="mb-8">
+        <h1 className="text-2xl font-medium text-gray-900">Listening tests</h1>
+        <p className="text-sm text-gray-500 mt-1">30 packages · 300 tests total</p>
+      </div>
 
       {sets.map((set, i) => (
+        <div key={i} className="mb-10">
 
-        <div key={i} className="mb-12">
-
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          <p className="text-xs font-medium uppercase tracking-widest text-gray-400 mb-3">
             {set.name}
-          </h2>
+          </p>
 
-          <div className="grid grid-cols-3 gap-6">
-
+          <div className="grid grid-cols-3 gap-3">
             {set.packs.map((pack, j) => {
-
-              const isUnlocked = (() => {
-  const plan = (subscription || "free").toLowerCase()
-
-  // free → hammasi lock
-  if (plan === "free") return false
-
-  // basic → faqat Set 1, Package 1
-  if (plan === "basic") {
-    return set.name === "Set 1" && pack.name === "Test Package 1"
-  }
-
-  // premium → Set 1, Package 1 & 2
-  if (plan === "premium") {
-    return (
-      set.name === "Set 1" &&
-      (pack.name === "Test Package 1" ||
-       pack.name === "Test Package 2")
-    )
-  }
-
-  // ultimate → hammasi ochiq
-  if (plan === "ultimate") return true
-
-  return false
-})()
-
-const isLocked = !isUnlocked
+              const unlocked = isUnlocked(subscription || "free", set.name, pack.name)
+              const locked = !unlocked
+              const done = packageProgress[pack.range[0]] || 0
+              const total = 10
+              const pct = Math.round((done / total) * 100)
 
               return (
-
                 <div
                   key={j}
-                  className="bg-white p-6 rounded-xl shadow hover:shadow-lg transition relative"
+                  className="bg-white rounded-2xl border border-gray-100 p-5 flex flex-col gap-3 hover:border-gray-200 transition"
+                  style={{ opacity: locked ? 0.85 : 1 }}
                 >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{pack.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        Tests {pack.range[0]} – {pack.range[1]}
+                      </p>
+                    </div>
+                    {locked && (
+                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">
+                        Pro
+                      </span>
+                    )}
+                  </div>
 
-                  {isLocked && (
-                    <span className="absolute top-3 right-3 text-xl">
-                      🔒
-                    </span>
+                  {!locked && (
+                    <div>
+                      <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-1 bg-emerald-500 rounded-full transition-all"
+                          style={{ width: `${pct}%` }}
+                        />
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">{done} / {total} done</p>
+                    </div>
                   )}
 
-                  <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                    {pack.name}
-                  </h3>
-
-                  <p className="text-sm text-gray-500 mb-4">
-                    Tests {pack.range[0]} – {pack.range[1]}
-                  </p>
-
-                  {isLocked && (
-                    <p className="text-sm text-gray-500 mb-2">
-                      🔒 Unlock with Pro
-                    </p>
-                  )}
-
-                  <div className="flex justify-center">
-
-                    <button
-                      onClick={() => {
-                        if (isLocked) {
-                          router.push("/pricing")
-                        } else {
-                          router.push(`/practice/listening/set/${pack.range[0]}`)
-                        }
-                      }}
-                      className={`px-6 py-2 rounded-lg text-white transition
-                      ${!isLocked
-                        ? "bg-blue-600 hover:bg-blue-700"
-                        : "bg-gradient-to-r from-purple-500 to-red-500"
-                      }`}
-                    >
-                      {!isLocked ? "Open Package" : "Unlock"}
-                    </button>
-
+                  <div className="flex justify-end mt-auto">
+                    {locked ? (
+                      <button
+                        onClick={() => router.push("/pricing")}
+                        className="text-xs font-medium px-4 py-1.5 rounded-lg bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
+                      >
+                        Unlock
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => router.push(`/practice/listening/set/${pack.range[0]}`)}
+                        className="text-xs font-medium px-4 py-1.5 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition"
+                      >
+                        {done === total ? "Review" : done > 0 ? "Continue" : "Open"}
+                      </button>
+                    )}
                   </div>
 
                 </div>
-
               )
-
             })}
-
           </div>
 
         </div>
-
       ))}
 
     </div>
-
   )
 }

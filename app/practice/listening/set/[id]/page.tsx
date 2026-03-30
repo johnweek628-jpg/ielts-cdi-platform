@@ -1,92 +1,132 @@
 'use client'
 
-import { useParams, useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { supabase } from "../../../../lib/supabase"
 
-export default function SetPage() {
-  const params = useParams()
+type TestResult = {
+  test_id: number
+  score: number | null
+}
+
+export default function ListeningSetPage() {
+
   const router = useRouter()
+  const params = useParams()
 
-  const setId = Number(params.id)
-  const tests = Array.from({ length: 10 }, (_, i) => i + 1)
+  // [id] is the first test number in the package (e.g. 1, 11, 21...)
+  const startId = Number(params.id)
+  const endId = startId + 9
+  const packageNumber = Math.ceil(startId / 10)
+
+  const [results, setResults] = useState<Record<number, TestResult>>({})
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      const { data: authData } = await supabase.auth.getUser()
+      if (!authData.user) {
+        router.replace("/auth/login")
+        return
+      }
+
+      const { data } = await supabase
+        .from("test_results")
+        .select("test_id, score")
+        .eq("user_id", authData.user.id)
+        .eq("test_type", "listening")
+        .gte("test_id", startId)
+        .lte("test_id", endId)
+
+      if (data) {
+        const map: Record<number, TestResult> = {}
+        data.forEach((r) => { map[r.test_id] = r })
+        setResults(map)
+      }
+
+      setLoading(false)
+    }
+
+    fetchResults()
+  }, [startId, endId, router])
+
+  const tests = Array.from({ length: 10 }, (_, i) => startId + i)
+  const doneCount = tests.filter(id => results[id]).length
+
+  if (loading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
+        Loading...
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-[#0f1623] px-6 py-8 font-sans">
+    <div className="min-h-screen bg-gray-100 p-8">
 
-      {/* TOP BAR */}
-      <div className="flex items-center justify-between mb-8">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
         <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white/40 text-sm hover:bg-white/10 hover:text-white/60 transition-all duration-200"
+          onClick={() => router.push("/practice/listening")}
+          className="text-sm text-gray-500 bg-white border border-gray-200 px-4 py-1.5 rounded-lg hover:border-gray-300 transition"
         >
           ← Back
         </button>
-
-        <div className="text-center">
-          <div className="flex items-center gap-2 justify-center mb-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4fc3a1]" />
-            <span className="text-[10px] font-semibold tracking-[0.12em] uppercase text-[#4fc3a1]">
-              Listening
-            </span>
-          </div>
-          <h1 className="text-xl font-semibold text-[#e8e0d0] tracking-tight">
-            Practice Set {setId}
+        <div className="flex-1">
+          <h1 className="text-lg font-medium text-gray-900">
+            Package {packageNumber} · Listening
           </h1>
+          <p className="text-sm text-gray-400">Tests {startId} – {endId}</p>
         </div>
-
-        <div className="w-24" />
+        <div className="flex items-center gap-3">
+          <div className="w-28 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-1.5 bg-emerald-500 rounded-full transition-all"
+              style={{ width: `${Math.round((doneCount / 10) * 100)}%` }}
+            />
+          </div>
+          <span className="text-sm text-gray-400 whitespace-nowrap">
+            {doneCount} / 10 done
+          </span>
+        </div>
       </div>
 
-      {/* PROGRESS */}
-      <div className="flex items-center gap-4 mb-8 px-1">
-        <span className="text-xs text-white/30 min-w-fit">Your progress</span>
-        <div className="flex-1 h-[3px] bg-white/[0.06] rounded-full overflow-hidden">
-          <div className="h-full w-[0%] bg-[#4fc3a1] rounded-full transition-all duration-500" />
-        </div>
-        <span className="text-xs text-white/30 min-w-fit">0 / 10</span>
-      </div>
-
-      {/* TEST GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {tests.map((testNumber) => {
-          const testId = setId + (testNumber - 1)
+      {/* Test grid */}
+      <div className="grid grid-cols-5 gap-3">
+        {tests.map((testId) => {
+          const result = results[testId]
+          const done = !!result
 
           return (
             <div
-              key={testNumber}
+              key={testId}
               onClick={() => router.push(`/practice/listening/${testId}`)}
-              className="
-                group relative
-                p-5 rounded-xl cursor-pointer
-                bg-[#1a2235]
-                border border-white/[0.06]
-                hover:border-[#4fc3a1]/30
-                hover:bg-[#1f2a40]
-                hover:-translate-y-[2px]
-                transition-all duration-200
-                overflow-hidden
-              "
+              className={`
+                bg-white rounded-2xl border p-4 flex flex-col gap-3 cursor-pointer transition
+                ${done
+                  ? "border-emerald-200 hover:border-emerald-300"
+                  : "border-gray-100 hover:border-gray-200"
+                }
+              `}
             >
-              {/* Top accent line on hover */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#4fc3a1] to-[#2eab82] opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-
-              {/* Headphone icon */}
-              <div className="w-8 h-8 rounded-lg bg-[#4fc3a1]/[0.08] flex items-center justify-center mb-3">
-                <svg className="w-4 h-4 text-[#4fc3a1]" viewBox="0 0 16 16" fill="none"
-                  stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 10V8a6 6 0 0 1 12 0v2" />
-                  <rect x="1" y="10" width="3" height="4" rx="1.5" />
-                  <rect x="12" y="10" width="3" height="4" rx="1.5" />
-                </svg>
-              </div>
-
-              <div className="text-[10px] font-semibold tracking-[0.1em] uppercase text-white/20 mb-1">
-                Test {String(testNumber).padStart(2, '0')}
-              </div>
-              <div className="text-[15px] font-medium text-[#d8d0c4] mb-1">
-                Listening Practice
-              </div>
-              <div className="text-xs text-white/28 text-white/30">
-                40 questions · ~30 min
+              <p className="text-sm font-medium text-gray-900">Test {testId}</p>
+              <div className="flex items-center justify-between">
+                {done ? (
+                  <>
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                      Done
+                    </span>
+                    {result.score !== null && (
+                      <span className="text-xs text-gray-400">
+                        {result.score}/40
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-400">
+                    New
+                  </span>
+                )}
               </div>
             </div>
           )
