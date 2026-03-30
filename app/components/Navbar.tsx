@@ -31,7 +31,6 @@ export default function Navbar({ toggleSidebar }: Props) {
   // THEME LOAD
   useEffect(() => {
     const saved = localStorage.getItem("theme")
-
     if (saved === "dark") {
       setDarkMode(true)
       document.documentElement.classList.add("dark")
@@ -80,12 +79,9 @@ export default function Navbar({ toggleSidebar }: Props) {
   useEffect(() => {
     const handleClickOutside = (e: any) => {
       if (!menuRef.current) return
-
       const isInsideMenu = menuRef.current.contains(e.target)
       const isMenuButton = (e.target as HTMLElement).closest(".menu-btn")
-
       if (isInsideMenu || isMenuButton) return
-
       setMenuOpen(false)
     }
 
@@ -136,59 +132,67 @@ export default function Navbar({ toggleSidebar }: Props) {
         `}
       >
         <div className="rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/10 p-5 shadow-2xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-            + {/* Practice Tests */}
- <p className="text-white/40 text-xs uppercase tracking-widest mb-2">
-  Practice Tests
- </p>
- <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-   {[
-     ["🎧", "Listening", "/practice/listening"],
-     ["📖", "Reading",   "/practice/reading"],
-     ["✍️", "Writing",   "/practice/writing"],
-     ["🎤", "Speaking",  "/practice/speaking"],
-   ].map(([icon, label, link]) => (
-     <button key={label} onClick={() => { setMenuOpen(false); router.push(link) }}
-       className={`ios-btn text-left text-white w-full flex items-center gap-2
-         ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}>
-       <span>{icon}</span>
-       <span>{label}</span>
-     </button>
-  ))}
- </div>
- 
- {/* Tools */}
- <p className="text-white/40 text-xs uppercase tracking-widest mb-2">
-   Tools & Results
- </p>
- <div className="grid grid-cols-2 gap-3 mb-4">
-  {[
-     ["🤖", "AI Writing Correction", "/ai-writing"],
-     ["📊", "Results",              "/results"],
-   ].map(([icon, label, link]) => (
-     <button key={label} onClick={() => { setMenuOpen(false); router.push(link) }}
-       className={`ios-btn text-left text-white w-full flex items-center gap-2
-         ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}>
-       <span>{icon}</span>
-       <span>{label}</span>
-     </button>
-   ))}
- </div>
- 
- {/* Secondary */}
- <div className="flex gap-3 border-t border-white/10 pt-4">
-   <button onClick={() => { setMenuOpen(false); window.open("https://t.me/jasurbeks_ielts","_blank") }}
-     className="ios-btn text-white/60 text-sm flex items-center gap-2">
-     ✈️ Telegram
-   </button>
-   <button onClick={() => { setMenuOpen(false); router.push("/support") }}
-     className="ios-btn text-white/60 text-sm flex items-center gap-2">
-     💬 Support
-   </button>
-+ </div>
-
+          {/* Practice Tests */}
+          <div className="text-white/40 text-xs uppercase tracking-widest mb-2">
+            Practice Tests
           </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            {([
+              ["🎧", "Listening", "/practice/listening"],
+              ["📖", "Reading",   "/practice/reading"],
+              ["✍️", "Writing",   "/practice/writing"],
+              ["🎤", "Speaking",  "/practice/speaking"],
+            ] as [string, string, string][]).map(([icon, label, link]) => (
+              <button
+                key={label}
+                onClick={() => { setMenuOpen(false); router.push(link) }}
+                className={`ios-btn text-left text-white w-full flex items-center gap-2
+                  ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}
+              >
+                <span>{icon}</span>
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Tools & Results */}
+          <div className="text-white/40 text-xs uppercase tracking-widest mb-2">
+            Tools &amp; Results
+          </div>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            {([
+              ["🤖", "AI Writing Correction", "/ai-writing"],
+              ["📊", "Results",               "/results"],
+            ] as [string, string, string][]).map(([icon, label, link]) => (
+              <button
+                key={label}
+                onClick={() => { setMenuOpen(false); router.push(link) }}
+                className={`ios-btn text-left text-white w-full flex items-center gap-2
+                  ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}
+              >
+                <span>{icon}</span>
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Secondary */}
+          <div className="flex gap-3 border-t border-white/10 pt-4">
+            <button
+              onClick={() => { setMenuOpen(false); window.open("https://t.me/jasurbeks_ielts", "_blank") }}
+              className="ios-btn text-white/60 text-sm flex items-center gap-2"
+            >
+              ✈️ Telegram
+            </button>
+            <button
+              onClick={() => { setMenuOpen(false); router.push("/support") }}
+              className="ios-btn text-white/60 text-sm flex items-center gap-2"
+            >
+              💬 Support
+            </button>
+          </div>
+
         </div>
       </div>
 
@@ -262,8 +266,6 @@ export default function Navbar({ toggleSidebar }: Props) {
               >
                 💎 Upgrade
               </button>
-
-              
 
               <button
                 onClick={logout}
