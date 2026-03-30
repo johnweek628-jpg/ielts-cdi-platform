@@ -124,68 +124,13 @@ Trusted by students worldwide
 </div>
 </section>
 
-<section className="py-20">
-  <div className="max-w-5xl mx-auto px-6 text-center">
 
-    <h2 className="text-3xl font-bold text-gray-900">
-      Why you’re stuck at Band 6.0 😓
-    </h2>
-
-    <p className="text-gray-500 mt-4">
-      It’s not your fault — most students practice the wrong way.
-    </p>
-
-    <div className="grid md:grid-cols-3 gap-8 mt-12">
-
-      <div className="p-6 border border-gray-200 rounded-2xl bg-white
-                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
-                transition duration-300">
-        <h3 className="font-semibold text-lg 
-                 bg-gradient-to-r from-orange-500 to-red-500 
-                 bg-clip-text text-transparent">No Feedback</h3>
-        <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-          You practice every day, but no one tells you what you're doing wrong.
-        </p>
-      </div>
-<div className="p-6 border border-gray-200 rounded-2xl 
-                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
-                transition duration-300 bg-white">
-
-  <h3 className="font-semibold text-lg 
-                 bg-gradient-to-r from-orange-500 to-red-500 
-                 bg-clip-text text-transparent">
-    No Strategy
-  </h3>
-
-  <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-    You don’t know how to approach tasks like a high-band student.
-  </p>
-
-</div>
-
-      <div className="p-6 border border-gray-200 rounded-2xl bg-white
-                hover:shadow-[0_10px_40px_rgba(255,100,0,0.2)] 
-                transition duration-300">
-        <h3 className="font-semibold text-lg 
-                 bg-gradient-to-r from-orange-500 to-red-500 
-                 bg-clip-text text-transparent">
-          No Progress
-        </h3>
-        <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-          You can’t clearly see what’s improving and what’s holding you back.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
 
 <section className="bg-black text-white py-20">
   <div className="max-w-5xl mx-auto px-6 text-center">
 
     <h2 className="text-3xl font-bold">
-      We built a system that fixes this 🚀
+      We built a perfect system for you!
     </h2>
 
     <p className="text-gray-400 mt-4">
@@ -342,103 +287,6 @@ Trusted by students worldwide
 
   </div>
 
-</section>
-
-<section className="py-24 bg-white">
-  <div className="max-w-6xl mx-auto px-6">
-    
-    <div className="text-center max-w-3xl mx-auto">
-      <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-black">
-        How much is staying at Band 6.0 costing you?
-      </h2>
-
-      <p className="mt-5 text-lg md:text-xl text-gray-600 leading-relaxed">
-        Every failed IELTS attempt quietly drains your money, time, and opportunities.
-      </p>
-    </div>
-
-    <div className="mt-16 grid md:grid-cols-2 gap-8 items-stretch">
-      
-      {/* LEFT CARD */}
-      <div className="rounded-3xl border border-red-100 bg-gradient-to-br from-red-50 to-white p-8 shadow-sm hover:shadow-xl transition duration-300">
-        <h3 className="text-2xl font-bold text-red-600">
-          Every failed attempt costs you:
-        </h3>
-
-        <div className="mt-6 space-y-4">
-          <div className="flex items-start gap-3">
-            <span className="text-red-500 text-xl">✖</span>
-            <p className="text-gray-700 text-lg">
-              <span className="font-semibold">$200+ exam fee</span> every time you retake it
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="text-red-500 text-xl">✖</span>
-            <p className="text-gray-700 text-lg">
-              <span className="font-semibold">Weeks or months of wasted time</span> repeating the same mistakes
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="text-red-500 text-xl">✖</span>
-            <p className="text-gray-700 text-lg">
-              <span className="font-semibold">Lost opportunities</span> for study, work, and visa plans
-            </p>
-          </div>
-        </div>
-
-        <p className="mt-8 text-gray-600 leading-relaxed">
-          Most students work hard, yet they keep going round in circles because they do not know
-          <span className="font-semibold text-black"> what exactly is holding them back.</span>
-        </p>
-      </div>
-
-      {/* RIGHT CARD */}
-      <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm hover:shadow-xl transition duration-300">
-        <h3 className="text-2xl font-bold text-black">
-          Or fix your strategy once — and improve faster
-        </h3>
-
-        <div className="mt-6 space-y-4">
-          <div className="flex items-start gap-3">
-            <span className="text-green-500 text-xl">✔</span>
-            <p className="text-gray-700 text-lg">
-              Real IELTS-style practice environment
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="text-green-500 text-xl">✔</span>
-            <p className="text-gray-700 text-lg">
-              Instant AI feedback on what you did wrong
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="text-green-500 text-xl">✔</span>
-            <p className="text-gray-700 text-lg">
-              Smart tracking so you can actually see progress
-            </p>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <span className="text-green-500 text-xl">✔</span>
-            <p className="text-gray-700 text-lg">
-              A clearer path from Band 6.0 to Band 7.0+
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 rounded-2xl bg-gray-50 border border-gray-100 p-5">
-          <p className="text-gray-700 text-lg leading-relaxed">
-            Instead of burning money on another disappointing attempt,
-            <span className="font-semibold text-black"> invest in a system that helps you improve intelligently.</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <section className="py-24 bg-gradient-to-b from-white to-red-50">

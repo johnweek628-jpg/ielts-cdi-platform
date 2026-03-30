@@ -138,37 +138,55 @@ export default function Navbar({ toggleSidebar }: Props) {
         <div className="rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/10 p-5 shadow-2xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-            {[
-              ["Listening Tests", "/practice/listening"],
-              ["Reading Tests", "/practice/reading"],
-              ["Writing Tests", "/practice/writing"],
-              ["Speaking Tests", "/practice/speaking"],
-              ["AI Writing Correction", "/ai-writing"],
-              ["Results", "/results"],
-              ["Telegram Channel", "https://t.me/jasurbeks_ielts"],
-              ["Support", "/support"]
-            ].map(([label, link]) => {
-
-              const active = isActive(link)
-
-              return (
-                <button
-                  key={label}
-                  onClick={() => {
-                    setMenuOpen(false)
-                    link.startsWith("http")
-                      ? window.open(link, "_blank")
-                      : router.push(link)
-                  }}
-                  className={`
-                    ios-btn text-left text-white w-full
-                    ${active ? "bg-white/20 border-white/30" : ""}
-                  `}
-                >
-                  {label}
-                </button>
-              )
-            })}
+            + {/* Practice Tests */}
+ <p className="text-white/40 text-xs uppercase tracking-widest mb-2">
+  Practice Tests
+ </p>
+ <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+   {[
+     ["🎧", "Listening", "/practice/listening"],
+     ["📖", "Reading",   "/practice/reading"],
+     ["✍️", "Writing",   "/practice/writing"],
+     ["🎤", "Speaking",  "/practice/speaking"],
+   ].map(([icon, label, link]) => (
+     <button key={label} onClick={() => { setMenuOpen(false); router.push(link) }}
+       className={`ios-btn text-left text-white w-full flex items-center gap-2
+         ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}>
+       <span>{icon}</span>
+       <span>{label}</span>
+     </button>
+  ))}
+ </div>
+ 
+ {/* Tools */}
+ <p className="text-white/40 text-xs uppercase tracking-widest mb-2">
+   Tools & Results
+ </p>
+ <div className="grid grid-cols-2 gap-3 mb-4">
+  {[
+     ["🤖", "AI Writing Correction", "/ai-writing"],
+     ["📊", "Results",              "/results"],
+   ].map(([icon, label, link]) => (
+     <button key={label} onClick={() => { setMenuOpen(false); router.push(link) }}
+       className={`ios-btn text-left text-white w-full flex items-center gap-2
+         ${isActive(link) ? "bg-white/20 border-white/30" : ""}`}>
+       <span>{icon}</span>
+       <span>{label}</span>
+     </button>
+   ))}
+ </div>
+ 
+ {/* Secondary */}
+ <div className="flex gap-3 border-t border-white/10 pt-4">
+   <button onClick={() => { setMenuOpen(false); window.open("https://t.me/jasurbeks_ielts","_blank") }}
+     className="ios-btn text-white/60 text-sm flex items-center gap-2">
+     ✈️ Telegram
+   </button>
+   <button onClick={() => { setMenuOpen(false); router.push("/support") }}
+     className="ios-btn text-white/60 text-sm flex items-center gap-2">
+     💬 Support
+   </button>
++ </div>
 
           </div>
         </div>
@@ -217,40 +235,6 @@ export default function Navbar({ toggleSidebar }: Props) {
             <span>Home</span>
           </Link>
 
-          <div className="flex items-center gap-2 ml-2">
-            <span className="text-xs">🌙</span>
-
-            <button
-              onClick={() => {
-                const newMode = !darkMode
-                setDarkMode(newMode)
-
-                if (newMode) {
-                  document.documentElement.classList.add("dark")
-                  localStorage.setItem("theme", "dark")
-                } else {
-                  document.documentElement.classList.remove("dark")
-                  localStorage.setItem("theme", "light")
-                }
-              }}
-              className={`
-                w-12 h-7 flex items-center rounded-full p-1
-                backdrop-blur-xl border border-white/20
-                ${darkMode ? "bg-green-500/80" : "bg-white/20"}
-              `}
-            >
-              <div
-                className={`
-                  w-5 h-5 bg-white rounded-full
-                  transition-all
-                  ${darkMode ? "translate-x-5" : ""}
-                `}
-              />
-            </button>
-
-            <span className="text-xs">☀️</span>
-          </div>
-
         </div>
 
         {/* CENTER */}
@@ -279,9 +263,7 @@ export default function Navbar({ toggleSidebar }: Props) {
                 💎 Upgrade
               </button>
 
-              <div className="ios-btn shrink-0 text-green-700 bg-green-500/15 border-green-300/40">
-                ✓ Signed In
-              </div>
+              
 
               <button
                 onClick={logout}
