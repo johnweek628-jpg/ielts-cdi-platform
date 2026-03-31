@@ -1,97 +1,114 @@
+// app/auth/login/page.tsx
+
 'use client'
 
 import { useState } from "react"
-import { supabase } from "../../lib/supabase"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { supabase } from "../../lib/supabase"
+import {
+  AuthShell, Field, ErrorBanner,
+  SubmitButton, OrDivider, GoogleButton, TrustRow,
+} from "../components"
 
-export default function LoginPage(){
+export default function LoginPage() {
+  const router = useRouter()
+  const [email,    setEmail]    = useState("")
+  const [password, setPassword] = useState("")
+  const [error,    setError]    = useState("")
+  const [loading,  setLoading]  = useState(false)
 
-const [email,setEmail] = useState("")
-const [password,setPassword] = useState("")
-const [error,setError] = useState("")
-const [loading,setLoading] = useState(false)
+  const handleLogin = async () => {
+    if (!email || !password) { setError("Please fill in all fields."); return }
+    setLoading(true); setError("")
 
-const router = useRouter()
+    const { error: err } = await supabase.auth.signInWithPassword({ email, password })
+    setLoading(false)
 
-const login = async () => {
+    if (err) { setError("Invalid email or password."); return }
+    router.replace("/dashboard")
+  }
 
-setLoading(true)
-setError("")
+  const handleGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/dashboard` },
+    })
+  }
 
-const { error } = await supabase.auth.signInWithPassword({
-email,
-password
-})
+  // Allow Enter key to submit
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleLogin()
+  }
 
-setLoading(false)
+  return (
+    <AuthShell
+      leftTitle="Welcome back —"
+      leftAccent="pick up where you left off"
+      leftDesc="Your progress, scores, and study plan are waiting for you."
+      showStats
+    >
+      <h1 className="text-2xl font-extrabold text-gray-950 tracking-[-0.5px] mb-1">
+        Sign in to your account
+      </h1>
+      <p className="text-sm text-gray-400 mb-8">
+        Continue your IELTS journey
+      </p>
 
-if(error){
-setError("Invalid email or password.")
-return
-}
+      <div className="flex flex-col gap-4" onKeyDown={onKeyDown}>
+        <Field
+          label="Email address"
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={setEmail}
+          disabled={loading}
+        />
+        <div>
+          <Field
+            label="Password"
+            type="password"
+            placeholder="Your password"
+            value={password}
+            onChange={setPassword}
+            disabled={loading}
+          />
+          <div className="flex justify-end mt-1.5">
+            <button
+              onClick={() => router.push("/auth/reset")}
+              className="text-[11px] text-gray-400 hover:text-red-500 transition-colors"
+            >
+              Forgot password?
+            </button>
+          </div>
+        </div>
+      </div>
 
-router.replace("/dashboard")
+      <ErrorBanner message={error} />
 
-}
+      <div className="flex flex-col gap-3 mt-5">
+        <SubmitButton
+          loading={loading}
+          label="Sign in →"
+          loadingLabel="Signing in…"
+          onClick={handleLogin}
+        />
+        <OrDivider />
+        <GoogleButton onClick={handleGoogle} disabled={loading} />
+      </div>
 
-return(
+      <p className="text-center text-xs text-gray-400 mt-7">
+        New to IELTS CDI?{" "}
+        <button
+          onClick={() => router.push("/auth/register")}
+          className="text-red-500 font-semibold hover:underline"
+        >
+          Create account
+        </button>
+      </p>
 
-<div className="min-h-screen flex items-center justify-center bg-gray-100">
-
-<div className="bg-white p-10 rounded-xl shadow w-[420px]">
-
-<h1 className="text-2xl font-semibold mb-6 text-center">
-Sign in to your account
-</h1>
-
-<input
-type="email"
-placeholder="Email"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-className="w-full border p-3 rounded mb-4"
-/>
-
-<input
-type="password"
-placeholder="Password"
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-className="w-full border p-3 rounded mb-2"
-/>
-
-{error && (
-<p className="text-red-500 text-sm mb-3">
-{error}
-</p>
-)}
-
-<button
-onClick={login}
-disabled={loading}
-className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-6"
->
-{loading ? "Signing in..." : "Sign in"}
-</button>
-
-<div className="text-center text-sm text-gray-600">
-
-New to platform?
-
-<Link
-href="/auth/register"
-className="text-blue-600 ml-1"
->
-Create account
-</Link>
-
-</div>
-
-</div>
-
-</div>
-
-)
-
+      <div className="mt-4">
+        <TrustRow items={["Free to start", "No card needed"]} />
+      </div>
+    </AuthShell>
+  )
 }

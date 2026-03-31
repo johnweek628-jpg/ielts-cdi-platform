@@ -1,85 +1,123 @@
+// app/auth/reset/page.tsx
+
 'use client'
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "../../lib/supabase"
+import { AuthShell, Field, ErrorBanner } from "../components"
 
-export default function ResetPage(){
+export default function ResetPage() {
+  const router  = useRouter()
+  const [email,   setEmail]   = useState("")
+  const [error,   setError]   = useState("")
+  const [loading, setLoading] = useState(false)
+  const [sent,    setSent]    = useState(false)
 
-const [email,setEmail] = useState("")
-const [sent,setSent] = useState(false)
-const [error,setError] = useState("")
+  const handleReset = async () => {
+    if (!email) { setError("Please enter your email address."); return }
+    setLoading(true); setError("")
 
-const sendReset = async () => {
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://ielts-cdi-platform-production.up.railway.app/update-password",
+    })
 
-if(!email){
-  setError("Please enter your email")
-  return
-}
+    setLoading(false)
+    if (err) { setError(err.message); return }
+    setSent(true)
+  }
 
-const { error } = await supabase.auth.resetPasswordForEmail(email,{
-redirectTo:"https://ielts-cdi-platform-production.up.railway.app/update-password"
-})
+  return (
+    <AuthShell
+      leftTitle="Reset your"
+      leftAccent="password"
+      leftDesc="Enter your email and we'll send you a secure link to get back in."
+      showStats={false}
+    >
+      {sent ? (
+        /* ── Success state ── */
+        <div className="flex flex-col items-center text-center gap-4">
+          <div className="w-14 h-14 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-2xl">
+            ✉️
+          </div>
+          <h2 className="text-xl font-extrabold text-gray-950 tracking-tight">
+            Check your inbox
+          </h2>
+          <p className="text-sm text-gray-500 leading-relaxed max-w-[260px]">
+            We sent a reset link to{" "}
+            <span className="font-semibold text-gray-800">{email}</span>.
+            Check your inbox or spam folder.
+          </p>
+          <button
+            onClick={() => router.push("/auth/login")}
+            className="
+              mt-4 w-full py-3 rounded-xl
+              bg-gray-950 hover:bg-gray-800
+              text-white text-sm font-semibold
+              transition-all duration-150 active:scale-[0.98]
+            "
+          >
+            Back to sign in
+          </button>
+        </div>
+      ) : (
+        /* ── Form state ── */
+        <>
+          <h1 className="text-2xl font-extrabold text-gray-950 tracking-[-0.5px] mb-1">
+            Forgot your password?
+          </h1>
+          <p className="text-sm text-gray-400 mb-8">
+            No worries — we'll email you a reset link.
+          </p>
 
-if(error){
-  setError(error.message)
-  return
-}
+          <div className="flex flex-col gap-4">
+            <Field
+              label="Email address"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={setEmail}
+              disabled={loading}
+            />
+          </div>
 
-setError("")
-setSent(true)
+          <ErrorBanner message={error} />
 
-}
+          <button
+            onClick={handleReset}
+            disabled={loading}
+            className="
+              mt-5 w-full py-3 rounded-xl
+              bg-gray-950 hover:bg-gray-800
+              text-white text-sm font-semibold
+              transition-all duration-150
+              active:scale-[0.98]
+              disabled:opacity-60 disabled:cursor-not-allowed
+              shadow-lg shadow-gray-900/10
+            "
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                  <path className="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                </svg>
+                Sending…
+              </span>
+            ) : "Send reset link →"}
+          </button>
 
-return(
-
-<div className="min-h-screen flex items-center justify-center bg-gray-100">
-
-<div className="bg-white p-10 rounded-xl shadow w-[420px]">
-
-<h1 className="text-xl mb-6 text-center">
-Reset Password
-</h1>
-
-{sent ? (
-
-<p className="text-green-600 text-center">
-We have sent you a link to prove that your email is yours.  
-Please check your inbox or spam folder.
-</p>
-
-):( 
-
-<>
-
-<input
-type="email"
-placeholder="Email"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-className="w-full border p-3 rounded mb-4"
-/>
-
-{error && (
-<p className="text-red-500 text-sm mb-3 text-center">
-{error}
-</p>
-)}
-
-<button
-onClick={sendReset}
-className="w-full bg-blue-600 text-white py-3 rounded"
->
-Send reset link
-</button>
-
-</>
-
-)}
-
-</div>
-
-</div>
-
-)
-
+          <p className="text-center text-xs text-gray-400 mt-7">
+            Remember your password?{" "}
+            <button
+              onClick={() => router.push("/auth/login")}
+              className="text-red-500 font-semibold hover:underline"
+            >
+              Back to sign in
+            </button>
+          </p>
+        </>
+      )}
+    </AuthShell>
+  )
 }

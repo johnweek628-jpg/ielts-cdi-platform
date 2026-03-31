@@ -1,120 +1,119 @@
+// app/auth/register/page.tsx
+
 'use client'
 
 import { useState } from "react"
-import { supabase } from "../../lib/supabase"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { supabase } from "../../lib/supabase"
+import {
+  AuthShell, Field, ErrorBanner,
+  SubmitButton, OrDivider, GoogleButton, TrustRow,
+} from "../components"
 
-export default function RegisterPage(){
+export default function RegisterPage() {
+  const router = useRouter()
+  const [name,     setName]     = useState("")
+  const [email,    setEmail]    = useState("")
+  const [password, setPassword] = useState("")
+  const [error,    setError]    = useState("")
+  const [loading,  setLoading]  = useState(false)
 
-const router = useRouter()
+  const handleSignup = async () => {
+    if (!name || !email || !password) { setError("Please fill in all fields."); return }
+    if (password.length < 8)          { setError("Password must be at least 8 characters."); return }
 
-const [email,setEmail] = useState("")
-const [name,setName] = useState("")
-const [password,setPassword] = useState("")
-const [error,setError] = useState("")
-const [loading,setLoading] = useState(false)
+    setLoading(true); setError("")
 
-const signup = async () => {
+    const { data, error: err } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } },
+    })
 
-setLoading(true)
-setError("")
+    setLoading(false)
 
-const { data, error } = await supabase.auth.signUp({
-email,
-password,
-options:{
-data:{
-full_name:name
-}
-}
-})
+    if (err)          { setError(err.message); return }
+    if (data.session) { router.replace("/dashboard"); return }
 
-setLoading(false)
+    // Email confirmation required
+    router.replace("/auth/login")
+  }
 
-if(error){
-setError(error.message)
-return
-}
+  const handleGoogle = async () => {
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: `${window.location.origin}/dashboard` },
+    })
+  }
 
-/* agar session darhol yaratilgan bo'lsa */
+  return (
+    <AuthShell
+      leftTitle="Your IELTS score,"
+      leftAccent="faster than ever"
+      leftDesc="Real exam simulations, AI feedback, and smart progress tracking — all in one place."
+      showStats
+    >
+      <h1 className="text-2xl font-extrabold text-gray-950 tracking-[-0.5px] mb-1">
+        Create your account
+      </h1>
+      <p className="text-sm text-gray-400 mb-8">
+        Start improving your score in 30 seconds
+      </p>
 
-if(data.session){
-router.replace("/dashboard")
-return
-}
+      <div className="flex flex-col gap-4">
+        <Field
+          label="Full name"
+          type="text"
+          placeholder="Jasurbek Abdullayev"
+          value={name}
+          onChange={setName}
+          disabled={loading}
+        />
+        <Field
+          label="Email address"
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={setEmail}
+          disabled={loading}
+        />
+        <Field
+          label="Password"
+          type="password"
+          placeholder="Min. 8 characters"
+          value={password}
+          onChange={setPassword}
+          disabled={loading}
+          hint="At least 8 characters"
+        />
+      </div>
 
-/* agar session hali yaratilmagan bo'lsa */
+      <ErrorBanner message={error} />
 
-router.replace("/auth/login")
+      <div className="flex flex-col gap-3 mt-5">
+        <SubmitButton
+          loading={loading}
+          label="Create account →"
+          loadingLabel="Creating account…"
+          onClick={handleSignup}
+        />
+        <OrDivider />
+        <GoogleButton onClick={handleGoogle} disabled={loading} />
+      </div>
 
-}
+      <p className="text-center text-xs text-gray-400 mt-7">
+        Already have an account?{" "}
+        <button
+          onClick={() => router.push("/auth/login")}
+          className="text-red-500 font-semibold hover:underline"
+        >
+          Sign in
+        </button>
+      </p>
 
-return(
-
-<div className="min-h-screen flex items-center justify-center bg-gray-100">
-
-<div className="bg-white p-10 rounded-xl shadow w-[420px]">
-
-<h1 className="text-2xl font-semibold mb-6 text-center">
-Create your account
-</h1>
-
-<input
-type="email"
-placeholder="Email"
-value={email}
-onChange={(e)=>setEmail(e.target.value)}
-className="w-full border p-3 rounded mb-4"
-/>
-
-<input
-type="text"
-placeholder="Full name"
-value={name}
-onChange={(e)=>setName(e.target.value)}
-className="w-full border p-3 rounded mb-4"
-/>
-
-<input
-type="password"
-placeholder="Password"
-value={password}
-onChange={(e)=>setPassword(e.target.value)}
-className="w-full border p-3 rounded mb-2"
-/>
-
-{error && (
-<p className="text-red-500 text-sm mb-3">
-{error}
-</p>
-)}
-
-<button
-onClick={signup}
-disabled={loading}
-className="w-full bg-indigo-500 text-white py-3 rounded-lg mb-6"
->
-{loading ? "Creating..." : "Create account"}
-</button>
-
-<div className="text-center text-sm text-gray-600">
-
-Already have an account?
-
-<Link
-href="/auth/login"
-className="text-blue-600 ml-1"
->
-Sign in
-</Link>
-
-</div>
-
-</div>
-
-</div>
-
-)
-
+      <div className="mt-4">
+        <TrustRow items={["Free to start", "No card needed", "Cancel anytime"]} />
+      </div>
+    </AuthShell>
+  )
 }
