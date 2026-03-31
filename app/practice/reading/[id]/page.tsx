@@ -4,177 +4,135 @@ import { useRouter, useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { supabase } from "../../../lib/supabase"
 
-export default function ReadingTest() {
+type TestResult = {
+  test_id: number
+  score: number | null
+}
+
+export default function ReadingSetPage() {
 
   const router = useRouter()
   const params = useParams()
 
-  const testId = Number(params.id)
+  // [id] is the first test number in the package (e.g. 1, 11, 21...)
+  const startId = Number(params.id)
+  const endId = startId + 9
+  const packageNumber = Math.ceil(startId / 10)
 
-  const [started, setStarted] = useState(false)
-  const [allowed, setAllowed] = useState(false)
-  const [checking, setChecking] = useState(true)
+  const [results, setResults] = useState<Record<number, TestResult>>({})
+  const [loading, setLoading] = useState(true)
 
-  useEffect(()=>{
-
-    const checkLimit = async () => {
-
-      let localPlan = "free"
-
-      if (typeof window !== "undefined") {
-        const stored = localStorage.getItem("plan")
-        if (stored) {
-          localPlan = stored.toLowerCase().trim()
-        }
-      }
-
-      const limits = {
-        free: 0,
-        basic: 10,
-        premium: 30,
-        ultimate: 100
-      }
-
-      const getPackageAccess = (testId: number, plan: string) => {
-  const normalized = plan.toLowerCase()
-
-  // map test → package
-  const packageNumber = Math.ceil(testId / 10)
-
-  if (normalized === "free") return false
-
-  if (normalized === "basic") {
-    return packageNumber === 1
-  }
-
-  if (normalized === "premium") {
-    return packageNumber === 1 || packageNumber === 2
-  }
-
-  if (normalized === "ultimate") {
-    return true
-  }
-
-  return false
-}
-
-// 🚀 ishlatish
-if (!getPackageAccess(testId, localPlan)) {
-  router.replace("/pricing")
-  return
-}
-
-      const { data } = await supabase.auth.getSession()
-
-      if(!data.session){
+  useEffect(() => {
+    const fetchResults = async () => {
+      const { data: authData } = await supabase.auth.getUser()
+      if (!authData.user) {
         router.replace("/auth/login")
         return
       }
 
-      const user = data.session.user
+      const { data } = await supabase
+        .from("test_results")
+        .select("test_id, score")
+        .eq("user_id", authData.user.id)
+        .eq("test_type", "reading")
+        .gte("test_id", startId)
+        .lte("test_id", endId)
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("plan")
-        .eq("email", user.email)
-        .single()
+      if (data) {
+        const map: Record<number, TestResult> = {}
+        data.forEach((r) => { map[r.test_id] = r })
+        setResults(map)
+      }
 
-      type Plan = "free" | "basic" | "premium" | "ultimate"
-
-      const rawPlan = profile?.plan?.toLowerCase().trim()
-
-      const plan: Plan =
-        rawPlan === "basic" ||
-        rawPlan === "premium" ||
-        rawPlan === "ultimate"
-          ? rawPlan
-          : "free"
-
-
-      // ✅ ACCESS OK
-      setAllowed(true)
-      setChecking(false)
+      setLoading(false)
     }
 
-    checkLimit()
+    fetchResults()
+  }, [startId, endId, router])
 
-  },[router, testId])
+  const tests = Array.from({ length: 10 }, (_, i) => startId + i)
+  const doneCount = tests.filter(id => results[id]).length
 
-  // 🔒 loading
-  if (checking) {
+  if (loading) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center">
+      <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
         Loading...
       </div>
     )
   }
 
-  if (!allowed) return null
-
-  // 🔥 1. INSTRUCTION SCREEN
-  if (!started) {
-    return (
-
-      <div className="min-h-screen flex items-center justify-center bg-gray-200">
-
-        <div className="bg-white p-10 rounded-xl shadow-lg max-w-2xl w-full">
-
-          <h1 className="text-xl font-bold text-black mb-4">
-            IELTS Reading
-          </h1>
-
-          <p className="mb-4 text-black">
-            Time: 60 minutes
-          </p>
-
-          <h2 className="font-bold text-black mt-6 mb-2">
-            INSTRUCTIONS TO CANDIDATES
-          </h2>
-
-          <ul className="list-disc ml-5 mb-4 text-black">
-            <li>Answer all the questions.</li>
-            <li>You can change your answers at any time during the test.</li>
-          </ul>
-
-          <h2 className="font-bold text-black mt-6 mb-2">
-            INFORMATION FOR CANDIDATES
-          </h2>
-
-          <ul className="list-disc ml-5 mb-6 text-black">
-            <li>There are 40 questions in this test.</li>
-            <li>Each question carries one mark.</li>
-            <li>The test clock will show you when there are 10 and 5 minutes remaining.</li>
-          </ul>
-
-          <div className="flex justify-center mt-6">
-
-            <button
-              onClick={() => setStarted(true)}
-              className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition"
-            >
-              Start Test
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-    )
-  }
-
-  // 🔥 2. REAL TEST
   return (
+    <div className="min-h-screen bg-gray-100 p-8">
 
-    <div className="w-screen h-screen flex flex-col bg-black overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
+        <button
+          onClick={() => router.push("/practice/reading")}
+          className="text-sm text-gray-500 bg-white border border-gray-200 px-4 py-1.5 rounded-lg hover:border-gray-300 transition"
+        >
+          ← Back
+        </button>
+        <div className="flex-1">
+          <h1 className="text-lg font-medium text-gray-900">
+            Package {packageNumber} · Reading
+          </h1>
+          <p className="text-sm text-gray-400">Tests {startId} – {endId}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-28 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-1.5 bg-emerald-500 rounded-full transition-all"
+              style={{ width: `${Math.round((doneCount / 10) * 100)}%` }}
+            />
+          </div>
+          <span className="text-sm text-gray-400 whitespace-nowrap">
+            {doneCount} / 10 done
+          </span>
+        </div>
+      </div>
 
-      <iframe
-        src={`/tests/reading-test-${testId}.html`}
-        className="w-full h-full border-0"
-      />
+      {/* Test grid */}
+      <div className="grid grid-cols-5 gap-3">
+        {tests.map((testId) => {
+          const result = results[testId]
+          const done = !!result
+
+          return (
+            <div
+              key={testId}
+              onClick={() => router.push(`/practice/reading/test/${testId}`)}
+              className={`
+                bg-white rounded-2xl border p-4 flex flex-col gap-3 cursor-pointer transition
+                ${done
+                  ? "border-emerald-200 hover:border-emerald-300"
+                  : "border-gray-100 hover:border-gray-200"
+                }
+              `}
+            >
+              <p className="text-sm font-medium text-gray-900">Test {testId}</p>
+              <div className="flex items-center justify-between">
+                {done ? (
+                  <>
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                      Done
+                    </span>
+                    {result.score !== null && (
+                      <span className="text-xs text-gray-400">
+                        {result.score}/40
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-400">
+                    New
+                  </span>
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
 
     </div>
-
   )
-
 }
