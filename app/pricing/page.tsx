@@ -303,6 +303,8 @@ export default function Pricing() {
               "Unlimited reading",
               "Unlimited speaking",
               "Unlimited writing",
+              "Weekly articles",
+              "Weakness analysis",
             ]}
             dark
           />
