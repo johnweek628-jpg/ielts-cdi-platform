@@ -1,109 +1,137 @@
 'use client'
 
-import { useParams, useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { supabase } from "../../../../lib/supabase"
 
-export default function SetPage() {
+type TestResult = {
+  test_id: number
+  score: number | null
+}
 
-  const params = useParams()
+export default function ReadingSetPage() {
+
   const router = useRouter()
+  const params = useParams()
 
-  const setId = Number(params.id)
+  // setId is the first test number in the package (1, 11, 21, 31...)
+  const startId = Number(params.id)
+  const endId = startId + 9
+  const packageNumber = Math.ceil(startId / 10)
 
+  const [results, setResults] = useState<Record<number, TestResult>>({})
+  const [loading, setLoading] = useState(true)
 
-  const start = setId // bu aslida 1, 11, 21 bo‘ladi
+  useEffect(() => {
+    const fetchResults = async () => {
+      const { data: authData } = await supabase.auth.getUser()
+      if (!authData.user) {
+        router.replace("/auth/login")
+        return
+      }
 
-const tests = Array.from({ length: 10 }, (_, i) => i + 1)
+      const { data } = await supabase
+        .from("test_results")
+        .select("test_id, score")
+        .eq("user_id", authData.user.id)
+        .eq("test_type", "reading")
+        .gte("test_id", startId)
+        .lte("test_id", endId)
+
+      if (data) {
+        const map: Record<number, TestResult> = {}
+        data.forEach((r) => { map[r.test_id] = r })
+        setResults(map)
+      }
+
+      setLoading(false)
+    }
+
+    fetchResults()
+  }, [startId, endId, router])
+
+  // Correct global test IDs: e.g. startId=11 → [11,12,13...20]
+  const tests = Array.from({ length: 10 }, (_, i) => startId + i)
+  const doneCount = tests.filter(id => results[id]).length
+
+  if (loading) {
+    return (
+      <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
+        Loading...
+      </div>
+    )
+  }
 
   return (
+    <div className="min-h-screen bg-gray-100 p-8">
 
-    <div className="min-h-screen px-6 py-10 bg-gradient-to-br from-gray-100 via-blue-50 to-purple-100">
-
-      {/* 🔝 HEADER */}
-      <div className="flex items-center justify-between mb-10">
-
+      {/* Header */}
+      <div className="flex items-center gap-4 mb-8">
         <button
-          onClick={() => router.push('/practice/reading/${testId}')}
-          className="
-            px-4 py-2 rounded-xl
-            bg-white/40 backdrop-blur-xl
-            border border-white/30
-            shadow-md
-            hover:scale-105 transition
-          "
+          onClick={() => router.push("/practice/reading")}
+          className="text-sm text-gray-500 bg-white border border-gray-200 px-4 py-1.5 rounded-lg hover:border-gray-300 transition"
         >
           ← Back
         </button>
-
-        <h1 className="text-2xl font-bold text-gray-800 tracking-tight">
-          Practice {setId}
-        </h1>
-
-        <div />
-
+        <div className="flex-1">
+          <h1 className="text-lg font-medium text-gray-900">
+            Package {packageNumber} · Reading
+          </h1>
+          <p className="text-sm text-gray-400">Tests {startId} – {endId}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-28 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              className="h-1.5 bg-emerald-500 rounded-full transition-all"
+              style={{ width: `${Math.round((doneCount / 10) * 100)}%` }}
+            />
+          </div>
+          <span className="text-sm text-gray-400 whitespace-nowrap">
+            {doneCount} / 10 done
+          </span>
+        </div>
       </div>
 
-      {/* 📊 OPTIONAL PROGRESS */}
-      <div className="mb-8">
-
-        <div className="text-sm text-gray-600 mb-2">
-          Progress: 0 / 10
-        </div>
-
-        <div className="w-full h-2 bg-white/40 rounded-full overflow-hidden backdrop-blur">
-          <div className="h-full w-[0%] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
-        </div>
-
-      </div>
-
-      {/* 🧊 TEST GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        {tests.map((testNumber) => {
-
-          // 🔥 GLOBAL mapping (bu muhim)
-          const testId = setId + (testNumber - 1)
+      {/* Test grid */}
+      <div className="grid grid-cols-5 gap-3">
+        {tests.map((testId) => {
+          const result = results[testId]
+          const done = !!result
 
           return (
-
             <div
-              key={testNumber}
+              key={testId}
               onClick={() => router.push(`/practice/reading/${testId}`)}
-              className="
-                relative
-                p-6
-                rounded-2xl
-                cursor-pointer
-                transition-all duration-300
-
-                bg-white/40
-                backdrop-blur-xl
-                border border-white/30
-
-                shadow-[0_8px_30px_rgba(0,0,0,0.12)]
-
-                hover:scale-[1.04]
-                hover:shadow-[0_12px_40px_rgba(0,0,0,0.18)]
-
-                active:scale-[0.96]
-              "
+              className={`
+                bg-white rounded-2xl border p-4 flex flex-col gap-3 cursor-pointer transition
+                ${done
+                  ? "border-emerald-200 hover:border-emerald-300"
+                  : "border-gray-100 hover:border-gray-200"
+                }
+              `}
             >
-
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/0 pointer-events-none" />
-
-              <h2 className="text-lg font-semibold text-gray-900 tracking-tight">
-                Test {testNumber}
-              </h2>
-
-              <p className="text-sm text-gray-600 mt-1">
-                IELTS Reading Practice
-              </p>
-
+              <p className="text-sm font-medium text-gray-900">Test {testId}</p>
+              <div className="flex items-center justify-between">
+                {done ? (
+                  <>
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                      Done
+                    </span>
+                    {result.score !== null && (
+                      <span className="text-xs text-gray-400">
+                        {result.score}/40
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-400">
+                    New
+                  </span>
+                )}
+              </div>
             </div>
-
           )
-
         })}
-
       </div>
 
     </div>
