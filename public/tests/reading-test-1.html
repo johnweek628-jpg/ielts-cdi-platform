@@ -3189,6 +3189,7 @@ document.addEventListener('DOMContentLoaded', function(){
   function showResultsModal(){
     const state = buildResults();
     saveHistory(state);
+    window.sendResult(state.score);
     hideTimer();
     const modal = document.getElementById('results-modal');
     document.getElementById('results-score').textContent = state.score;
@@ -3292,6 +3293,11 @@ document.addEventListener('DOMContentLoaded', function(){
   switchToPart(1, false);
   updateAttemptedIndicators();
 });
+
+// ── CDI Progress Integration ─────────────────────────────
+window.sendResult = function(score) {
+  window.parent.postMessage({ type: "TEST_COMPLETE", score: score }, "*");
+};
 </script>
 </body>
 </html>
