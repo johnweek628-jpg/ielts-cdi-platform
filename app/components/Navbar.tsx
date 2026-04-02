@@ -162,7 +162,7 @@ export default function Navbar({ toggleSidebar }: Props) {
     const handle = (e: MouseEvent) => {
       if (!menuRef.current) return
       if (menuRef.current.contains(e.target as Node)) return
-      if ((e.target as HTMLElement).closest(".menu-trigger")) return
+      if (buttonRef.current?.contains(e.target as Node)) return
       setMenuOpen(false)
     }
     document.addEventListener("click", handle)
@@ -352,7 +352,9 @@ export default function Navbar({ toggleSidebar }: Props) {
                 }}
                 className="menu-trigger w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-all"
               >
-                {menuOpen ? <IconClose /> : <IconMenu />}
+                <span className="pointer-events-none">
+                  {menuOpen ? <IconClose /> : <IconMenu />}
+                </span>
               </button>
             </>
           )}
