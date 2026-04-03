@@ -133,7 +133,9 @@ export default function Navbar({ toggleSidebar }: Props) {
   const [loading, setLoading]   = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [origin, setOrigin]     = useState({ x: 40, y: 40 })
+  const [origin, setOrigin]       = useState({ x: 40, y: 40 })
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting]           = useState(false)
 
   const menuRef   = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -182,6 +184,24 @@ export default function Navbar({ toggleSidebar }: Props) {
     await supabase.auth.signOut()
     setUser(null)
     router.push("/")
+  }
+
+  const deleteAccount = async () => {
+    setDeleting(true)
+    try {
+      const { data: session } = await supabase.auth.getSession()
+      const userId = session.session?.user?.id
+      if (userId) {
+        await supabase.from("test_results").delete().eq("user_id", userId)
+        await supabase.from("profiles").delete().eq("id", userId)
+      }
+      await supabase.auth.signOut()
+      setUser(null)
+      router.push("/")
+    } catch {
+      setDeleting(false)
+      setConfirmDelete(false)
+    }
   }
 
   const isHome      = pathname === "/"
@@ -298,11 +318,44 @@ export default function Navbar({ toggleSidebar }: Props) {
               </button>
             </div>
             {user && (
-              <div className="flex items-center gap-2.5">
-                <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-[10px] font-bold text-red-400">
-                  {initial}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center text-[10px] font-bold text-red-400">
+                    {initial}
+                  </div>
+                  <span className="text-[11px] text-white/30">{username}</span>
                 </div>
-                <span className="text-[11px] text-white/30">{username}</span>
+                {!confirmDelete ? (
+                  <button
+                    onClick={() => setConfirmDelete(true)}
+                    className="flex items-center gap-1.5 text-[11px] text-red-400/50 hover:text-red-400 bg-white/[0.02] hover:bg-red-500/10 border border-white/[0.04] hover:border-red-500/20 px-2.5 py-1.5 rounded-lg transition-all"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                      <path d="M10 11v6M14 11v6" />
+                      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                    </svg>
+                    Delete account
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-white/40">Sure?</span>
+                    <button
+                      onClick={deleteAccount}
+                      disabled={deleting}
+                      className="text-[11px] font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 px-2.5 py-1.5 rounded-lg transition-all disabled:opacity-50"
+                    >
+                      {deleting ? "Deleting..." : "Yes, delete"}
+                    </button>
+                    <button
+                      onClick={() => setConfirmDelete(false)}
+                      className="text-[11px] text-white/30 hover:text-white/60 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1.5 rounded-lg transition-all"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
