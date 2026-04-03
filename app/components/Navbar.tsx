@@ -86,13 +86,6 @@ const IconSupport = () => (
   </svg>
 )
 
-const IconHome = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-)
-
 const IconDiamond = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M6 3h12l4 6-10 13L2 9z" />
@@ -109,6 +102,15 @@ const IconLogout = () => (
   </svg>
 )
 
+const IconDashboard = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+    <rect x="14" y="14" width="7" height="7" rx="1" />
+  </svg>
+)
+
 // ─── Nav items config ─────────────────────────────────────────────────────────
 const PRACTICE_ITEMS = [
   { icon: <IconHeadphones />, label: "Listening", sub: "300 tests",  link: "/practice/listening" },
@@ -118,8 +120,8 @@ const PRACTICE_ITEMS = [
 ]
 
 const TOOL_ITEMS = [
-  { icon: <IconSparkle />, label: "AI Writing",  sub: "Instant band feedback", link: "/ai-writing" },
-  { icon: <IconChart />,   label: "My Results",  sub: "Scores & progress",     link: "/results"    },
+  { icon: <IconSparkle />, label: "AI Writing", sub: "Instant band feedback", link: "/ai-writing" },
+  { icon: <IconChart />,   label: "My Results", sub: "Scores & progress",     link: "/results"    },
 ]
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -127,8 +129,8 @@ export default function Navbar({ toggleSidebar }: Props) {
   const pathname = usePathname()
   const router   = useRouter()
 
-  const [user, setUser]       = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser]         = useState<any>(null)
+  const [loading, setLoading]   = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [origin, setOrigin]     = useState({ x: 40, y: 40 })
@@ -169,7 +171,7 @@ export default function Navbar({ toggleSidebar }: Props) {
     return () => document.removeEventListener("click", handle)
   }, [])
 
-  // ESC key
+  // ESC
   useEffect(() => {
     const handle = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false) }
     document.addEventListener("keydown", handle)
@@ -182,10 +184,11 @@ export default function Navbar({ toggleSidebar }: Props) {
     router.push("/")
   }
 
-  const isHome = pathname === "/"
-  const testMatch = pathname.match(/\/practice\/(?:reading|listening)\/(?:test\/|)(\d+)$/)
-  const testNumber = testMatch ? testMatch[1] : null
-  const testType = pathname.includes("listening") ? "Listening" : "Reading"
+  const isHome      = pathname === "/"
+  const isDashboard = pathname === "/dashboard"
+  const testMatch   = pathname.match(/\/practice\/(?:reading|listening)\/(?:test\/|)(\d+)$/)
+  const testNumber  = testMatch ? testMatch[1] : null
+  const testType    = pathname.includes("listening") ? "Listening" : "Reading"
   const shouldShowMenu = !isHome
 
   const isActive = (link: string) => {
@@ -199,14 +202,14 @@ export default function Navbar({ toggleSidebar }: Props) {
     else router.push(link)
   }
 
-  const initial = user?.email?.[0]?.toUpperCase() ?? "U"
+  const initial  = user?.email?.[0]?.toUpperCase() ?? "U"
   const username = user?.email?.split("@")[0] ?? ""
 
   return (
     <>
       {/* ── BACKDROP ──────────────────────────────────────────────────── */}
       <div
-        className={`fixed inset-0 z-30 transition-all duration-400 ${
+        className={`fixed inset-0 z-30 transition-all duration-300 ${
           menuOpen ? "opacity-100 bg-black/50 backdrop-blur-sm" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
@@ -217,9 +220,11 @@ export default function Navbar({ toggleSidebar }: Props) {
         ref={menuRef}
         style={{ transformOrigin: `${origin.x}px ${origin.y}px` }}
         className={`
-          fixed top-[60px] left-0 w-full z-40 px-5 transition-all duration-400
-          ease-[cubic-bezier(0.16,1,0.3,1)]
-          ${menuOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-3 pointer-events-none"}
+          fixed top-[56px] left-0 w-full z-40 px-5
+          transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+          ${menuOpen
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}
         `}
       >
         <div className="rounded-2xl bg-[#0c0c0c] border border-white/[0.06] p-5 shadow-2xl">
@@ -234,15 +239,13 @@ export default function Navbar({ toggleSidebar }: Props) {
                 key={label}
                 onClick={() => navigate(link)}
                 className={`
-                  flex flex-col gap-3 p-3.5 rounded-xl text-left transition-all duration-150
-                  border
+                  flex flex-col gap-3 p-3.5 rounded-xl text-left transition-all duration-150 border
                   ${isActive(link)
                     ? "bg-white/10 border-white/15"
-                    : "bg-white/[0.03] border-white/[0.05] hover:bg-white/[0.07] hover:border-white/10"
-                  }
+                    : "bg-white/[0.03] border-white/[0.05] hover:bg-white/[0.07] hover:border-white/10"}
                 `}
               >
-                <div className="text-white/50">{icon}</div>
+                <div className="text-white/50 pointer-events-none">{icon}</div>
                 <div>
                   <div className="text-[13px] font-semibold text-white">{label}</div>
                   <div className="text-[11px] text-white/30 mt-0.5">{sub}</div>
@@ -261,15 +264,13 @@ export default function Navbar({ toggleSidebar }: Props) {
                 key={label}
                 onClick={() => navigate(link)}
                 className={`
-                  flex items-center gap-3 p-3.5 rounded-xl text-left transition-all duration-150
-                  border
+                  flex items-center gap-3 p-3.5 rounded-xl text-left transition-all duration-150 border
                   ${isActive(link)
                     ? "bg-white/10 border-white/15"
-                    : "bg-white/[0.03] border-white/[0.05] hover:bg-white/[0.07] hover:border-white/10"
-                  }
+                    : "bg-white/[0.03] border-white/[0.05] hover:bg-white/[0.07] hover:border-white/10"}
                 `}
               >
-                <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center text-white/50 flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-white/[0.05] flex items-center justify-center text-white/50 flex-shrink-0 pointer-events-none">
                   {icon}
                 </div>
                 <div>
@@ -305,7 +306,6 @@ export default function Navbar({ toggleSidebar }: Props) {
               </div>
             )}
           </div>
-
         </div>
       </div>
 
@@ -313,19 +313,18 @@ export default function Navbar({ toggleSidebar }: Props) {
       <div
         className={`
           fixed top-0 left-0 w-full h-14 z-50
-          flex items-center justify-between
-          px-5 transition-all duration-300
+          flex items-center justify-between px-5
+          transition-all duration-300
           ${scrolled
             ? "bg-white/95 backdrop-blur-xl border-b border-gray-200/80 shadow-sm"
             : "bg-white/90 backdrop-blur-xl border-b border-gray-100"}
         `}
       >
-
         {/* LEFT */}
         <div className="flex items-center gap-3">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 bg-red-500 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
@@ -350,7 +349,7 @@ export default function Navbar({ toggleSidebar }: Props) {
                   if (rect) setOrigin({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 })
                   setMenuOpen(prev => !prev)
                 }}
-                className="menu-trigger w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-all"
+                className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-500 hover:text-gray-700 transition-all"
               >
                 <span className="pointer-events-none">
                   {menuOpen ? <IconClose /> : <IconMenu />}
@@ -358,11 +357,10 @@ export default function Navbar({ toggleSidebar }: Props) {
               </button>
             </>
           )}
-
         </div>
 
         {/* CENTER */}
-        <span className="text-[13px] font-medium text-gray-500 absolute left-1/2 -translate-x-1/2">
+        <span className="text-[13px] font-medium text-gray-500 absolute left-1/2 -translate-x-1/2 pointer-events-none">
           {testNumber ? `${testType} Test ${testNumber}` : "IELTS CDI Platform"}
         </span>
 
@@ -374,7 +372,9 @@ export default function Navbar({ toggleSidebar }: Props) {
               onClick={() => router.push(`/practice/${testType.toLowerCase()}`)}
               className="flex items-center gap-1.5 text-[12px] text-gray-500 hover:text-gray-800 border border-gray-200 hover:border-gray-300 px-3 py-1.5 rounded-lg transition-all"
             >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><polyline points="15 18 9 12 15 6" /></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
               Back
             </button>
           )}
@@ -385,6 +385,22 @@ export default function Navbar({ toggleSidebar }: Props) {
               <div className="w-7 h-7 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-[11px] font-bold text-red-500 flex-shrink-0">
                 {initial}
               </div>
+
+              {/* Dashboard button — only shown when signed in, disabled on dashboard */}
+              {!isDashboard ? (
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="flex items-center gap-1.5 text-[12px] font-medium text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-300 hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-all"
+                >
+                  <IconDashboard />
+                  Dashboard
+                </button>
+              ) : (
+                <div className="flex items-center gap-1.5 text-[12px] font-medium text-gray-300 border border-gray-100 bg-gray-50 px-3 py-1.5 rounded-lg cursor-default select-none">
+                  <IconDashboard />
+                  Dashboard
+                </div>
+              )}
 
               <button
                 onClick={() => router.push("/pricing")}
@@ -411,7 +427,6 @@ export default function Navbar({ toggleSidebar }: Props) {
             </button>
           )}
         </div>
-
       </div>
     </>
   )
