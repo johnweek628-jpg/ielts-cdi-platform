@@ -1,6 +1,8 @@
 'use client'
 
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { supabase } from "./lib/supabase"
 import { motion } from "framer-motion"
 
 // ─── Reusable fade-up wrapper ───────────────────────────────────────────────
@@ -26,7 +28,6 @@ function FadeUp({
   )
 }
 
-// ─── Section label ───────────────────────────────────────────────────────────
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div className="inline-flex items-center gap-2 mb-4">
@@ -38,7 +39,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ─── Step badge ──────────────────────────────────────────────────────────────
 function StepBadge({ n }: { n: number }) {
   return (
     <div className="inline-flex items-center gap-3 mb-5">
@@ -54,6 +54,24 @@ function StepBadge({ n }: { n: number }) {
 
 export default function LandingPage() {
   const router = useRouter()
+
+  // ── Handle OAuth redirect landing on /# ──────────────────────────────────
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        router.replace("/dashboard")
+      }
+    })
+
+    // Listen for auth state changes (handles hash fragment token exchange)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        router.replace("/dashboard")
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [router])
 
   const features = [
     {
@@ -155,7 +173,6 @@ export default function LandingPage() {
 
       {/* ── HERO ────────────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left */}
         <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -228,14 +245,12 @@ export default function LandingPage() {
           </motion.p>
         </div>
 
-        {/* Right — real screenshot */}
         <motion.div
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="relative"
         >
-          {/* Subtle glow behind image */}
           <div className="absolute inset-0 bg-red-100 rounded-3xl blur-2xl opacity-40 scale-95" />
           <div className="relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl shadow-gray-200">
             <img
@@ -256,13 +271,8 @@ export default function LandingPage() {
             { n: "94%", l: "Success rate" },
             { n: "24/7", l: "AI feedback" },
           ].map((s, i) => (
-            <div
-              key={i}
-              className="text-center px-4 border-r border-gray-200 last:border-r-0"
-            >
-              <div className="text-3xl font-bold text-red-500 tracking-tight">
-                {s.n}
-              </div>
+            <div key={i} className="text-center px-4 border-r border-gray-200 last:border-r-0">
+              <div className="text-3xl font-bold text-red-500 tracking-tight">{s.n}</div>
               <div className="text-sm text-gray-500 mt-1">{s.l}</div>
             </div>
           ))}
@@ -289,9 +299,7 @@ export default function LandingPage() {
                 <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-lg mb-5 group-hover:bg-red-100 transition-colors">
                   {f.icon}
                 </div>
-                <div className="text-[15px] font-semibold text-gray-900 mb-2">
-                  {f.title}
-                </div>
+                <div className="text-[15px] font-semibold text-gray-900 mb-2">{f.title}</div>
                 <div className="text-sm text-gray-500 leading-relaxed">{f.desc}</div>
               </div>
             </FadeUp>
@@ -299,7 +307,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS — 3 STEPS WITH REAL IMAGES ─────────────────────── */}
+      {/* ── HOW IT WORKS ────────────────────────────────────────────────── */}
       <section id="demo" className="bg-gray-50 border-t border-gray-100 py-24">
         <div className="max-w-4xl mx-auto px-6">
           <FadeUp className="text-center mb-20">
@@ -317,12 +325,8 @@ export default function LandingPage() {
               <FadeUp key={i} delay={0.05}>
                 <div>
                   <StepBadge n={i + 1} />
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {step.label}
-                  </h3>
-                  <p className="text-sm text-gray-500 mb-8 max-w-sm leading-relaxed">
-                    {step.desc}
-                  </p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{step.label}</h3>
+                  <p className="text-sm text-gray-500 mb-8 max-w-sm leading-relaxed">{step.desc}</p>
                   <div className="group rounded-3xl overflow-hidden border border-gray-200 bg-white shadow-xl shadow-gray-100 transition-transform duration-500 hover:scale-[1.015]">
                     <img
                       src={step.src}
@@ -349,7 +353,6 @@ export default function LandingPage() {
               The same Inspera-like environment you'll use on test day
             </p>
           </FadeUp>
-
           <FadeUp>
             <div className="rounded-3xl overflow-hidden border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.5)]">
               <video
@@ -391,15 +394,9 @@ export default function LandingPage() {
                 </button>
               </div>
               <div className="mt-7 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-gray-400">
-                <span className="flex items-center gap-1.5">
-                  <span className="text-green-500 font-bold">✓</span> Free to start
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="text-green-500 font-bold">✓</span> No card needed
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="text-green-500 font-bold">✓</span> Cancel anytime
-                </span>
+                <span className="flex items-center gap-1.5"><span className="text-green-500 font-bold">✓</span> Free to start</span>
+                <span className="flex items-center gap-1.5"><span className="text-green-500 font-bold">✓</span> No card needed</span>
+                <span className="flex items-center gap-1.5"><span className="text-green-500 font-bold">✓</span> Cancel anytime</span>
               </div>
             </div>
           </FadeUp>
