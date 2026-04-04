@@ -26,15 +26,15 @@ export default function LoginPage() {
     router.replace("/dashboard")
   }
 
-  const handleGoogle = async () => {
+const handleGoogle = async () => {
   const origin = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin
 
   await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${origin}/auth/callback?next=/dashboard`, // ✅ explicit destination
       queryParams: {
-        prompt: "select_account", // ✅ always shows account picker
+        prompt: "select_account",
       },
     },
   })
