@@ -232,8 +232,8 @@ export default function Pricing() {
             items={[
               "10 Listening tests",
               "10 Reading tests",
-              "3 Speaking mocks",
-              "3 Writing corrections",
+              "5 Speaking mocks",
+              "10 Writing corrections",
               "Weekly articles",
             ]}
           />
@@ -267,8 +267,8 @@ export default function Pricing() {
             items={[
               "30 Listening tests",
               "30 Reading tests",
-              "6 Speaking mocks",
-              "6 Writing corrections",
+              "20 Speaking mocks",
+              "30 Writing corrections",
               "Weekly articles",
               "Weakness analysis",
             ]}
