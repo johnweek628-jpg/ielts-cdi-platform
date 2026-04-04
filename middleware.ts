@@ -7,10 +7,12 @@ const PUBLIC_ROUTES = [
   "/",
   "/auth/login",
   "/auth/register",
+  "/auth/reset",       // ✅ make sure this is here
+  "/auth/callback",    // ✅ and this
+  "/update-password",  // ✅ and this
   "/pricing",
   "/support",
 ]
-
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
   const pathname = req.nextUrl.pathname

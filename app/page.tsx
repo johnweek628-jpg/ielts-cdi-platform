@@ -54,30 +54,35 @@ function StepBadge({ n }: { n: number }) {
 
 export default function LandingPage() {
   const router = useRouter()
-  // null = still checking, false = not logged in, true = logged in
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
   useEffect(() => {
-    // ✅ getUser() makes a network request to Supabase to verify the session
-    // is still valid server-side. Deleted users will return null here,
-    // unlike getSession() which only reads the local cookie.
+    // ✅ Step 1: If Supabase dumped ?code= on the root page instead of
+    // /auth/callback, forward it there immediately so the session is exchanged.
+    const params = new URLSearchParams(window.location.search)
+    const code   = params.get("code")
+    const next   = params.get("next") ?? "/dashboard"
+
+    if (code) {
+      window.location.href = `/auth/callback?code=${code}&next=${next}`
+      return // stop — page is navigating away
+    }
+
+    // ✅ Step 2: Verify session server-side (getUser hits Supabase network,
+    // unlike getSession which only reads the local cookie — catches deleted users)
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setIsLoggedIn(true)
-        // Only auto-redirect if they landed here with a session
-        // (e.g. returning from OAuth). Don't redirect on normal landing.
       } else {
-        // Clear any stale/invalid session cookies so they don't linger
-        supabase.auth.signOut({ scope: "local" })
+        supabase.auth.signOut({ scope: "local" }) // clear any stale cookie
         setIsLoggedIn(false)
       }
     })
 
-    // Listen for future auth state changes (OAuth callback, sign out, etc.)
+    // ✅ Step 3: Listen for future auth changes (sign in, sign out, OAuth return)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (event === "SIGNED_IN" && session) {
-          // Verify the sign-in is real before redirecting
           const { data: { user } } = await supabase.auth.getUser()
           if (user) {
             setIsLoggedIn(true)
@@ -175,7 +180,6 @@ export default function LandingPage() {
             >
               Pricing
             </button>
-            {/* ✅ Show Sign in only for guests */}
             {isLoggedIn === false && (
               <button
                 onClick={() => router.push("/auth/login")}
@@ -186,8 +190,6 @@ export default function LandingPage() {
             )}
           </div>
 
-          {/* ✅ CTA button: Dashboard for logged-in users, Get started for guests.
-               While checking (null), render a placeholder so layout doesn't jump. */}
           {isLoggedIn === true ? (
             <button
               onClick={() => router.push("/dashboard")}
@@ -203,7 +205,6 @@ export default function LandingPage() {
               Get started free
             </button>
           ) : (
-            // Still resolving auth state — invisible placeholder to prevent layout shift
             <div className="w-[140px] h-[38px] rounded-xl bg-gray-100 animate-pulse" />
           )}
         </div>
@@ -251,7 +252,6 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.24 }}
             className="mt-9 flex flex-wrap gap-3"
           >
-            {/* ✅ Hero CTA also adapts to auth state */}
             {isLoggedIn === true ? (
               <button
                 onClick={() => router.push("/dashboard")}
@@ -428,7 +428,6 @@ export default function LandingPage() {
                 Real practice. Sharp feedback. Measurable progress. No guessing.
               </p>
               <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
-                {/* ✅ Bottom CTA also adapts */}
                 {isLoggedIn === true ? (
                   <button
                     onClick={() => router.push("/dashboard")}
