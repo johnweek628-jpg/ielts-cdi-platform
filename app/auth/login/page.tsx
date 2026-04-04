@@ -27,13 +27,18 @@ export default function LoginPage() {
   }
 
   const handleGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`, // ✅ fixed
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin
+
+  await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+      queryParams: {
+        prompt: "select_account", // ✅ always shows account picker
       },
-    })
-  }
+    },
+  })
+}
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleLogin()
