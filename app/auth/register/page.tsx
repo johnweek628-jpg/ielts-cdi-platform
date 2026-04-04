@@ -38,12 +38,14 @@ export default function RegisterPage() {
   }
 
  const handleGoogle = async () => {
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin
+  // Force the correct origin — never trust window.location.origin
+  // when a proxy/tunnel might be running on a different port
+  const origin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000"
 
   await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${origin}/auth/callback?next=/dashboard`, // ✅ explicit destination
+      redirectTo: `${origin}/auth/callback?next=/dashboard`,
       queryParams: {
         prompt: "select_account",
       },

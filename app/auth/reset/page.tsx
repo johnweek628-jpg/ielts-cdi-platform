@@ -16,12 +16,9 @@ export default function ResetPage() {
     if (!email) { setError("Please enter your email address."); return }
     setLoading(true); setError("")
 
-    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-      // ✅ Points to /auth/callback which handles the code exchange,
-      // then callback redirects to /update-password for the new password form.
-      // Works for both localhost and production automatically.
-      redirectTo: `${window.location.origin}/auth/callback?next=/update-password`,
-    })
+   const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+  redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000"}/auth/callback?next=/update-password`,
+})
 
     setLoading(false)
     if (err) { setError(err.message); return }
