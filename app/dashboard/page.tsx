@@ -313,20 +313,8 @@ export default function Dashboard() {
             <span className={`px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase ${PLAN_CHIP[plan]}`}>
               {plan}
             </span>
-            {plan === "free" && (
-              <button
-                onClick={() => router.push("/pricing")}
-                className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white text-[12px] font-bold px-4 py-1.5 rounded-lg transition-all duration-150"
-              >
-                Upgrade →
-              </button>
-            )}
-            <button
-              onClick={logout}
-              className="text-[12px] text-gray-400 hover:text-gray-700 border border-gray-200 hover:border-gray-300 px-3.5 py-1.5 rounded-lg transition-all"
-            >
-              Sign out
-            </button>
+            {plan === "free"}
+
           </div>
         </header>
 
