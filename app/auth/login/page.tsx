@@ -1,5 +1,3 @@
-// app/auth/login/page.tsx
-
 'use client'
 
 import { useState } from "react"
@@ -31,11 +29,12 @@ export default function LoginPage() {
   const handleGoogle = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`, // ✅ fixed
+      },
     })
   }
 
-  // Allow Enter key to submit
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleLogin()
   }

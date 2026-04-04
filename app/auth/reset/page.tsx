@@ -1,5 +1,3 @@
-// app/auth/reset/page.tsx
-
 'use client'
 
 import { useState } from "react"
@@ -19,7 +17,10 @@ export default function ResetPage() {
     setLoading(true); setError("")
 
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://ielts-cdi-platform-production.up.railway.app/update-password",
+      // ✅ Points to /auth/callback which handles the code exchange,
+      // then callback redirects to /update-password for the new password form.
+      // Works for both localhost and production automatically.
+      redirectTo: `${window.location.origin}/auth/callback?next=/update-password`,
     })
 
     setLoading(false)
