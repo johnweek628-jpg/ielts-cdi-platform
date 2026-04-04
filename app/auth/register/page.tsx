@@ -33,25 +33,25 @@ export default function RegisterPage() {
     if (err)          { setError(err.message); return }
     if (data.session) { router.replace("/dashboard"); return }
 
-    // Email confirmation required
     router.replace("/auth/login")
   }
 
- const handleGoogle = async () => {
-  // Force the correct origin — never trust window.location.origin
-  // when a proxy/tunnel might be running on a different port
-  const origin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000"
+  const handleGoogle = async () => {
+    // ✅ Explicitly hardcode localhost:3000 for local dev.
+    // For production, use the real hostname without any port.
+    const { hostname, protocol } = window.location
+    const origin = hostname === "localhost"
+      ? "http://localhost:3000"
+      : `${protocol}//${hostname}`
 
-  await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${origin}/auth/callback?next=/dashboard`,
-      queryParams: {
-        prompt: "select_account",
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback?next=/dashboard`,
+        queryParams: { prompt: "select_account" },
       },
-    },
-  })
-}
+    })
+  }
 
   return (
     <AuthShell

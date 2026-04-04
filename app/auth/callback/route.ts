@@ -7,10 +7,15 @@ export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code       = requestUrl.searchParams.get("code")
   const next       = requestUrl.searchParams.get("next") ?? "/dashboard"
-  const origin     = requestUrl.origin
+
+  // ✅ Derive origin from the incoming request itself — this is always correct
+  // regardless of what port Next.js is running on or what env vars say.
+  // We never use process.env or window.location here.
+  const host     = request.headers.get("host") ?? "localhost:3000"
+  const protocol = host.startsWith("localhost") ? "http" : "https"
+  const origin   = `${protocol}://${host}`
 
   if (!code) {
-    // No code at all — just redirect to login
     return NextResponse.redirect(new URL("/auth/login", origin))
   }
 
@@ -20,8 +25,8 @@ export async function GET(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll()              { return cookieStore.getAll() },
-        setAll(cookiesToSet)  {
+        getAll()             { return cookieStore.getAll() },
+        setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, options)
           )
@@ -37,10 +42,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login?error=oauth_failed", origin))
   }
 
-  // ✅ Detect password recovery vs normal sign-in
-  // When user clicks a reset link, the session type is "recovery"
-  if (data?.session?.user?.recovery_sent_at || 
-      data?.user?.aud === "authenticated" && next === "/update-password") {
+  // Detect password recovery flow
+  if (next === "/update-password" || data?.session?.user?.recovery_sent_at) {
     return NextResponse.redirect(new URL("/update-password", origin))
   }
 

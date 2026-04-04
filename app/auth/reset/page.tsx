@@ -16,9 +16,15 @@ export default function ResetPage() {
     if (!email) { setError("Please enter your email address."); return }
     setLoading(true); setError("")
 
-   const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
-  redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000"}/auth/callback?next=/update-password`,
-})
+    // ✅ Same safe origin logic — hardcode port 3000 for localhost
+    const { hostname, protocol } = window.location
+    const origin = hostname === "localhost"
+      ? "http://localhost:3000"
+      : `${protocol}//${hostname}`
+
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${origin}/auth/callback?next=/update-password`,
+    })
 
     setLoading(false)
     if (err) { setError(err.message); return }
@@ -33,7 +39,6 @@ export default function ResetPage() {
       showStats={false}
     >
       {sent ? (
-        /* ── Success state ── */
         <div className="flex flex-col items-center text-center gap-4">
           <div className="w-14 h-14 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-2xl">
             ✉️
@@ -48,18 +53,12 @@ export default function ResetPage() {
           </p>
           <button
             onClick={() => router.push("/auth/login")}
-            className="
-              mt-4 w-full py-3 rounded-xl
-              bg-gray-950 hover:bg-gray-800
-              text-white text-sm font-semibold
-              transition-all duration-150 active:scale-[0.98]
-            "
+            className="mt-4 w-full py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold transition-all duration-150 active:scale-[0.98]"
           >
             Back to sign in
           </button>
         </div>
       ) : (
-        /* ── Form state ── */
         <>
           <h1 className="text-2xl font-extrabold text-gray-950 tracking-[-0.5px] mb-1">
             Forgot your password?
@@ -84,15 +83,7 @@ export default function ResetPage() {
           <button
             onClick={handleReset}
             disabled={loading}
-            className="
-              mt-5 w-full py-3 rounded-xl
-              bg-gray-950 hover:bg-gray-800
-              text-white text-sm font-semibold
-              transition-all duration-150
-              active:scale-[0.98]
-              disabled:opacity-60 disabled:cursor-not-allowed
-              shadow-lg shadow-gray-900/10
-            "
+            className="mt-5 w-full py-3 rounded-xl bg-gray-950 hover:bg-gray-800 text-white text-sm font-semibold transition-all duration-150 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-gray-900/10"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
