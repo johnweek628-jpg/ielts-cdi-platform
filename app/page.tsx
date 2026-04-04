@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "./lib/supabase"
 import { motion } from "framer-motion"
@@ -54,21 +54,41 @@ function StepBadge({ n }: { n: number }) {
 
 export default function LandingPage() {
   const router = useRouter()
+  // null = still checking, false = not logged in, true = logged in
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
 
-  // ── Handle OAuth redirect landing on /# ──────────────────────────────────
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.replace("/dashboard")
+    // ✅ getUser() makes a network request to Supabase to verify the session
+    // is still valid server-side. Deleted users will return null here,
+    // unlike getSession() which only reads the local cookie.
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        setIsLoggedIn(true)
+        // Only auto-redirect if they landed here with a session
+        // (e.g. returning from OAuth). Don't redirect on normal landing.
+      } else {
+        // Clear any stale/invalid session cookies so they don't linger
+        supabase.auth.signOut({ scope: "local" })
+        setIsLoggedIn(false)
       }
     })
 
-    // Listen for auth state changes (handles hash fragment token exchange)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        router.replace("/dashboard")
+    // Listen for future auth state changes (OAuth callback, sign out, etc.)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "SIGNED_IN" && session) {
+          // Verify the sign-in is real before redirecting
+          const { data: { user } } = await supabase.auth.getUser()
+          if (user) {
+            setIsLoggedIn(true)
+            router.replace("/dashboard")
+          }
+        }
+        if (event === "SIGNED_OUT") {
+          setIsLoggedIn(false)
+        }
       }
-    })
+    )
 
     return () => subscription.unsubscribe()
   }, [router])
@@ -155,19 +175,37 @@ export default function LandingPage() {
             >
               Pricing
             </button>
-            <button
-              onClick={() => router.push("/auth/login")}
-              className="text-sm text-gray-500 hover:text-gray-900 transition"
-            >
-              Sign in
-            </button>
+            {/* ✅ Show Sign in only for guests */}
+            {isLoggedIn === false && (
+              <button
+                onClick={() => router.push("/auth/login")}
+                className="text-sm text-gray-500 hover:text-gray-900 transition"
+              >
+                Sign in
+              </button>
+            )}
           </div>
-          <button
-            onClick={() => router.push("/auth/register")}
-            className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-150"
-          >
-            Get started free
-          </button>
+
+          {/* ✅ CTA button: Dashboard for logged-in users, Get started for guests.
+               While checking (null), render a placeholder so layout doesn't jump. */}
+          {isLoggedIn === true ? (
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-150"
+            >
+              Go to Dashboard →
+            </button>
+          ) : isLoggedIn === false ? (
+            <button
+              onClick={() => router.push("/auth/register")}
+              className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all duration-150"
+            >
+              Get started free
+            </button>
+          ) : (
+            // Still resolving auth state — invisible placeholder to prevent layout shift
+            <div className="w-[140px] h-[38px] rounded-xl bg-gray-100 animate-pulse" />
+          )}
         </div>
       </nav>
 
@@ -213,12 +251,22 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.24 }}
             className="mt-9 flex flex-wrap gap-3"
           >
-            <button
-              onClick={() => router.push("/auth/register")}
-              className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-7 py-3.5 rounded-2xl transition-all duration-150 shadow-lg shadow-red-100"
-            >
-              Get started free →
-            </button>
+            {/* ✅ Hero CTA also adapts to auth state */}
+            {isLoggedIn === true ? (
+              <button
+                onClick={() => router.push("/dashboard")}
+                className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-7 py-3.5 rounded-2xl transition-all duration-150 shadow-lg shadow-red-100"
+              >
+                Go to Dashboard →
+              </button>
+            ) : (
+              <button
+                onClick={() => router.push("/auth/register")}
+                className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-7 py-3.5 rounded-2xl transition-all duration-150 shadow-lg shadow-red-100"
+              >
+                Get started free →
+              </button>
+            )}
             <button
               onClick={() => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" })}
               className="border border-red-200 hover:border-red-300 hover:bg-red-50 text-red-500 font-semibold text-[15px] px-7 py-3.5 rounded-2xl transition-all duration-150"
@@ -380,12 +428,22 @@ export default function LandingPage() {
                 Real practice. Sharp feedback. Measurable progress. No guessing.
               </p>
               <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={() => router.push("/auth/register")}
-                  className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-8 py-4 rounded-2xl transition-all duration-150 shadow-lg shadow-red-200"
-                >
-                  Get started — it takes 30 seconds
-                </button>
+                {/* ✅ Bottom CTA also adapts */}
+                {isLoggedIn === true ? (
+                  <button
+                    onClick={() => router.push("/dashboard")}
+                    className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-8 py-4 rounded-2xl transition-all duration-150 shadow-lg shadow-red-200"
+                  >
+                    Go to Dashboard →
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => router.push("/auth/register")}
+                    className="bg-red-500 hover:bg-red-600 active:scale-[0.97] text-white font-semibold text-[15px] px-8 py-4 rounded-2xl transition-all duration-150 shadow-lg shadow-red-200"
+                  >
+                    Get started — it takes 30 seconds
+                  </button>
+                )}
                 <button
                   onClick={() => router.push("/pricing")}
                   className="border border-red-200 hover:border-red-300 hover:bg-red-100/50 text-red-500 font-semibold text-[15px] px-8 py-4 rounded-2xl transition-all duration-150"
