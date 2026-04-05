@@ -17,6 +17,8 @@ export default function ListeningTest() {
   const [allowed, setAllowed]   = useState(false)
   const [checking, setChecking] = useState(true)
   const [saving, setSaving]     = useState(false)
+  const [done, setDone]         = useState(false)
+  const submittedRef            = useRef(false) // ← one-time guard
 
   // ─── Access check ────────────────────────────────────────────────────
   useEffect(() => {
@@ -57,6 +59,10 @@ export default function ListeningTest() {
     const handleMessage = async (event: MessageEvent) => {
       if (event.data?.type !== "TEST_COMPLETE") return
 
+      // ← Ignore any re-submissions after the first
+      if (submittedRef.current) return
+      submittedRef.current = true
+
       const score = event.data.score ?? null
       setSaving(true)
 
@@ -76,17 +82,23 @@ export default function ListeningTest() {
         )
       }
 
-      const packageStart = Math.floor((testId - 1) / 10) * 10 + 1
-      router.push(`/practice/listening/set/${packageStart}`)
+      setSaving(false)
+      setDone(true) // ← stay on iframe review, show progress button
     }
 
     window.addEventListener("message", handleMessage)
     return () => window.removeEventListener("message", handleMessage)
-  }, [started, testId, router])
+  }, [started, testId])
 
   // ─── Inject capture script once iframe loads ──────────────────────────
   const handleIframeLoad = () => {
     injectTestCapture(iframeRef.current)
+  }
+
+  // ─── Open progress in new tab, user stays on review ──────────────────
+  const handleGoToProgress = () => {
+    const packageStart = Math.floor((testId - 1) / 10) * 10 + 1
+    window.open(`/practice/listening/set/${packageStart}`, "_blank")
   }
 
   // ─── Loading ──────────────────────────────────────────────────────────
@@ -97,16 +109,6 @@ export default function ListeningTest() {
   )
 
   if (!allowed) return null
-
-  // ─── Saving overlay ───────────────────────────────────────────────────
-  if (saving) return (
-    <div className="w-screen h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-xl shadow text-center">
-        <p className="text-lg font-medium text-gray-800 mb-2">Saving your result...</p>
-        <p className="text-sm text-gray-500">You'll be redirected in a moment.</p>
-      </div>
-    </div>
-  )
 
   // ─── Instructions ─────────────────────────────────────────────────────
   if (!started) return (
@@ -135,15 +137,37 @@ export default function ListeningTest() {
     </div>
   )
 
-  // ─── Test iframe ──────────────────────────────────────────────────────
+  // ─── Test iframe (with optional saving/done overlays) ─────────────────
   return (
-    <div className="w-screen h-screen flex flex-col bg-black overflow-hidden">
+    <div className="w-screen h-screen flex flex-col bg-black overflow-hidden relative">
       <iframe
         ref={iframeRef}
         src={`/tests/listening-test-${testId}.html`}
         className="w-full h-full border-0"
         onLoad={handleIframeLoad}
       />
+
+      {/* Saving overlay */}
+      {saving && (
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
+          <div className="bg-white p-8 rounded-xl shadow text-center">
+            <p className="text-lg font-medium text-gray-800 mb-2">Saving your result...</p>
+            <p className="text-sm text-gray-500">Please wait a moment.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Done — floating button, opens progress in new tab */}
+      {done && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+          <button
+            onClick={handleGoToProgress}
+            className="bg-black text-white px-8 py-3 rounded-full shadow-lg hover:bg-gray-800 transition text-sm font-medium"
+          >
+            Go to Progress →
+          </button>
+        </div>
+      )}
     </div>
   )
 }
